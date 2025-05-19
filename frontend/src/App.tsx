@@ -1,33 +1,54 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import io, { Socket } from 'socket.io-client';
+
+const SOCKET_SERVER_URL = 'http://localhost:5000';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState<string[]>([]);
+
+  useEffect(() => {
+    const newSocket = io(SOCKET_SERVER_URL);
+    setSocket(newSocket);
+
+    newSocket.on('connect', () => {
+      console.log('서버에 연결됨!');
+    });
+
+    newSocket.on('disconnect', () => {
+      console.log('서버 연결 끊김');
+    });
+
+    // 서버에서 'receiveMessage' 이벤트 받을 때
+    newSocket.on('receiveMessage', (msg) => {
+      console.log('서버로부터 메시지 수신:', msg);
+      setMessages(prevMessages => [...prevMessages, msg]); 
+    });
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []); // 빈 배열: 마운트될 때 한 번만 실행
+
+  const sendMessage = () => {
+    if (socket && message) {
+      socket.emit('sendMessage', message);
+      setMessage('');
+    }
+  };
 
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <input type='text' value={message} onChange={(e) => setMessage(e.target.value)} />
+        <button onClick={sendMessage}>메세지보내기</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
