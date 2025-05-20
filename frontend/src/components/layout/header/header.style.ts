@@ -15,7 +15,7 @@ export const HeaderContainer = styled.div`
 export const Title = styled.p(({ theme }) => ({
   margin: 0,
   fontWeight: "bold",
-  fontSize: theme.fontSize.lg,
+  fontSize: theme.fontSize.xl,
   color: theme.color.darkblue,
   textAlign: "center",
   flex: 1,
@@ -27,7 +27,7 @@ export const UserInfo = styled.div(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: "0.5rem",
-  fontSize: "0.875rem",
+  fontSize: theme.fontSize.sm,
   color: theme.color.darkblue,
   span: {
     color: theme.color.darkblue,

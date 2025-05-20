@@ -16,17 +16,18 @@ export const BalloonContainer = styled.div(({ theme }) => ({
   margin: "1rem auto",
 }));
 
-export const ContentRow = styled.div({
+export const ContentRow = styled.div<{ expanded: boolean }>(({ expanded }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-});
+  marginBottom: expanded ? "3rem" : "0",
+}));
 
 export const QuestionSection = styled.div({
   display: "flex",
   alignItems: "center",
   gap: "0.5rem",
-  flex: 1,
+  flex: 0.97,
   overflow: "hidden",
 });
 
@@ -58,14 +59,14 @@ export const QuestionTextExpanded = styled.div(({ theme }) => ({
 }));
 
 export const TimeText = styled.span(({ theme }) => ({
-  fontSize: theme.fontSize.sm,
-  color: theme.color.gray50,
+  fontSize: theme.fontSize.xs,
+  fontWeight: 500,
+  color: " #989898",
   marginLeft: "1rem",
   flexShrink: 0,
 }));
 
 export const ToggleIcon = styled.div(({ theme }) => ({
-  fontSize: theme.fontSize.lg,
   color: theme.color.darkblue,
   flexShrink: 0,
 }));
