@@ -2,6 +2,7 @@ import type {Theme} from "@emotion/react";
 
 const color={
 	blue10:"#D5E4FF",
+	blue0:"#EAF1FF",
 	black: "#1F1F1F",
 	gray50:"#5F6B7A",
 	gray10:"#D5E4FF",

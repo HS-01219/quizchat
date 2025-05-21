@@ -1,7 +1,7 @@
 import React from 'react';
 import * as S from "@/components/layout/layout.style"
-import Header from "@/components/layout/header/header"
-import Footer from "@/components/layout/footer/footer";
+import Header from "@/components/header/header"
+import Footer from "@/components/footer/footer";
 import QuizHeader from '../quizHeader/quizHeader';
 
 interface LayoutProps {

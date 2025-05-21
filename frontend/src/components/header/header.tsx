@@ -1,4 +1,4 @@
-import * as S from "@/components/layout/header/header.style";
+import * as S from "@/components/header/header.style";
 import { FiUser } from "react-icons/fi";
 
 // interface HeaderProps {
