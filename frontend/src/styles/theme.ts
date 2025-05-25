@@ -19,7 +19,13 @@ const fontSize={
 	lg:"1rem",//16px
 	xl:"1.25",//20px
 }
+const fontWeight={
+	s:"400",
+	m:"500",
+	lg:"600",
+	xl:"700",
 
+}
 const borderRadius ={
 	xx:"0.5rem",//8px
 	x:"0.625rem",//10px
@@ -39,6 +45,7 @@ const buttonScheme = {
 
 export type ColorTypes=typeof color;
 export type FontSizeTypes=typeof fontSize;
+export type FontWeightTypes=typeof fontWeight;
 export type BorderRadiusTypes =typeof borderRadius;
 export type ButtonScheme=typeof buttonScheme;
 const theme:Theme={
@@ -46,5 +53,6 @@ const theme:Theme={
 	fontSize,
 	borderRadius,
 	buttonScheme,
+	fontWeight,
 }
 export default theme;
