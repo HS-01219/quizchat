@@ -1,8 +1,10 @@
 // import Button from "@/components/button/button";
+import VoteCard from "@/components/vote/voteCard";
+
 const Vote = () => {
 	return (
-		<div>투표</div>
-// <Button children={"완료"}/>
+<VoteCard/>
+
 	)
 }
 export default Vote;
