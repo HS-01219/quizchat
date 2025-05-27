@@ -62,7 +62,7 @@ export const QuestionTextExpanded = styled.div(({ theme }) => ({
 export const TimeText = styled.span(({ theme }) => ({
   fontSize: theme.fontSize.xs,
   fontWeight: 500,
-  color: " #989898",
+  color: theme.color.gray50,
   marginLeft: "1rem",
   flexShrink: 0,
 }));

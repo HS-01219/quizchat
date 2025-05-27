@@ -10,6 +10,6 @@ export const LayoutWrapper = styled.div({
 export const LayoutContainer = styled.div({
 	flex: 1,
 	width: "100%",
-	backgroundColor: "#f9f9f9",
+	backgroundColor: "#ffffff",
 	overflowY: "auto",
 });
