@@ -34,7 +34,7 @@ function App() {
     return () => {
       newSocket.disconnect();
     };
-  }, []); // 빈 배열: 마운트될 때 한 번만 실행
+  }, []); 
 
   const sendMessage = () => {
     if (socket && message) {
