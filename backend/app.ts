@@ -32,6 +32,7 @@ const io = new SocketServer(server, {
     }
 });
 
+// socket 설정
 setupSocketIO(io);
 
 server.listen(PORT, () => {
