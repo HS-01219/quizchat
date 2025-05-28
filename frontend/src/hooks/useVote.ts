@@ -1,20 +1,26 @@
-import {useModal} from "@/hooks/useModal";
 
+import { useModalStore } from "@/store/useModalStore";
+import { useVoteStore } from "@/store/useVoteStore";
 
 export const useVote = () => {
-	const {  closeModal } = useModal();
-	const save = async (data) => {
-		console.log("save",data);
+	const { closeModal } = useModalStore();
+	const { isSave, setIsSave } = useVoteStore();
+
+	const save = async (data: any) => {
+		console.log("save", data);
+		setIsSave(true);
+	};
+
+	const edit = async (id: number, data: any) => {
+		console.log("edit", id, data);
+		setIsSave(false);
 
 	};
-	const edit = async (id, data) => {
-		console.log("Edit",id, data);
 
-	};
 	const cancel = () => {
-		closeModal('quiz');
-
+		closeModal("vote");
+		setIsSave(false);
 	};
 
-	return { save, edit, cancel };
+	return { isSave, save, edit, cancel };
 };

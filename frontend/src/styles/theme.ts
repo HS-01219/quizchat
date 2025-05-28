@@ -21,7 +21,7 @@ const fontSize={
 	sm:"0.875rem",	//"14px"
 	md:"0.938rem",//15px
 	lg:"1rem",//16px
-	xl:"1.25",//20px
+	xl:"1.25rem",//20px
 }
 const fontWeight={
 	s:"400",

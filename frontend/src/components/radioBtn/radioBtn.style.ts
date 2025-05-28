@@ -1,19 +1,27 @@
 import styled from "@emotion/styled";
 
 export const RadioWrapper = styled.div`
-  display: flex;
-  align-items: center;
+ 	 display: flex;
+  	align-items: center;
 		width: 100%;
     gap:0.5rem;
 		margin-bottom: 0.5rem;
 		margin-left:0.5rem;
-justify-content: flex-start;
+		justify-content: flex-start;
+		
 `;
+export const RadioStatusText= styled.div(({ theme }) => ({
+	color: theme.color.darkblue,
+	fontSize: theme.fontSize.s,
+	fontWeight: theme.fontWeight.s,
+	width: "100%",
+justifyContent: "flex-start",
+	padding: "0.5rem",
 
+}))
 export const RadioInput = styled.input`
     appearance: none;
     width: 1rem;
-		
     height: 1rem;
     border: 2px solid #5a8bd9;
     border-radius: 50%;
