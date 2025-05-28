@@ -3,7 +3,6 @@ import * as S from "@/components/layout/layout.style"
 
 import Header from "@/components/header/header"
 import Footer from "@/components/footer/footer";
-import QuizHeader from '../quizHeader/quizHeader';
 
 interface LayoutProps {
 	children: React.ReactNode;

@@ -1,9 +1,16 @@
-import * as S from "@/components/button/button.style"
+import * as S from "@/components/button/button.style";
 import React from "react";
 
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  className?: string;
+}
 
-const Button = ({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
-	return <S.ButtonContainer {...props}>{children}</S.ButtonContainer>;
+const Button = ({ children, className, ...props }: ButtonProps) => {
+  return (
+    <S.ButtonContainer className={className} {...props}>
+      {children}
+    </S.ButtonContainer>
+  );
 };
 
 export default Button;
