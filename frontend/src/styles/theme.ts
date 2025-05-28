@@ -9,7 +9,7 @@ const color={
 	blue20:"#D5E4FF",
 	darkblue:"#5A8BD9",
 	blue30:"#8BB2F2",
-gray30:"#989898"
+gray30:"#989898",
 	gray: "#F4F6FA",
 
 }
