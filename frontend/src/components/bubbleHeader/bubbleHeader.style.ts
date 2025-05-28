@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { FaVoteYea } from "react-icons/fa";
 
 export const BalloonContainer = styled.div(({ theme }) => ({
   position: "relative",
@@ -61,7 +62,7 @@ export const QuestionTextExpanded = styled.div(({ theme }) => ({
 export const TimeText = styled.span(({ theme }) => ({
   fontSize: theme.fontSize.xs,
   fontWeight: 500,
-  color: " #989898",
+  color: theme.color.gray50,
   marginLeft: "1rem",
   flexShrink: 0,
 }));
@@ -70,3 +71,10 @@ export const ToggleIcon = styled.div(({ theme }) => ({
   color: theme.color.darkblue,
   flexShrink: 0,
 }));
+
+export const VoteIcon = styled(FaVoteYea)(({ theme }) => ({
+  color: theme.color.darkblue,
+  fontSize: theme.fontSize.md,
+  flexShrink: 0,
+}));
+
