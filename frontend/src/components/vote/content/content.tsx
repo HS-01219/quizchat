@@ -4,7 +4,7 @@ import * as S from "./content.style";
 import Button from "@/components/button/button";
 import InputWithIcon from "@/components/vote/Input/input";
 import RadioBtn from "@/components/radioBtn/radioBtn";
-
+import { useVote } from "@/hooks/useVote";
 interface VoteItem {
 	id: number;
 	text: string;
@@ -14,7 +14,7 @@ const Content = () => {
 	const [voteItems, setVoteItems] = useState<VoteItem[]>([
 		{ id: Date.now(), text: "" },
 	]);
-
+	const { cancel } = useVote();
 	const handleItemChange = (id: number, value: string) => {
 		setVoteItems((prev) =>
 			prev.map((item) => (item.id === id ? { ...item, text: value } : item))
@@ -63,12 +63,11 @@ const Content = () => {
 				/>
 			))}
 
-			{/* 항목 추가 */}
 			<S.AddText onClick={addVoteItem}>+ 항목 추가</S.AddText>
 			<RadioBtn/>
 <S.ButtonWrapper>
-	<Button>완료</Button>
-	<Button>취소</Button>
+	<Button >완료</Button>
+	<Button onClick={cancel}>취소</Button>
 </S.ButtonWrapper>
 
 		</S.VoteInputContainer>
