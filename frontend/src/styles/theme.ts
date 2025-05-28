@@ -9,7 +9,7 @@ const color={
 	blue20:"#D5E4FF",
 	darkblue:"#5A8BD9",
 	blue30:"#8BB2F2",
-gray30:"#989898",
+	gray30:"#989898",
 	gray: "#F4F6FA",
 
 }
@@ -20,7 +20,7 @@ const fontSize={
 	sm:"0.875rem",	//"14px"
 	md:"0.938rem",//15px
 	lg:"1rem",//16px
-	xl:"1.25",//20px
+	xl:"1.25rem",//20px
 }
 const fontWeight={
 	s:"400",
