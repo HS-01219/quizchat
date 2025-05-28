@@ -4,10 +4,11 @@ import VoteCard from "@/components/vote/voteCard";
 import {useModal} from "@/hooks/useModal";
 
 const Vote = () => {
+	const {isOpenModal} = useModal();
   return (
     	<>
     <BubbleHeader type="vote" question="이것은 투표내용 아직 없다" time="00:30" />
-   
+
 			{isOpenModal.vote && (
 				<VoteCard/>
 			)}
@@ -16,4 +17,3 @@ const Vote = () => {
   );
 };
 export default Vote;
-
