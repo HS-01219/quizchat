@@ -1,9 +1,18 @@
 import './App.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMessageHandler } from './socket/messageHandler';
 import { useVoteHandler } from './socket/voteHandler';
+import { useUserHandler } from './socket/userHandler';
 
 function App() {
+  // 유저 관련
+  const { nickName, setNickName, updateNickName, requestJoinRoom } = useUserHandler();
+
+  // 프론트 TODO : 로컬 스토리지에 user의 Id를 저장해서 새로고침했을 때 id가 존재한다면 join하지 않도록 처리
+  useEffect(() => {
+    requestJoinRoom("테스트유저");
+  }, []); 
+
   // 메시지 관련
   const { message, setMessage, messages, sendMessage } = useMessageHandler();
 
@@ -18,26 +27,6 @@ function App() {
     if(!vote || !vote.isActive) return;
 
     const update = new Set(selectedItems);
-
-    newSocket.on('disconnect', () => {
-      console.log('서버 연결 끊김');
-    });
-
-    // 서버에서 'receiveMessage' 이벤트 받을 때
-    newSocket.on('receiveMessage', (msg) => {
-      console.log('서버로부터 메시지 수신:', msg);
-      setMessages(prevMessages => [...prevMessages, msg]); 
-    });
-
-    return () => {
-      newSocket.disconnect();
-    };
-  }, []); 
-
-  const sendMessage = () => {
-    if (socket && message) {
-      socket.emit('sendMessage', message);
-      setMessage('');
 
     if(update.has(itemId)){
       update.delete(itemId);
@@ -54,6 +43,12 @@ function App() {
 
   return (
     <>
+      {/* 유저 */}
+      <div>
+        <input type='text' value={nickName} onChange={(e) => setNickName(e.target.value)} />
+        <button onClick={updateNickName}>닉네임 변경</button>
+      </div>
+
       {/* 메시지 */}
       <div>
         <input type='text' value={message} onChange={(e) => setMessage(e.target.value)} />
@@ -100,4 +95,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
