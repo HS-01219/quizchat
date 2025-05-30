@@ -4,8 +4,8 @@ import express from 'express';
 import cors from 'cors';
 import { StatusCodes } from 'http-status-codes';
 import http from 'http';
-import { Socket, Server as SocketServer } from 'socket.io';
-import { setupSocket } from './socket/soketManager';
+import { Server as SocketServer } from 'socket.io';
+import { setupSocketIO } from './socket/socketManager';
 
 dotenv.config();
 
@@ -33,7 +33,7 @@ const io = new SocketServer(server, {
 });
 
 // socket 설정
-setupSocket(io);
+setupSocketIO(io);
 
 server.listen(PORT, () => {
     console.log("서버 실행")
