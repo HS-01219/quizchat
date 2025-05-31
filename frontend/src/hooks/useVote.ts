@@ -4,7 +4,7 @@ import { useVoteStore } from "@/store/useVoteStore";
 
 export const useVote = () => {
 	const { closeModal } = useModalStore();
-	const { isSave, setIsSave } = useVoteStore();
+	const { isSave, setIsSave,isVote} = useVoteStore();
 
 	const save = async (data: any) => {
 		console.log("save", data);
@@ -21,6 +21,9 @@ export const useVote = () => {
 		closeModal("vote");
 		setIsSave(false);
 	};
+const vote =(id:number)=>{
+	isVote(id)
+}
 
-	return { isSave, save, edit, cancel };
+	return { isSave, save, edit, cancel,vote };
 };

@@ -6,5 +6,4 @@ export const VoteStartText= styled.div(({theme})=>({
 	width: "100%",
 	display: "flex",
 	justifyContent: "center",
-
 }))

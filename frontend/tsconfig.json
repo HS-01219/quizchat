@@ -3,7 +3,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "target": "ES5",
-    "lib": ["DOM", "ES2015"],
+    "lib": ["DOM", "ES2015","ES2016"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],

@@ -19,9 +19,7 @@ const UserNameChange = ({ onClose, onSave }: UserNameChangeProps) => {
   return (
     <S.Modal>
       <S.ModalContainer>
-
         <S.ModalTitle>사용할 닉네임을 입력해주세요</S.ModalTitle>
-        
         <S.ModalInput
           type="text"
           value={input}
