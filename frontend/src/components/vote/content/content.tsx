@@ -9,15 +9,17 @@ import { useVote } from "@/hooks/useVote";
 import { useVoteStore } from "@/store/useVoteStore";
 
 const Content = () => {
-	const { save, edit } = useVote();
+	const { save, edit, vote } = useVote();
 
 	const {
 		title,
 		voteItems,
+		deleteVoteItem,
 		isSave,
 		isDuplicated,
 		setTitle,
 		setVoteItems,
+		selectedVoteId,
 	} = useVoteStore();
 
 	const handleItemChange = (id: number, value: string) => {
@@ -28,8 +30,7 @@ const Content = () => {
 	};
 
 	const handleItemDelete = (id: number) => {
-		if (isSave || voteItems.length <= 2) return;
-		setVoteItems((prev) => prev.filter((item) => item.id !== id));
+		deleteVoteItem(id);
 	};
 
 	const addVoteItem = () => {
@@ -57,7 +58,13 @@ const Content = () => {
 			items: voteItems.map((item) => item.text),
 			isDuplicated,
 		};
-		edit(123, data); // 123은 예시 ID
+		edit(123, data);
+	};
+
+	const onVote = (itemId: number) => {
+		if (isSave) {
+			vote(itemId);
+		}
 	};
 
 	return (
@@ -73,12 +80,15 @@ const Content = () => {
 			{voteItems.map((item, index) => (
 				<InputWithIcon
 					key={item.id}
+					readOnly={isSave}
+					isSelected={selectedVoteId.includes(item.id)}
 					inputComponent={S.MediumInput}
 					placeholder={`항목 ${index + 1}`}
 					value={item.text}
 					onChange={(e) => {
 						if (!isSave) handleItemChange(item.id, e.target.value);
 					}}
+					onClick={() => onVote(item.id)}
 					icon={
 						!isSave && voteItems.length > 2 ? (
 							<IoIosCloseCircleOutline
@@ -87,11 +97,10 @@ const Content = () => {
 							/>
 						) : null
 					}
-					readOnly={isSave}
 				/>
 			))}
 
-			{!isSave&&(
+			{!isSave && (
 				<S.AddText onClick={addVoteItem}>+ 항목 추가</S.AddText>
 			)}
 			<RadioBtn />

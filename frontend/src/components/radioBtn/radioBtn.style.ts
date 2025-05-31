@@ -8,17 +8,16 @@ export const RadioWrapper = styled.div`
 		margin-bottom: 0.5rem;
 		margin-left:0.5rem;
 		justify-content: flex-start;
-		
 `;
 export const RadioStatusText= styled.div(({ theme }) => ({
-	color: theme.color.darkblue,
+	color: theme.color.gray50,
 	fontSize: theme.fontSize.s,
 	fontWeight: theme.fontWeight.s,
 	width: "100%",
-justifyContent: "flex-start",
+	justifyContent: "flex-start",
 	padding: "0.5rem",
-
 }))
+
 export const RadioInput = styled.input`
     appearance: none;
     width: 1rem;
@@ -28,7 +27,6 @@ export const RadioInput = styled.input`
     outline: none;
     cursor: pointer;
     position: relative;
-
     &:checked::before {
         content: "";
         position: absolute;

@@ -6,17 +6,15 @@ export const VoteInputContainer = styled.div`
 		gap:0.62rem;
 		justify-content: center;
 		align-items: center;`
-export const BaseInput= styled.input(({ theme }) => ({
-		border: `1px solid ${theme.color.darkblue}`,
-		borderRadius: theme.borderRadius.xx,
-		color: theme.color.black,
-		paddingRight: "2.5rem",
-		padding: "0.25rem 0.75rem",
-		"&:focus": {
-			border: `2px solid ${theme.color.darkblue}`,
-		}
-	}
-))
+
+export const BaseInput = styled.input<{ isSelected?: boolean }>(({ isSelected, theme }) => ({
+	border: `1px solid ${theme.color.darkblue}`,
+	borderRadius: theme.borderRadius.xx,
+
+	padding: "0.25rem 0.75rem",
+	backgroundColor: isSelected ? theme.color.darkblue : "white",
+	color: isSelected ? "white" : theme.color.black,
+}));
 export const LargeInput = styled(BaseInput)(({ theme }) => ({
 	width: "17rem",
 	height: "3.5rem",
