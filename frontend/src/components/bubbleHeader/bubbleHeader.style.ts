@@ -78,3 +78,8 @@ export const VoteIcon = styled(FaVoteYea)(({ theme }) => ({
   flexShrink: 0,
 }));
 
+export const ButtonContainer =styled.div`
+display: flex;`
+
+export const VoteButtonGroup=styled.div`
+display: flex;`

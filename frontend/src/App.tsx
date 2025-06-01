@@ -14,9 +14,6 @@ const App:React.FC =()=>{
           <Outlet />
         </Layout>
       </ThemeProvider>
-
-
-
   )
 }
 export default App;
