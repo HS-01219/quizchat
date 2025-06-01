@@ -1,70 +1,3 @@
-// import { create } from "zustand";
-//
-// interface VoteItem {
-// 	id: number;
-// 	text: string;
-// 	count?: number;
-// }
-//
-// interface VoteState {
-// 	title: string;
-// 	voteItems: VoteItem[];
-// 	isSave: boolean;
-// 	setTitle: (title: string) => void;
-// 	setVoteItems: (itemsOrUpdater: VoteItem[] | ((prev: VoteItem[]) => VoteItem[])) => void;
-// 	addVoteItem: () => void;
-// 	deleteVoteItem: (id: number) => void;
-// 	setIsSave: (state: boolean) => void;
-// 	resetVote: () => void;
-// 	isDuplicated:boolean;
-// 	setIsDuplicated: (state: boolean) => void;
-//
-// 	isVote: (id: number) => void;
-// 	setSelectedVoteId: (fn: (prev: number[]) => number[]) => void;
-// }
-//
-// export const useVoteStore = create<VoteState>((set, get) => ({
-// 	title: "",
-// 	voteItems: [
-// 		{ id: Date.now(), text: "" },
-// 		{ id: Date.now() + 1, text: "" },
-// 	],
-// 	isSave: false,
-// 	setTitle: (title: string) => set({ title }),
-// 	setVoteItems: (itemsOrUpdater) =>
-// 		set((state) => ({
-// 			voteItems:
-// 				typeof itemsOrUpdater === "function"
-// 					? itemsOrUpdater(state.voteItems)
-// 					: itemsOrUpdater,
-// 		})),
-// 	addVoteItem: () => {
-// 		if (get().isSave) return;
-// 		set((state) => ({
-// 			voteItems: [...state.voteItems, { id: Date.now(), text: "" }],
-// 		}));
-// 	},
-// 	deleteVoteItem: (id: number) => {
-// 		if (get().isSave || get().voteItems.length <= 2) return;
-// 		set((state) => ({
-// 			voteItems: state.voteItems.filter((item) => item.id !== id),
-// 		}));
-// 	},
-// 	setIsSave: (isSave: boolean) => set({ isSave }),
-// 	resetVote: () =>
-// 		set({
-// 			title: "",
-// 			voteItems: [
-// 				{ id: Date.now(), text: "" },
-// 				{ id: Date.now() + 1, text: "" },
-// 			],
-// 			isSave: false,
-// 		}),
-// 	selectedVoteId: null,
-// 	isDuplicated: false,
-//
-// }));
-
 import { create } from "zustand";
 
 interface VoteItem {
@@ -78,6 +11,9 @@ interface VoteStore {
 	isSave: boolean;
 	isDuplicated: boolean;
 	selectedVoteId: number[];
+	isTimerActive: boolean;
+	isVoteEnded: boolean;  // 투표 종료 상태 추가
+
 	setIsSave: (state: boolean) => void;
 	setTitle: (title: string) => void;
 	setVoteItems: (fn: (prev: VoteItem[]) => VoteItem[]) => void;
@@ -85,6 +21,9 @@ interface VoteStore {
 	deleteVoteItem: (id: number) => void;
 	setSelectedVoteId: (fn: (prev: number[]) => number[]) => void;
 	isVote: (id: number) => void;
+	setIsTimerActive: (active: boolean) => void;
+	endVote: () => void;  // 투표 종료 함수 추가
+	resetVote: () => void;  // 투표 리셋 함수 추가
 }
 
 export const useVoteStore = create<VoteStore>((set, get) => ({
@@ -96,6 +35,8 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 	isSave: false,
 	isDuplicated: false,
 	selectedVoteId: [],
+	isTimerActive: false,
+	isVoteEnded: false,
 
 	setTitle: (title) => set({ title }),
 	setVoteItems: (fn) =>
@@ -108,8 +49,28 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 	setIsSave: (isSave: boolean) => set({ isSave }),
 	setSelectedVoteId: (fn) =>
 		set((state) => ({ selectedVoteId: fn(state.selectedVoteId) })),
+	setIsTimerActive: (active) => set({ isTimerActive: active }),
+
+	endVote: () => set({
+		isTimerActive: false,
+		isVoteEnded: true
+	}),
+
+
+	resetVote: () => set({
+		title: "",
+		voteItems: [
+			{ id: Date.now(), text: "" },
+			{ id: Date.now() + 1, text: "" },
+		],
+		isSave: false,
+		selectedVoteId: [],
+		isTimerActive: false,
+		isVoteEnded: false,
+	}),
+
 	isVote: (id) => {
-		const {isDuplicated, setSelectedVoteId } = get();
+		const {  isDuplicated, setSelectedVoteId } = get();
 		if (isDuplicated) {
 			setSelectedVoteId((prev) =>
 				prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]

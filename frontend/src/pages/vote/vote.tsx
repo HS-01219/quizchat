@@ -6,13 +6,14 @@ import { useModalStore } from "@/store/useModalStore";
 import * as S from "@/pages/vote/vote.style"
 import {useVoteStore} from "@/store/useVoteStore";
 const Vote = () => {
-	const { isOpenModal, openModal,closeModal } = useModalStore();
-const {title} = useVoteStore();
+	const { isOpenModal } = useModalStore();
+	const {title} = useVoteStore();
+	const VoteHeader=title.trim()?title:"생성된 투표가 없습니다"
 	return (
 		<>
-			<BubbleHeader type="vote" question={title} time="00:30" />
+			<BubbleHeader type="vote" question={VoteHeader} hasVote={!!title.trim()}/>
 			{isOpenModal.vote && <VoteCard />}
-			{isOpenModal.vote ?	<S.VoteStartText onClick={() => closeModal("vote")}>닫기</S.VoteStartText>:	<S.VoteStartText onClick={() => openModal("vote")}>{Label.VOTE_START}</S.VoteStartText>}
+
 		</>
 	);
 };

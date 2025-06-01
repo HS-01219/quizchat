@@ -1,5 +1,5 @@
 import React from "react";
-import * as S from "@/components/vote/Input/Input.style"; // 스타일 분리 가능
+import * as S from "@/components/vote/Input/Input.style";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 	icon?: React.ReactNode;
