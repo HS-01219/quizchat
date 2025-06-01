@@ -1,4 +1,3 @@
-// src/userHandler.ts
 import pool from '../db/mariadb';
 import { ResultSetHeader } from 'mysql2/promise';
 import { Server, Socket } from "socket.io";
@@ -55,20 +54,18 @@ export function handleUser(io : Server, socket : Socket) {
                 });
                 
                 // 퀴즈/투표가 진행중인지, 진행중이라면 내용을 전달 (Redis)
-                const quizState = await getRedisValue('quizState');
-                const quizData = await getRedisValue('quizData');
-                const voteState = await getRedisValue('voteState');
-                const voteData = await getRedisValue('voteData');
+                const quizStateRaw = await getRedisValue('quizState');
+                const voteStateRaw = await getRedisValue('voteState');
+                const quizState = quizStateRaw ? JSON.parse(quizStateRaw) : null;
+                const voteState = voteStateRaw ? JSON.parse(voteStateRaw) : null;
 
                 // JOIN_ROOM 을 보낸 클라이언트에게만 전달
                 socket.emit('SEND_JOINED_SUCCESS', {
                     userId : socket.data.userId,
                     nickName : socket.data.nickName,
                     roomState : {
-                        quizState : quizState,
-                        quizData : quizData,
-                        voteState : voteState,
-                        voteData : voteData,
+                        quizState,
+                        voteState,
                     }
                 });
             } else {
@@ -157,4 +154,4 @@ const leaveRoom = async (userId : number) : Promise<ResultSetHeader | null> => {
         console.error('DB에러 : 유저 INSERT 오류', err);
         throw err;
     }
-}
+};
