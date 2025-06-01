@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { socket } from './socketManager';
+import type { QuizState, VoteState } from '../../../common/types';
 
 export const useUserHandler = () => {
     const [nickName, setNickName] = useState<string>('');
@@ -39,11 +40,9 @@ export const useUserHandler = () => {
         // SEND_JOINED, SEND_LEAVED를 분리해도 무방
     }
 
-    // quizData, voteData는 interface로 정의 후 매개에 추가할 예정
-    // 테스트는 임시 데이터를 사용해주세요.
-    const joinRoom = (data : { userId : number, nickName : string, roomState : {quizState : boolean, VoteState : boolean} }) => {
+    const joinRoom = (data : { userId : number, nickName : string, roomState : { quizState : QuizState, voteState : VoteState } }) => {
         console.log(`${data.nickName}님, 현재 퀴즈`)
-        // 방 참여에 성공한 유저에게 roomState (quizState, quizData, voteState, voteData)를 전달
+        // 방 참여에 성공한 유저에게 roomState (quizState, voteState)를 전달
         // 프론트 TODO : 퀴즈나 투표가 있다면 해당 유저의 화면에 표시
     }
 
