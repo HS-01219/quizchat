@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, {ChangeEvent, useState} from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import * as S from "./content.style";
 import Button from "@/components/button/button";
@@ -7,9 +7,10 @@ import RadioBtn from "@/components/radioBtn/radioBtn";
 
 import { useVote } from "@/hooks/useVote";
 import { useVoteStore } from "@/store/useVoteStore";
+import {useVoteHandler} from "@/socket/voteHandler";
 
 const Content = () => {
-	const { save, edit, vote } = useVote();
+	const { save, edit } = useVote();
 
 	const {
 		title,
@@ -21,6 +22,32 @@ const Content = () => {
 		setVoteItems,
 		selectedVoteId,
 	} = useVoteStore();
+
+
+	const { vote, startVote, submitVote, endVote } = useVoteHandler();
+	// const [newTitle, setNewTitle] = useState('');
+	// const [newItems, setNewItems] = useState<string[]>(['', '']);
+	// const [allowMultiple, setAllowMultiple] = useState(false);
+	const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
+
+	const handleVoteClick = (itemId: string) => {
+		if(!vote || !vote.isActive) return;
+
+		const update = new Set(selectedItems);
+
+		if(update.has(itemId)){
+			update.delete(itemId);
+		}else{
+			if(!vote?.isMultiple){
+				update.clear();
+			}
+			update.add(itemId);
+		}
+
+		setSelectedItems(update);
+		submitVote(Array.from(update));
+	}
+
 
 	const handleItemChange = (id: number, value: string) => {
 		if (isSave) return;
@@ -61,11 +88,11 @@ const Content = () => {
 		edit(123, data);
 	};
 
-	const onVote = (itemId: number) => {
-		if (isSave) {
-			vote(itemId);
-		}
-	};
+	// const onVote = (itemId: number) => {
+	// 	if (isSave) {
+	// 		vote(itemId);
+	// 	}
+	// };
 
 	return (
 		<S.VoteInputContainer>
@@ -88,7 +115,7 @@ const Content = () => {
 					onChange={(e) => {
 						if (!isSave) handleItemChange(item.id, e.target.value);
 					}}
-					onClick={() => onVote(item.id)}
+					onClick={() =>  handleVoteClick(item.itemId)}
 					icon={
 						!isSave && voteItems.length > 2 ? (
 							<IoIosCloseCircleOutline

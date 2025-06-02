@@ -82,4 +82,5 @@ export const ButtonContainer =styled.div`
 display: flex;`
 
 export const VoteButtonGroup=styled.div`
-display: flex;`
+display: flex;
+flex-direction: column;`
