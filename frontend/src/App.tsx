@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {GlobalStyle} from "@/styles/global";
 import {Global} from "@emotion/react"
@@ -16,4 +17,5 @@ const App:React.FC =()=>{
       </ThemeProvider>
   )
 }
+
 export default App;
