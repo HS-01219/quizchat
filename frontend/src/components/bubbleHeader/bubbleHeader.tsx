@@ -10,6 +10,7 @@ interface BubbleHeaderProps {
   type: "quiz" | "vote";
   question: string;
   hasVote?: boolean;
+  time?: string;
 }
 
 const BubbleHeader: React.FC<BubbleHeaderProps> = ({
