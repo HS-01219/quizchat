@@ -1,7 +1,7 @@
 import pool from '../db/mariadb';
 import { ResultSetHeader } from 'mysql2/promise';
 import { Server, Socket } from 'socket.io';
-import type { MessagePayload } from '../../common/types';
+import type { MessagePayload } from '../common/types';
 
 const saveSendMessageToDB = async (userId: number, nickname: string, content: string): Promise<ResultSetHeader | null> => {
     const query = 'INSERT INTO messages (user_id, nickname, content, created_at) VALUES (?, ?, ?, NOW())';
