@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
 
-const SOCKET_SERVER_URL = 'http://localhost:5000';
+const SOCKET_SERVER_URL = 'http://localhost:8888';
 // const [socket, setSocket] = useState<Socket | null>(null);
 
 // 소켓 생성

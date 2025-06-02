@@ -1,10 +1,13 @@
 import * as S from "@/components/footer/footerUserName/footerUserName.style";
 import React from "react";
 import { PiPencilSimpleLine } from "react-icons/pi";
-const FooterUserName = ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
+import {useUserStore} from "@/store/useUserStore";
+const FooterUserName = ({ ...props }: React.HTMLAttributes<HTMLDivElement>) => {
+	const {nickname}=useUserStore();
+	console.log('리렌더링 된 닉네임:', nickname);
 	return (
-		<S.FooterUserNameContainer {...props}>
-			{children} 님
+		<S.FooterUserNameContainer {...props} >
+			{nickname} 님
 			<PiPencilSimpleLine size={"14"}/>
 		</S.FooterUserNameContainer>
 	);

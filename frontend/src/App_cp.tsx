@@ -4,6 +4,7 @@ import { useMessageHandler } from './socket/messageHandler';
 import { useVoteHandler } from './socket/voteHandler';
 import { useUserHandler } from './socket/userHandler';
 import { useQuizHandler } from './socket/quizHandler';
+import type { VoteItem } from '../../common/types';
 
 function App() {
   // 유저 관련
@@ -25,9 +26,9 @@ function App() {
   const [newTitle, setNewTitle] = useState('');
   const [newItems, setNewItems] = useState<string[]>(['', '']);
   const [allowMultiple, setAllowMultiple] = useState(false);
-  const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
+  const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
 
-  const handleVoteClick = (itemId: string) => {
+  const handleVoteClick = (itemId: number) => {
     if(!vote || !vote.isActive) return;
 
     const update = new Set(selectedItems);
@@ -43,6 +44,32 @@ function App() {
 
     setSelectedItems(update);
     submitVote(Array.from(update));
+  }
+
+  const handleStartVote = () => {
+    const formattedItems: VoteItem[] = newItems
+      .filter(itemText => itemText.trim() !== '')
+      .map((itemText, index) => ({
+        itemId: index,
+        text: itemText,
+        count: 0
+      }));
+    
+    if(!newTitle.trim()){
+      alert('투표 제목을 입력해주세요.');
+      return;
+    }
+    if(formattedItems.length ===0){
+      alert('투표 항목을 최소 하나 이상 입력해주세요.');
+      return;
+    }
+
+    startVote(newTitle, formattedItems, allowMultiple); // 변환된 데이터 startVote 함수에 전달
+
+    // 투표 시작 후 입력 필드 초기화
+    setNewTitle('');
+    setNewItems(['', '']);
+    setAllowMultiple(false);
   }
 
   return (
@@ -83,7 +110,7 @@ function App() {
           <input type='checkbox' checked={allowMultiple} onChange={(e) => setAllowMultiple(e.target.checked)}/>
           중복 투표 가능
         </label>
-        <button onClick={() => startVote(newTitle, newItems, allowMultiple)}>투표 시작</button>
+        <button onClick={handleStartVote}>투표 시작</button>
 
         {/* 현재 투표 상태 */}
         {vote && (

@@ -58,9 +58,9 @@ export function handleVote(io: Server, socket: Socket) {
         console.log('투표 시작:', {title, items, isMultiple});
         currentVote = {
             title,
-            items: items.map((text, index) => ({
-                itemId: index,
-                text,
+            items: items.map(item => ({
+                itemId: item.itemId,
+                text: item.text,
                 count: 0
             })),
             isActive: true,
