@@ -9,7 +9,7 @@ export interface MessagePayload {
 // 투표 관련
 export interface StartVotePayload {
     title: string;
-    items: string[];
+    items: VoteItem[];
     isMultiple: boolean;
 }
 
@@ -26,6 +26,7 @@ export interface VoteState { // 투표 제목, 항목, 현재 유효한지 여�
     isMultiple: boolean;
 };
 
+// 퀴즈 관련련
 export interface QuizItem { // 퀴즈 id, 문제, 정답
     id : number;
     question : string;
