@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import LoadingPage from "@/pages/loading/loading";
 
 const App = lazy(() => import("@/App"));
 const Vote =lazy(()=>import("@/pages/vote/vote"))
@@ -9,7 +10,7 @@ const router = createBrowserRouter([
 	{
 		path: "/",
 		element: (
-			<Suspense fallback={<div>Loading...</div>}>
+			<Suspense fallback={		<LoadingPage />}>
 				<App />
 			</Suspense>
 		),
