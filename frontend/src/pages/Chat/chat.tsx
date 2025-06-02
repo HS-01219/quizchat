@@ -4,7 +4,7 @@ const Chat = () => {
 	return (
 		<>
 		<div>채팅</div>
-		<LoadingPage />
+
 		</>
 	)
 }

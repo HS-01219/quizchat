@@ -40,7 +40,7 @@ export const useUserHandler = () => {
         // 프론트 TODO : 퀴즈나 투표가 있다면 해당 유저의 화면에 표시
     }
 
-    /* 닉네임 변경 관련 */ 
+    /* 닉네임 변경 관련 */
     const sendNickName = (data : { userId : number, nickName : string}) => {
         console.log(`${data.userId}의 닉네임이 ${data.nickName}으로 변경됨`);
         // 프론트 TODO :해당 유저가 보낸 채팅의 닉네임 변경하는 로직 추라
