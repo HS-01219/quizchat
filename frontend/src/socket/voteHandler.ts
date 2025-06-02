@@ -1,6 +1,6 @@
 import { socket } from "./socketManager";
 import { useEffect, useState } from "react";
-import type { VoteState } from '../../../common/types';
+import type { VoteItem, VoteState } from '../../../common/types';
 
 export const useVoteHandler = () => {
     const [vote, setVote] = useState<VoteState | null>(null);
@@ -8,33 +8,33 @@ export const useVoteHandler = () => {
 
     useEffect(() => {
         // 투표 업데이트
-        socket.on('updateVote', (data: VoteState) => {
+        socket.on('UPDATE_VOTE', (data: VoteState) => {
             console.log('투표 업데이트:', data);
             setVote(data);
         });
 
         // 투표 종료
-        socket.on('endVote', (data: VoteState) => {
+        socket.on('END_VOTE', (data: VoteState) => {
             console.log('투표 종료:', data);
             setVote(data);
         });
 
         return () => {
-            socket.off('updateVote');
-            socket.off('endVote');
+            socket.off('UPDATE_VOTE');
+            socket.off('END_VOTE');
         };
     }, []);
 
-    const startVote = (title: string, items: string[], isMultiple: boolean) => {
-        socket.emit('startVote', {title, items, isMultiple});
+    const startVote = (title: string, items: VoteItem[], isMultiple: boolean) => {
+        socket.emit('START_VOTE', {title, items, isMultiple});
     };
 
-    const submitVote = (itemIds: string[]) => {
-        socket.emit('submitVote', itemIds);
+    const submitVote = (itemIds: number[]) => {
+        socket.emit('SUBMIT_VOTE', itemIds);
     };
 
     const endVote = () => {
-        socket.emit('endVote');
+        socket.emit('END_VOTE');
     };
 
     return { vote, startVote, submitVote, endVote };
