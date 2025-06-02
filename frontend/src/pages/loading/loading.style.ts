@@ -1,19 +1,29 @@
 import styled from "@emotion/styled";
 
-export const Wrapper = styled.div`
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  z-index: 9999;
 `;
 
 export const Spinner = styled.img`
-  width: 100px;
-  height: 80px;
-  animation: spin 3s linear infinite;
+  width: 70px;
+  height: 70px;
+  animation: spin 1s linear infinite;
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 `;
