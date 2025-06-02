@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useMessageHandler } from './socket/messageHandler';
 import { useVoteHandler } from './socket/voteHandler';
 import { useUserHandler } from './socket/userHandler';
+import { useQuizHandler } from './socket/quizHandler';
 
 function App() {
   // 유저 관련
@@ -12,6 +13,9 @@ function App() {
   useEffect(() => {
     requestJoinRoom("테스트유저");
   }, []); 
+
+  // 퀴즈 관련
+  const { requestStartQuiz, answer, setAnswer, requestAnswer } = useQuizHandler();
 
   // 메시지 관련
   const { message, setMessage, messages, sendMessage } = useMessageHandler();
@@ -47,6 +51,13 @@ function App() {
       <div>
         <input type='text' value={nickName} onChange={(e) => setNickName(e.target.value)} />
         <button onClick={updateNickName}>닉네임 변경</button>
+      </div>
+
+      {/* 퀴즈 */}
+      <div>
+        <button onClick={requestStartQuiz}>퀴즈 시작</button>
+        <input type='text' value={answer} onChange={(e) => setAnswer(e.target.value)} />
+        <button onClick={requestAnswer}>정답 보내기</button>
       </div>
 
       {/* 메시지 */}
