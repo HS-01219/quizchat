@@ -3,7 +3,6 @@ import type { StartVotePayload, VoteState } from '../../common/types';
 import { getRedisValue, setRedisValue, delRedisValue } from '../utils/redis';
 
 let currentVote: VoteState | null = null;
-// const userVotes = new Map<number, Set<number>>();
 
 // Redis : 최신 투표 상태 로드
 async function loadCurrentVoteFromRedis(): Promise<VoteState | null> {
@@ -77,7 +76,7 @@ export function handleVote(io: Server, socket: Socket) {
 
     // 투표 참여
     socket.on('SUBMIT_VOTE', async (itemIds: number[]) => {
-        const userId: number = 1; // 임시 userId
+        const userId: number = socket.data.userId;
         
         currentVote = await loadCurrentVoteFromRedis(); // Redis에서 현재 투표 상태 로드
         const userVotes = await loadUserVotesFromRedis(); // Redis에서 모든 유저 투표 기록 로드
@@ -99,16 +98,6 @@ export function handleVote(io: Server, socket: Socket) {
             const prevArray = Array.from(prevVotes);
             const nextArray = Array.from(nextVotes);
             hasVoteChanged = !(prevArray.length === nextArray.length && prevArray.every(item => nextVotes.has(item)))
-            // if(prevVotes.size !== nextVotes.size){
-            //     hasVoteChanged = true;
-            // }else{
-            //     for(const itemId of nextVotes){
-            //         if(!prevVotes.has(itemId)){
-            //             hasVoteChanged = true;
-            //             break;
-            //         }
-            //     }
-            // }
         }else{ // 단일 투표 모드
             const newItemId = itemIds[0];
 
@@ -121,14 +110,6 @@ export function handleVote(io: Server, socket: Socket) {
             }else{ // 유효하지 않은 항목 선택 or 여러 항목 선택 -> 무시
                 hasVoteChanged = false; 
             }
-
-            // if(prevVotes.has(newItemId)){
-            //     nextVotes.clear();
-            //     hasVoteChanged = true;
-            // }else{
-            //     nextVotes.add(newItemId);
-            //     hasVoteChanged = true;
-            // }
         }
 
         // 변경 사항이 있을 때만 처리

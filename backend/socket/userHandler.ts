@@ -1,5 +1,3 @@
-import pool from '../db/mariadb';
-import { ResultSetHeader } from 'mysql2/promise';
 import { Server, Socket } from "socket.io";
 import { getRedisValue, setRedisValue } from '../utils/redis';
 
