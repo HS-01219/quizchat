@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react';
 import { socket } from './socketManager';
-import type { MessagePayload } from '../../../common/types';
+
+export interface MessagePayload {
+    userId: number;
+    nickName: string;
+    content: string;
+    timestamp: string;
+}
 
 export const useMessageHandler = () => {
     const [message, setMessage] = useState('');
