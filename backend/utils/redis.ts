@@ -33,4 +33,12 @@ const setRedisValue = async (key : string, value : string, expireTime : number) 
     }
 }
 
-export { getRedisValue, setRedisValue };
+const delRedisValue = async (key: string): Promise<void> => {
+  try{
+    await redis.del(key);
+  }catch(err){
+    console.log('Redis 에러 - 삭제 실패', err);
+  }
+};
+
+export { getRedisValue, setRedisValue, delRedisValue };

@@ -1,6 +1,8 @@
 import mariadb from 'mysql2/promise';
 import dotenv from 'dotenv';
-dotenv.config();
+import path from 'path';
+// dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 // db 연결 정보
 const pool = mariadb.createPool({

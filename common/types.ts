@@ -1,3 +1,11 @@
+// 메세지 관련
+export interface MessagePayload {
+    userId: number;
+    nickName: string;
+    content: string;
+    timestamp: string;
+}
+
 // 투표 관련
 export interface StartVotePayload {
     title: string;
@@ -6,7 +14,7 @@ export interface StartVotePayload {
 }
 
 export interface VoteItem { // 각 항목 식별 id, 내용, 투표 수
-    itemId: string;
+    itemId: number;
     text: string;
     count: number;
 };
