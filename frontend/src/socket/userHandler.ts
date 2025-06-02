@@ -8,23 +8,17 @@ export const useUserHandler = () => {
     useEffect(() => {
         socket.on('SEND_NICKNAME', sendNickName);
         socket.on('SEND_NICKNAME_SUCCESS', responseMessage);
-        socket.on('SEND_NICKNAME_ERROR', responseMessage);
         socket.on('SEND_JOINED', updateUserCnt);
         socket.on('SEND_JOINED_SUCCESS', joinRoom);
-        socket.on('SEND_JOINED_ERROR', responseMessage);
         socket.on('SEND_LEAVED', updateUserCnt);
-        socket.on('SEND_LEAVED_ERROR', responseMessage);
 
 
         return () => {
             socket.off('SEND_NICKNAME', sendNickName);
             socket.off('SEND_NICKNAME_SUCCESS', responseMessage);
-            socket.off('SEND_NICKNAME_ERROR', responseMessage);
             socket.off('SEND_JOINED', updateUserCnt);
             socket.off('SEND_JOINED_SUCCESS', joinRoom);
-            socket.off('SEND_JOINED_ERROR', responseMessage);
             socket.off('SEND_LEAVED', updateUserCnt);
-            socket.off('SEND_LEAVED_ERROR', responseMessage);
         };
     }, []);
 
