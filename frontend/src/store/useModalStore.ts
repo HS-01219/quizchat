@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type ModalType = 'quiz' | 'nickname' | 'vote';
+type ModalType = 'quiz' | 'nickName' | 'vote';
 
 type ModalState = {
 	[key in ModalType]: boolean;
@@ -15,7 +15,7 @@ interface ModalStore {
 
 const defaultState: ModalState = {
 	quiz: false,
-	nickname: false,
+	nickName: false,
 	vote: false,
 };
 

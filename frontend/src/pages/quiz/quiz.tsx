@@ -29,7 +29,7 @@ const Quiz = () => {
         time="00:30"
       />
       {showCorrect && (
-        <SystemMessage type="correct" nickname="사용자" time="00:30" />
+        <SystemMessage type="correct" nickName="사용자" time="00:30" />
       )}
       {showVoteStart && <SystemMessage type="voteStart" time="00:30" />}
       {showVoteEnd && <SystemMessage type="voteEnd" time="00:30" />}

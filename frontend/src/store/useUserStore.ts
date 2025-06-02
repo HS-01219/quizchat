@@ -1,15 +1,15 @@
-import {create} from 'zustand'
+
+import { create } from 'zustand'
 
 interface UserStore {
-	nickname: string,
-	setNickName: (name: string) => void,
+	nickName: string;
+	setNickName: (name: string) => void;
 }
 
-export const useUserStore=create<UserStore>(
-	(set)=>({
-			nickname: localStorage.getItem('nickname') || "",
-		setNickName: (name) => {
-			localStorage.setItem('nickname', name);
-			set({nickname: name});
-	},}
-))
+export const useUserStore = create<UserStore>((set) => ({
+	nickName: "",
+	setNickName: (name) => {
+		localStorage.setItem('nickName', name);
+		set({ nickName: name });
+	},
+}));

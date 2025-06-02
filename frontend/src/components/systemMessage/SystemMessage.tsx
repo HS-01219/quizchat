@@ -8,19 +8,19 @@ type MessageType = "correct" | "voteStart" | "voteEnd" | "warning";
 
 interface SystemMessageProps {
   type: MessageType;
-  nickname?: string;
+  nickName?: string;
   time: string;
 }
 
 const messageMap: {
   [key in MessageType]: {
     IconComponent: React.ElementType;
-    getText: (nickname?: string) => string;
+    getText: (nickName?: string) => string;
   };
 } = {
   correct: {
     IconComponent: FaCheckCircle,
-    getText: (nickname = "사용자") => `'${nickname}'님 정답입니다!`,
+    getText: (nickName = "사용자") => `'${nickName}'님 정답입니다!`,
   },
   voteStart: {
     IconComponent: MdHowToVote,
@@ -36,7 +36,7 @@ const messageMap: {
   },
 };
 
-const SystemMessage: React.FC<SystemMessageProps> = ({ type, nickname = "사용자", time }) => {
+const SystemMessage: React.FC<SystemMessageProps> = ({ type, nickName = "사용자", time }) => {
   const { IconComponent, getText } = messageMap[type];
 
   return (
@@ -44,7 +44,7 @@ const SystemMessage: React.FC<SystemMessageProps> = ({ type, nickname = "사용�
       <S.Icon type={type}>
         <IconComponent />
       </S.Icon>
-      <S.Text>{type === "correct" ? getText(nickname) : getText()}</S.Text>
+      <S.Text>{type === "correct" ? getText(nickName) : getText()}</S.Text>
       <S.Time>{time}</S.Time>
     </S.Wrapper>
   );
