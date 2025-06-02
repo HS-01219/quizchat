@@ -10,7 +10,7 @@ const router = createBrowserRouter([
 	{
 		path: "/",
 		element: (
-			<Suspense fallback={		<LoadingPage />}>
+			<Suspense fallback={<LoadingPage />}>
 				<App />
 			</Suspense>
 		),
