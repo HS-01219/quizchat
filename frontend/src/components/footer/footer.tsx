@@ -20,7 +20,6 @@ const Footer = () => {
         <FooterInput isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
         {isExpanded && <FooterMenu />}
       </S.FooterContainer>
-
       {isOpenModal.nickName && (
         <UserNameChange onSave={handleSave} />
       )}

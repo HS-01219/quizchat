@@ -28,9 +28,9 @@ const Content = () => {
 	// const [newTitle, setNewTitle] = useState('');
 	// const [newItems, setNewItems] = useState<string[]>(['', '']);
 	// const [allowMultiple, setAllowMultiple] = useState(false);
-	const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
+	const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
 
-	const handleVoteClick = (itemId: string) => {
+	const handleVoteClick = (itemId: number) => {
 		if(!vote || !vote.isActive) return;
 
 		const update = new Set(selectedItems);
@@ -115,7 +115,7 @@ const Content = () => {
 					onChange={(e) => {
 						if (!isSave) handleItemChange(item.id, e.target.value);
 					}}
-					onClick={() =>  handleVoteClick(item.itemId)}
+					onClick={() =>  handleVoteClick(item.id)}
 					icon={
 						!isSave && voteItems.length > 2 ? (
 							<IoIosCloseCircleOutline

@@ -2,7 +2,7 @@ import pool from '../db/mariadb';
 import { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 import { Server, Socket } from "socket.io";
 import { getRedisValue, setRedisValue } from '../utils/redis';
-import { QuizItem, QuizState } from '../../common/types';
+import { QuizItem, QuizState } from '../common/types';
 
 interface answerPayload {
     userId : number;

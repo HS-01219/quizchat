@@ -1,5 +1,5 @@
 import { Server, Socket } from 'socket.io';
-import type { StartVotePayload, VoteState } from '../../common/types';
+import type { StartVotePayload, VoteState, VoteItem } from '../common/types';
 import { getRedisValue, setRedisValue, delRedisValue } from '../utils/redis';
 
 let currentVote: VoteState | null = null;
