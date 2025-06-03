@@ -54,7 +54,7 @@ export const useUserHandler = () => {
     const updateNickName = (data:{nickName:string}) => {
         // userId 체크하는 로직 필요
         if(nickName.trim() === '') {
-          alert(data);
+          alert("닉네임이 빈칸입니다.");
           return;
         }
 
