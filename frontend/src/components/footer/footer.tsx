@@ -23,7 +23,6 @@ const Footer = () => {
 
       {isModalOpen && (
         <UserNameChange
-          onClose={() => setIsModalOpen(false)}
           onSave={(newName) => setNickname(newName)}
         />
       )}

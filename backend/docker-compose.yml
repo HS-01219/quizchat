@@ -1,0 +1,39 @@
+services:
+  backend: 
+    build: ./backend
+    # image: hschoi01/quizchat-backend:1.0.0
+    ports:
+      - "5000:5000" 
+    networks:
+      - mynetwork
+    environment:
+      REDIS_HOST: redis 
+      REDIS_PORT: 6379 
+    depends_on:
+      - redis
+
+  redis: 
+    image: redis:latest 
+    # command: redis-server --requirepass --port 6379
+    ports:
+       - "6379:6379"
+    networks:
+      - mynetwork
+
+  frontend:
+   build: ./frontend
+   # image: hschoi01/quizchat-frontend:0.0.5 
+   ports:
+     - "5173:80"
+   networks:
+      - mynetwork
+   depends_on:
+     - backend 
+
+networks:
+  mynetwork:
+    driver: bridge
+
+# volumes: 추후 영구저장이 필요할 때 주석 해제
+#   redis_data:
+#     driver: local
