@@ -1,6 +1,6 @@
 import * as S from "./userNameChange.style";
 import {useUserStore} from "@/store/useUserStore";
-import {useModalStore} from "@/store/useModalStore";
+
 
 interface UserNameChangeProps {
   onSave: (nickName: string) => void;
@@ -9,7 +9,6 @@ interface UserNameChangeProps {
 const UserNameChange = ({  onSave }: UserNameChangeProps) => {
   const { nickName, setNickName } = useUserStore();
 
-  const { closeModal } = useModalStore();
   const handleSave = () => {
     const trimmedNickName = nickName.trim();
     if (!trimmedNickName) {
@@ -17,7 +16,7 @@ const UserNameChange = ({  onSave }: UserNameChangeProps) => {
       return;
     }
     onSave(trimmedNickName);
-  closeModal("nickName");
+
   };
   return (
     <S.Modal>

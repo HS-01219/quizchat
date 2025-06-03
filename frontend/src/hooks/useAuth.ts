@@ -38,5 +38,5 @@ export const useAuth=()=>{
 		actions[actionKey]();
 		closeModal("nickName");
 	}
-	return{isOpenModal,handleSave}
+	return{isOpenModal,handleSave,openModal}
 }

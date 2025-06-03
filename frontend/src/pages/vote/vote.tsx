@@ -5,6 +5,7 @@ import {Label} from "@/constants/label";
 import { useModalStore } from "@/store/useModalStore";
 import * as S from "@/pages/vote/vote.style"
 import {useVoteStore} from "@/store/useVoteStore";
+import Chat from "@/pages/Chat/chat";
 const Vote = () => {
 	const { isOpenModal } = useModalStore();
 	const {title} = useVoteStore();
@@ -13,7 +14,7 @@ const Vote = () => {
 		<>
 			<BubbleHeader type="vote" question={VoteHeader} hasVote={!!title.trim()}/>
 			{isOpenModal.vote && <VoteCard />}
-
+<Chat/>
 		</>
 	);
 };

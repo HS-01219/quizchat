@@ -5,17 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6f725f3-202e-4302-a71e-871989bfb0a2" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/hooks/useAuth.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/systemMessage/chatSystemMessage/chatSystemMessage.style.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/systemMessage/chatSystemMessage/chatSystemMessage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/footer/footerUserName/footerUserName.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/footer/footerUserName/footerUserName.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App_cp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App_cp.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/footer/footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/footer/footer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/modal/userNameChange/userNameChange.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/modal/userNameChange/userNameChange.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/systemMessage/SystemMessage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/systemMessage/SystemMessage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/quiz/quiz.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/quiz/quiz.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/router/router.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/router.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/hooks/useAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/hooks/useAuth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Chat/chat.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Chat/chat.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/vote/vote.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/vote/vote.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/socket/userHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/socket/userHandler.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/store/useModalStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/useModalStore.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/store/useUserStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/useUserStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -102,7 +101,7 @@
       <workItem from="1747797996234" duration="30121000" />
       <workItem from="1748404651509" duration="2213000" />
       <workItem from="1748491544442" duration="45549000" />
-      <workItem from="1748876457551" duration="12635000" />
+      <workItem from="1748876457551" duration="22203000" />
     </task>
     <servers />
   </component>
@@ -134,7 +133,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/frontend/src/components/modal/userNameChange/userNameChange.tsx</url>
-          <line>28</line>
+          <line>26</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
