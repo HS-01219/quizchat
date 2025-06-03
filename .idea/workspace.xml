@@ -5,17 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6f725f3-202e-4302-a71e-871989bfb0a2" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/systemMessage/chatSystemMessage/chatSystemMessage.style.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/systemMessage/chatSystemMessage/chatSystemMessage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App_cp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App_cp.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/footer/footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/footer/footer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/modal/userNameChange/userNameChange.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/modal/userNameChange/userNameChange.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/hooks/useAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/hooks/useAuth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Chat/chat.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Chat/chat.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/vote/vote.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/vote/vote.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/socket/userHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/socket/userHandler.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/store/useUserStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/useUserStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +23,14 @@
             <RecentBranchesForRepo>
               <option name="branches">
                 <list>
+                  <RecentBranch>
+                    <option name="branchName" value="1/develop" />
+                    <option name="lastUsedInstant" value="1748939482" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="heeyoung123-1/develop" />
+                    <option name="lastUsedInstant" value="1748939454" />
+                  </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="1/feature/#17-voteUI" />
                     <option name="lastUsedInstant" value="1748153945" />
@@ -101,7 +99,7 @@
       <workItem from="1747797996234" duration="30121000" />
       <workItem from="1748404651509" duration="2213000" />
       <workItem from="1748491544442" duration="45549000" />
-      <workItem from="1748876457551" duration="22203000" />
+      <workItem from="1748876457551" duration="22896000" />
     </task>
     <servers />
   </component>
