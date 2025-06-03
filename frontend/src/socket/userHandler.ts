@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { socket } from './socketManager';
+import {useUserStore} from "@/store/useUserStore";
 
 export interface VoteItem { // 각 항목 식별 id, 내용, 투표 수
     itemId: number;
@@ -25,12 +26,14 @@ export interface QuizState {
     quizData : QuizItem | null;
 }
 
+
+
 export const useUserHandler = () => {
-    const [nickName, setNickName] = useState<string>('');
+    const { nickName, setNickName } = useUserStore();
 
     useEffect(() => {
-        socket.on('SEND_NICKNAME', sendNickName);
-        socket.on('SEND_NICKNAME_SUCCESS', responseMessage);
+        socket.on('SEND_NICKNAME', sendNickName); // 전체 메세지
+        socket.on('SEND_NICKNAME_SUCCESS', responseMessage); // 요청한 사람한테만
         socket.on('SEND_JOINED', updateUserCnt);
         socket.on('SEND_JOINED_SUCCESS', joinRoom);
         socket.on('SEND_LEAVED', updateUserCnt);
@@ -73,15 +76,15 @@ export const useUserHandler = () => {
         alert(data.message);
     }
 
-    const updateNickName = () => {
+    const updateNickName = (data:{nickName:string}) => {
         // userId 체크하는 로직 필요
         if(nickName.trim() === '') {
-          alert('닉네임을 입력해주세요.');
+          alert(data);
           return;
         }
 
         socket.emit('UPDATE_NICKNAME', { userId : 1, nickName : nickName });
-        setNickName('');
+
     }
 
     return { nickName, setNickName, updateNickName, requestJoinRoom };
