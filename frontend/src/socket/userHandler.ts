@@ -89,6 +89,9 @@ export const useUserHandler = () => {
     }
 
     const updateNickName = (data:{nickName:string}) => {
+        // 프론트 TODO : userStore에서 userId 관리 추가
+        // 해당 userId를 가져와서 백엔드로 보내야함
+        // nickName와 userId가 둘다 userStore에 있어서 매개로 안받아도 될듯?
         // userId 체크하는 로직 필요
         if(nickName.trim() === '') {
           alert("닉네임이 빈칸입니다.");
