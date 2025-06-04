@@ -18,14 +18,14 @@ export function handleUser(io : Server, socket : Socket) {
         console.log('채팅방 참여 요청', nickName)
         const nextUserId = await getRedisValue('nextUserId') || 1;
         const userId = nextUserId;
-        setRedisValue('nextUserId', (Number(nextUserId) + 1).toString(), 60 * 60); 
+        setRedisValue('nextUserId', (Number(nextUserId) + 1).toString()); 
 
         socket.data.userId = userId;
         socket.data.nickName = nickName;
 
         const currentUsers = await getRedisValue('currentUsers');
         const userCnt = currentUsers ? parseInt(currentUsers) + 1 : 1;
-        setRedisValue('currentUsers', userCnt.toString(), 60 * 60);
+        setRedisValue('currentUsers', userCnt.toString());
         
         // 이 때 잔여 인원 수를 함께 전달 (Redis)
         io.emit('SEND_JOINED', { 
