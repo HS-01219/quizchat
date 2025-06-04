@@ -29,8 +29,8 @@ export interface QuizState {
 
 
 export const useUserHandler = () => {
-    const { nickName, setNickName } = useUserStore();
-
+    const { nickName, setNickName} = useUserStore();
+    const { setCurrentUsers } = useUserStore.getState()
     useEffect(() => {
         socket.on('SEND_NICKNAME', sendNickName); // 전체 메세지
         socket.on('SEND_NICKNAME_SUCCESS', responseMessage); // 요청한 사람한테만
@@ -54,23 +54,25 @@ export const useUserHandler = () => {
         socket.emit('JOIN_ROOM', { nickName : nickName });
     }
 
-    const userJoined = (data : { currentUsers : number, userId : number, nickName : string }) => {
-        console.log(`${data.nickName} 님이 방에 참여했습니다. userId : ${data.userId}`);
-        // 프론트 TODO : 방 참여 또는 퇴장 알림
-        updateUserCnt(data.currentUsers);
-    }
+
+//     const userJoined = (data : { currentUsers : number, userId : number, nickName : string }) => {
+//         console.log(`${data.nickName} 님이 방에 참여했습니다. userId : ${data.userId}`);
+//         // 프론트 TODO : 방 참여 또는 퇴장 알림
+//         updateUserCnt(data.currentUsers);
+//     }
     
-    const userLeaved = (data : { currentUsers : number, userId : number, nickName : string }) => {
-        console.log(`${data.nickName} 님이 퇴장했습니다. userId : ${data.userId}`);
-        // 프론트 TODO : 방 참여 또는 퇴장 알림
-        updateUserCnt(data.currentUsers);
-    }
+//     const userLeaved = (data : { currentUsers : number, userId : number, nickName : string }) => {
+//         console.log(`${data.nickName} 님이 퇴장했습니다. userId : ${data.userId}`);
+//         // 프론트 TODO : 방 참여 또는 퇴장 알림
+//         updateUserCnt(data.currentUsers);
+//     }
 
-    const updateUserCnt = (currentUsers : number) => {
-        console.log(`현재 인원: ${currentUsers}`);
-        // 프론트 TODO : 모든 클라이언트의 전체 유저 수를 업데이트
-    }
 
+
+    const updateUserCnt = (data: { currentUsers: number; userId: number; nickName: string }) => {
+        console.log(`${data.nickName} 님이 방에 참여했습니다. 현재 인원: ${data.currentUsers}`);
+        setCurrentUsers(data.currentUsers);
+    };
     const joinRoom = (data : { userId : number, nickName : string, roomState : { quizState : QuizState, voteState : VoteState } }) => {
         console.log(`userId : ${data.userId} nickName : ${data.nickName}`)
         console.log(`현재 퀴즈 상태 : ${data.roomState.quizState.isActive} 현재 투표 상태 : ${data.roomState.voteState.isActive}`)
@@ -83,6 +85,7 @@ export const useUserHandler = () => {
         console.log(`${data.userId}의 닉네임이 ${data.nickName}으로 변경됨`);
         // 프론트 TODO :해당 유저가 보낸 채팅의 닉네임 변경하는 로직 추라
     }
+
 
     const responseMessage = (data : { message : string }) => {
         alert(data.message);
@@ -102,5 +105,5 @@ export const useUserHandler = () => {
 
     }
 
-    return { nickName, setNickName, updateNickName, requestJoinRoom };
+    return { nickName, setNickName, updateNickName, requestJoinRoom,updateUserCnt };
 }
