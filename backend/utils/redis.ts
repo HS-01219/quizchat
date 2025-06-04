@@ -25,9 +25,9 @@ const getRedisValue = async (key : string) : Promise<string | null> => {
     }
 };
 
-const setRedisValue = async (key : string, value : string, expireTime : number) : Promise<void> => {
+const setRedisValue = async (key : string, value : string, expireTime? : number) : Promise<void> => {
     try {
-        await redis.set(key, value, 'EX', expireTime);
+      expireTime ? await redis.set(key, value, 'EX', expireTime) : await redis.set(key, value);
     } catch (err) {
         console.log('Redis 에러 - 저장 실패', err);
     }
