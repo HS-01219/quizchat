@@ -3,6 +3,7 @@ services:
     build: ./backend
     # image: hschoi01/quizchat-backend:1.0.0
     ports:
+
       - "8888:8888"
     networks:
       - mynetwork
@@ -36,4 +37,6 @@ networks:
 
 # volumes: 추후 영구저장이 필요할 때 주석 해제
 #   redis_data:
+
 #     driver: local
+
