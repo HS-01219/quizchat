@@ -1,6 +1,8 @@
 import { io } from 'socket.io-client';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const SOCKET_SERVER_URL = 'http://localhost:5000';
+const SOCKET_SERVER_URL = process.env.BACK_SERVER_URL || 'http://localhost:5000';
 // const [socket, setSocket] = useState<Socket | null>(null);
 
 // 소켓 생성

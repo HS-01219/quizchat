@@ -1,8 +1,6 @@
 import { Server, Socket } from "socket.io";
 import { getRedisValue, setRedisValue } from '../utils/redis';
 
-let nextUserId = 1;
-
 interface userPayload {
     userId?: number;
     nickName : string;
@@ -18,7 +16,9 @@ export function handleUser(io : Server, socket : Socket) {
 
     socket.on('JOIN_ROOM', async ({ nickName } : userPayload) => {
         console.log('채팅방 참여 요청', nickName)
-        const userId = nextUserId++;
+        const nextUserId = await getRedisValue('nextUserId') || 1;
+        const userId = nextUserId;
+        setRedisValue('nextUserId', (Number(nextUserId) + 1).toString(), 60 * 60); 
 
         socket.data.userId = userId;
         socket.data.nickName = nickName;
