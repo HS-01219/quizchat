@@ -50,7 +50,8 @@ export const useUserHandler = () => {
     };
     const joinRoom = (data : { userId : number, nickName : string, roomState : { quizState : QuizState, voteState : VoteState } }) => {
         console.log(`userId : ${data.userId} nickName : ${data.nickName}`)
-        console.log(`현재 퀴즈 상태 : ${data.roomState.quizState.isActive} 현재 투표 상태 : ${data.roomState.voteState.isActive}`)
+        console.log(`현재 퀴즈 상태 : ${data.roomState.quizState.isActive ? data.roomState.quizState.isActive : 'X'} 
+                     현재 투표 상태 : ${data.roomState.voteState.isActive ? data.roomState.voteState.isActive : 'X'}`)
         // 방 참여에 성공한 유저에게 roomState (quizState, voteState)를 전달
         // 프론트 TODO : 퀴즈나 투표가 있다면 해당 유저의 화면에 표시
     }
