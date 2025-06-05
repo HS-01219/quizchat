@@ -3,8 +3,7 @@ services:
     build: ./backend
     # image: hschoi01/quizchat-backend:1.0.0
     ports:
-
-      - "8888:8888"
+      - "5000:5000"
     networks:
       - mynetwork
     env_file:
