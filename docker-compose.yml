@@ -6,11 +6,15 @@ services:
       - "5000:5000" 
     networks:
       - mynetwork
+    env_file:
+      - ./backend/.env
     environment:
       REDIS_HOST: redis 
       REDIS_PORT: 6379 
     depends_on:
       - redis
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
 
   redis: 
     image: redis:latest 
