@@ -7,6 +7,7 @@ interface UserState {
 	justJoined: boolean;
 	message: string[];
 currentUsers:number;
+setUserId: (userId: string) => void;
 setCurrentUsers: (currentUsers: number) => void;
 	setNickName: (name: string) => void;
 	setJustJoined: (joined: boolean) => void;
@@ -19,6 +20,8 @@ export const useUserStore = create<UserState>((set) => ({
 	message: [],
 	userId:'',
 	currentUsers:0,
+	setUserId: (id: string) => set({ userId: id }),
+
 	setCurrentUsers:(currentUsers: number) => set({ currentUsers : currentUsers }),
 	setNickName: (name) => set({ nickName: name }),
 	setJustJoined: (joined) => set({ justJoined: joined }),
