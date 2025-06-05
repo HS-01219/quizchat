@@ -43,6 +43,17 @@ export const useUserHandler = () => {
 //     }
 
 
+// 실행이 안돼서 이 부분 추가해놨습니다
+const userJoined = (data: { currentUsers: number; userId: number; nickName: string }) => {
+    console.log(`${data.nickName} 님이 방에 참여했습니다. userId : ${data.userId}`);
+    updateUserCnt(data);
+};
+
+const userLeaved = (data: { currentUsers: number; userId: number; nickName: string }) => {
+    console.log(`${data.nickName} 님이 퇴장했습니다. userId : ${data.userId}`);
+    updateUserCnt(data);
+};
+
 
     const updateUserCnt = (data: { currentUsers: number; userId: number; nickName: string }) => {
         console.log(`${data.nickName} 님이 방에 참여했습니다. 현재 인원: ${data.currentUsers}`);
