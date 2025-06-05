@@ -1,10 +1,19 @@
 import React from "react";
-import * as S from "./SystemMessage.style"
-import { FaCheckCircle, FaExclamationTriangle, FaVoteYea } from "react-icons/fa";
-import { MdHowToVote } from "react-icons/md"
+import * as S from "./SystemMessage.style";
+import {
+  FaCheckCircle,
+  FaExclamationTriangle,
+  FaVoteYea,
+} from "react-icons/fa";
+import { MdHowToVote } from "react-icons/md";
 
-
-type MessageType = "correct" | "voteStart" | "voteEnd" | "warning";
+type MessageType =
+  | "correct"
+  | "voteStart"
+  | "voteEnd"
+  | "warning"
+  | "quizStart"
+  | "quizEnd";
 
 interface SystemMessageProps {
   type: MessageType;
@@ -34,9 +43,21 @@ const messageMap: {
     IconComponent: FaExclamationTriangle,
     getText: () => "투표 또는 퀴즈가 진행중입니다.",
   },
+  quizStart: {
+    IconComponent: FaExclamationTriangle,
+    getText: () => "퀴즈가 시작되었습니다.",
+  },
+  quizEnd: {
+    IconComponent: FaExclamationTriangle,
+    getText: () => "퀴즈가 종료료되었습니다.",
+  },
 };
 
-const SystemMessage: React.FC<SystemMessageProps> = ({ type, nickName = "사용자", time }) => {
+const SystemMessage: React.FC<SystemMessageProps> = ({
+  type,
+  nickName = "사용자",
+  time,
+}) => {
   const { IconComponent, getText } = messageMap[type];
 
   return (
@@ -44,12 +65,10 @@ const SystemMessage: React.FC<SystemMessageProps> = ({ type, nickName = "사용�
       <S.Icon type={type}>
         <IconComponent />
       </S.Icon>
-      <S.Text>{type === "correct" ? getText(nickName) : getText()}</S.Text>
+      <S.Text>{getText(nickName)}</S.Text>
       <S.Time>{time}</S.Time>
     </S.Wrapper>
   );
 };
-
-
 
 export default SystemMessage;
