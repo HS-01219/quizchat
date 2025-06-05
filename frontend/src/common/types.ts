@@ -27,6 +27,7 @@ export interface VoteState {
     isMultiple: boolean; // 중복 투표 가능 여부
 };
 
+
 // 퀴즈 관련
 export interface QuizItem {
     id : number;       // 퀴즈 id
