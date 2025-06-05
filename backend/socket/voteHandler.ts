@@ -1,5 +1,5 @@
 import { Server, Socket } from 'socket.io';
-import type { StartVotePayload, VoteState, VoteItem } from '../common/types';
+import type { StartVotePayload, VoteState } from '../common/types';
 import { getRedisValue, setRedisValue, delRedisValue } from '../utils/redis';
 
 let currentVote: VoteState | null = null;
@@ -57,6 +57,7 @@ export function handleVote(io: Server, socket: Socket) {
     socket.on('START_VOTE', async ({title, items, isMultiple}: StartVotePayload) => {
         console.log('투표 시작:', {title, items, isMultiple});
         currentVote = {
+            userId: socket.data.userId,
             title,
             items: items.map(item => ({
                 itemId: item.itemId,
