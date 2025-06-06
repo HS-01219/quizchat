@@ -1,16 +1,17 @@
-import {useUserStore} from "@/store/useUserStore";
-import {useUserHandler} from "@/socket/userHandler";
-import {useModalStore} from "@/store/useModalStore";
-import {useEffect, useState} from "react";
+// src/hooks/useAuth.ts
+import { useEffect, useState } from "react";
+import { useUserStore } from "@/store/useUserStore";
+import { useModalStore } from "@/store/useModalStore";
+import { useUserHandlers} from "@/socket/userHandler";
 
-export const useAuth=()=>{
-	const { nickName, setNickName, setJustJoined, setMessage, currentUsers ,setCurrentUsers} = useUserStore();
-	const { requestJoinRoom, updateNickName, updateUserCnt} = useUserHandler();
-	const { closeModal, openModal,isOpenModal } = useModalStore();
+export const useAuth = () => {
+	const { nickName, setNickName, setJustJoined, setMessage, currentUsers, setCurrentUsers ,userId,setUserId} = useUserStore();
+	const { requestJoinRoom, updateNickName } = useUserHandlers();
+	const { closeModal, openModal, isOpenModal } = useModalStore();
+
 	const [isInitial, setIsInitial] = useState(true);
-
-;
 	const [prevNickName, setPrevNickName] = useState<string>("");
+
 	useEffect(() => {
 		if (!nickName) {
 			localStorage.removeItem("nickName");
@@ -19,35 +20,34 @@ export const useAuth=()=>{
 			setIsInitial(true);
 			openModal("nickName");
 		}
-	}, [nickName, setNickName, openModal]);
+	}, [nickName]);
 
+	const handleSave = (nickName: string) => {
 
-
-	const handleSave = (newNickName: string) => {
-		const trimmedNick = newNickName.trim();
+		const trimmedNick = nickName.trim();
 		if (!trimmedNick) return;
 
-		const actions = {
-			initial: () => {
-				setNickName(trimmedNick);
-				setPrevNickName(trimmedNick);
-				requestJoinRoom(trimmedNick);
-				setJustJoined(true);
-				setCurrentUsers(currentUsers);
-				setIsInitial(false);
-				setMessage(`'${trimmedNick}' 님이 입장하셨습니다.`);
-			},
-			update: () => {
-				setNickName(trimmedNick);
-				updateNickName({ nickName: trimmedNick });
-				setPrevNickName(trimmedNick);
-				setMessage(`'${prevNickName}' 님이 '${trimmedNick}' 님으로 이름이 변경되었습니다.`);
-			},
-		};
+		if (isInitial) {
+			setNickName(trimmedNick);
+			setPrevNickName(trimmedNick);
 
-		const actionKey = isInitial ? "initial" : "update";
-		actions[actionKey]();
+			requestJoinRoom({
+				currentUsers,
+				userId: Number(userId),
+				nickName: trimmedNick,
+			});
+
+			setJustJoined(true);
+			setIsInitial(false);
+		}else {
+			setNickName(trimmedNick);
+			updateNickName({ nickName: trimmedNick });
+			setPrevNickName(trimmedNick);
+			setMessage(`'${prevNickName}' 님이 '${trimmedNick}' 님으로 이름이 변경되었습니다.`);
+		}
+
 		closeModal("nickName");
 	};
+
 	return { isOpenModal, handleSave, openModal };
-}
+};
