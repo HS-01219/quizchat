@@ -4,7 +4,7 @@ import { PiPencilSimpleLine } from "react-icons/pi";
 import {useUserStore} from "@/store/useUserStore";
 const FooterUserName = ({ ...props }: React.HTMLAttributes<HTMLDivElement>) => {
 	const {nickName}=useUserStore();
-	console.log('리렌더링 된 닉네임:', nickName);
+
 	return (
 		<S.FooterUserNameContainer {...props} >
 			{nickName} 님
