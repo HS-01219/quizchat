@@ -3,6 +3,7 @@ import { create } from "zustand";
 interface VoteItem {
 	id: number;
 	text: string;
+	count: number;
 }
 
 interface VoteStore {
@@ -12,7 +13,7 @@ interface VoteStore {
 	isDuplicated: boolean;
 	selectedVoteId: number[];
 	isTimerActive: boolean;
-	isVoteEnded: boolean;  // 투표 종료 상태 추가
+	isVoteEnded: boolean;
 
 	setIsSave: (state: boolean) => void;
 	setTitle: (title: string) => void;
@@ -22,15 +23,15 @@ interface VoteStore {
 	setSelectedVoteId: (fn: (prev: number[]) => number[]) => void;
 	isVote: (id: number) => void;
 	setIsTimerActive: (active: boolean) => void;
-	endVote: () => void;  // 투표 종료 함수 추가
-	resetVote: () => void;  // 투표 리셋 함수 추가
+	endVote: () => void;
+	resetVote: () => void;
 }
 
 export const useVoteStore = create<VoteStore>((set, get) => ({
 	title: "",
 	voteItems: [
-		{ id: Date.now(), text: "" },
-		{ id: Date.now() + 1, text: "" },
+		{ id: Date.now(), text: "" , count: 0 },
+		{ id: Date.now() + 1, text: "" , count: 0 },
 	],
 	isSave: false,
 	isDuplicated: false,
@@ -60,8 +61,8 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 	resetVote: () => set({
 		title: "",
 		voteItems: [
-			{ id: Date.now(), text: "" },
-			{ id: Date.now() + 1, text: "" },
+			{ id: Date.now(), text: "" , count:0},
+			{ id: Date.now() + 1, text: "" ,count:0},
 		],
 		isSave: false,
 		selectedVoteId: [],

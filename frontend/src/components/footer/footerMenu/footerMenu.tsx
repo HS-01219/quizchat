@@ -20,7 +20,6 @@ const FooterMenu = () => {
   return (
     <S.FooterMenuContainer>
       <S.FooterMenuWrapper>
-        {" "}
         <RiFileListLine onClick={handleVoteClick} />
         <S.FooterMenuLabel> {Label.VOTE}</S.FooterMenuLabel>
       </S.FooterMenuWrapper>

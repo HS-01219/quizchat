@@ -9,11 +9,11 @@ import { setupSocketIO } from './socket/socketManager';
 
 dotenv.config();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5174;
 const app = express();
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONT_SERVER_URL || "http://localhost:5173",
     credentials: true,
 }));
 app.use(express.json());
@@ -26,7 +26,7 @@ app.use(function(req : Request, res : Response) {
 const server = http.createServer(app);
 const io = new SocketServer(server, {
     cors : {
-        origin: "http://localhost:5173",
+        origin: process.env.FRONT_SERVER_URL || "http://localhost:5173",
         methods: ["GET", "POST"], 
         credentials: true 
     }
@@ -36,5 +36,6 @@ const io = new SocketServer(server, {
 setupSocketIO(io);
 
 server.listen(PORT, () => {
+    console.log(`💡 서버 포트: ${PORT}`); // 추가
     console.log("서버 실행")
 });

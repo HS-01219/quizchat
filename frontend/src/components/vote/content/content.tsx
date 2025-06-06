@@ -8,10 +8,11 @@ import RadioBtn from "@/components/radioBtn/radioBtn";
 import { useVote } from "@/hooks/useVote";
 import { useVoteStore } from "@/store/useVoteStore";
 import {useVoteHandler} from "@/socket/voteHandler";
+import {useModalStore} from "@/store/useModalStore";
 
 const Content = () => {
 	const { save, edit } = useVote();
-
+const {closeModal} = useModalStore();
 	const {
 		title,
 		voteItems,
@@ -87,7 +88,9 @@ const Content = () => {
 		};
 		edit(123, data);
 	};
-
+const handleCloseModal=()=>{
+	closeModal("vote");
+}
 	// const onVote = (itemId: number) => {
 	// 	if (isSave) {
 	// 		vote(itemId);
@@ -135,6 +138,7 @@ const Content = () => {
 				<Button onClick={isSave ? onEdit : onSaveClick}>
 					{isSave ? "수정" : "완료"}
 				</Button>
+				<Button onClick={handleCloseModal}>닫기</Button>
 			</S.ButtonWrapper>
 		</S.VoteInputContainer>
 	);
