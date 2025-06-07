@@ -10,7 +10,6 @@ export const VoteInputContainer = styled.div`
 export const BaseInput = styled.input<{ isSelected?: boolean }>(({ isSelected, theme }) => ({
 	border: `1px solid ${theme.color.darkblue}`,
 	borderRadius: theme.borderRadius.xx,
-
 	padding: "0.25rem 0.75rem",
 	backgroundColor: isSelected ? theme.color.darkblue : "white",
 	color: isSelected ? "white" : theme.color.black,
