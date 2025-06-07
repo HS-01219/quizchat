@@ -19,12 +19,13 @@ export interface StartVotePayload {
     isMultiple: boolean; // 중복 투표 가능 여부
 }
 
-export interface VoteState { 
+export interface VoteState {
     userId: number;      // 투표를 생성한 유저의 id
     title: string;       // 투표 제목
     items: VoteItem[];   // 투표 항목들
     isActive: boolean;   // 투표 활성화 여부
     isMultiple: boolean; // 중복 투표 가능 여부
+    isEnded: boolean; //투표 종료 여부
 };
 
 

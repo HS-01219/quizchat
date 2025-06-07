@@ -21,7 +21,6 @@ export const useVote = () => {
 
 	const save = async (data: any) => {
 		console.log("투표 저장:", data);
-
 		if (!data.title.trim()) {
 			alert('투표 제목을 입력해주세요.');
 			return;
@@ -66,7 +65,6 @@ export const useVote = () => {
 
 	const vote = (id: number) => {
 		console.log("투표 항목 선택:", id);
-
 		if (isDuplicated) {
 			setSelectedVoteId((prev) =>
 				prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
