@@ -18,7 +18,7 @@ export function handleUser(io : Server, socket : Socket) {
         console.log('채팅방 참여 요청', nickName)
         const nextUserId = await getRedisValue('nextUserId') || 1;
         const userId = nextUserId;
-        setRedisValue('nextUserId', (Number(nextUserId) + 1).toString()); 
+        setRedisValue('nextUserId', (Number(nextUserId) + 1).toString());
 
         socket.data.userId = userId;
         socket.data.nickName = nickName;
@@ -26,14 +26,14 @@ export function handleUser(io : Server, socket : Socket) {
         const currentUsers = await getRedisValue('currentUsers');
         const userCnt = currentUsers ? parseInt(currentUsers) + 1 : 1;
         setRedisValue('currentUsers', userCnt.toString());
-        
+
         // 이 때 잔여 인원 수를 함께 전달 (Redis)
-        io.emit('SEND_JOINED', { 
+        io.emit('SEND_JOINED', {
             currentUsers : userCnt,
             userId : userId,
             nickName : nickName,
         });
-        
+
         // 퀴즈/투표가 진행중인지, 진행중이라면 내용을 전달 (Redis)
         const quizStateRaw = await getRedisValue('quizState');
         const voteStateRaw = await getRedisValue('voteState');
@@ -62,9 +62,9 @@ export const userLeave = async (io : Server, socket : Socket) : Promise<void> =>
     console.log('방 나가기', socket.data.userId);
     const currentUsers = await getRedisValue('currentUsers');
     const userCnt = currentUsers ? parseInt(currentUsers) - 1 : 0;
-    setRedisValue('currentUsers', userCnt.toString(), 60 * 60);
+    setRedisValue('currentUsers', userCnt.toString());
 
-    io.emit('SEND_LEAVED', { 
+    io.emit('SEND_LEAVED', {
         currentUsers : userCnt,
         userId : socket.data.userId,
         nickName : socket.data.nickName,

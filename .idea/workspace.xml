@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="a6f725f3-202e-4302-a71e-871989bfb0a2" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/backend/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/socket/userHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/socket/userHandler.ts" afterDir="false" />
@@ -12,6 +13,9 @@
       <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/socket/socketManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/socket/socketManager.ts" afterDir="false" />
     </list>
+=======
+    <list default="true" id="a6f725f3-202e-4302-a71e-871989bfb0a2" name="변경" comment="" />
+>>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

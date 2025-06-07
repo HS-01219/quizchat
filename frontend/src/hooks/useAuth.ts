@@ -1,12 +1,11 @@
-// src/hooks/useAuth.ts
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/store/useUserStore";
 import { useModalStore } from "@/store/useModalStore";
 import { useUserHandlers} from "@/socket/userHandler";
 
 export const useAuth = () => {
-	const { nickName, setNickName, setJustJoined, setMessage, currentUsers, setCurrentUsers ,userId,setUserId} = useUserStore();
-	const { requestJoinRoom, updateNickName } = useUserHandlers();
+	const { nickName, setNickName, setJustJoined, setMessage} = useUserStore();
+	const { requestJoinRoom} = useUserHandlers();
 	const { closeModal, openModal, isOpenModal } = useModalStore();
 
 	const [isInitial, setIsInitial] = useState(true);
@@ -23,25 +22,18 @@ export const useAuth = () => {
 	}, [nickName]);
 
 	const handleSave = (nickName: string) => {
-
 		const trimmedNick = nickName.trim();
 		if (!trimmedNick) return;
 
 		if (isInitial) {
 			setNickName(trimmedNick);
 			setPrevNickName(trimmedNick);
-
-			requestJoinRoom({
-				currentUsers,
-				userId: Number(userId),
-				nickName: trimmedNick,
-			});
-
+			requestJoinRoom({ nickName: trimmedNick });
 			setJustJoined(true);
 			setIsInitial(false);
+
 		}else {
 			setNickName(trimmedNick);
-			updateNickName({ nickName: trimmedNick });
 			setPrevNickName(trimmedNick);
 			setMessage(`'${prevNickName}' 님이 '${trimmedNick}' 님으로 이름이 변경되었습니다.`);
 		}

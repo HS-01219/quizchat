@@ -13,7 +13,6 @@ const Header = () => {
       <S.UserInfo>
         <FiUser size={20} />
          <span>{currentUsers}</span>
-
       </S.UserInfo>
     </S.HeaderContainer>
   );

@@ -3,11 +3,11 @@ import { create } from "zustand";
 
 interface UserState {
 	nickName: string;
-	userId:string;
+	userId:number;
 	justJoined: boolean;
 	message: string[];
 currentUsers:number;
-setUserId: (userId: string) => void;
+setUserId: (userId: number) => void;
 setCurrentUsers: (currentUsers: number) => void;
 	setNickName: (name: string) => void;
 	setJustJoined: (joined: boolean) => void;
@@ -18,9 +18,9 @@ export const useUserStore = create<UserState>((set) => ({
 	nickName: "",
 	justJoined: false,
 	message: [],
-	userId:'',
+	userId:0,
 	currentUsers:0,
-	setUserId: (id: string) => set({ userId: id }),
+	setUserId: (id: number) => set({ userId: id }),
 
 	setCurrentUsers:(currentUsers: number) => set({ currentUsers : currentUsers }),
 	setNickName: (name) => set({ nickName: name }),

@@ -28,7 +28,7 @@ services:
    build: ./frontend
    # image: hschoi01/quizchat-frontend:0.0.5 
    ports:
-     - "5173:80"
+     - "5174:80"
    networks:
       - mynetwork
    depends_on:
@@ -42,4 +42,3 @@ networks:
 #   redis_data:
 
 #     driver: local
-

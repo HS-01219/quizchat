@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { socket } from './socketManager';
 import {useUserStore} from "@/store/useUserStore";
-import type { VoteState, QuizState } from '../common/types';
+import type { VoteState, QuizState } from '@/common/types';
+import {useRoomStore} from "@/store/useRoomStore";
 
 let isSocketInitialized = false;
 
 export const useUserHandlers = () => {
-    const {nickName, setNickName, setMessage} = useUserStore();
+    const { nickName, userId, setNickName, setMessage, setUserId } = useUserStore();
     const {setCurrentUsers} = useUserStore.getState()
-
+    const { setQuizState, setVoteState } = useRoomStore.getState();
     useEffect(() => {
         if (isSocketInitialized) return;
         isSocketInitialized = true;
@@ -31,11 +32,11 @@ export const useUserHandlers = () => {
         };
     }, []);
 
-    /* 유저 관련 */
-    const requestJoinRoom = (data: { currentUsers: number, userId: number, nickName: string }) => {
-        console.log(`${data.nickName} 님이 입장습니다. userId : ${data.userId}`);
-        socket.emit('JOIN_ROOM', {nickName: nickName});
-    }
+// userHandler.ts
+    const requestJoinRoom = (data: { nickName: string }) => {
+        console.log(`${data.nickName} 님이 입장 요청합니다.`);
+        socket.emit('JOIN_ROOM', { nickName: data.nickName });
+    };
 
     const userLeaved = (data: { currentUsers: number, userId: number, nickName: string }) => {
         console.log(`${data.nickName} 님이 퇴장했습니다. userId : ${data.userId}`);
@@ -44,26 +45,37 @@ export const useUserHandlers = () => {
         setMessage(`'${data.nickName}' 님이 퇴장하셨습니다.`);
     }
 
-
     const userJoined = (data: { currentUsers: number; userId: number; nickName: string }) => {
         console.log(`${data.nickName} 님이 방에 참여했습니다. 현재 인원: ${data.currentUsers}, 유저 아이디 :${data.userId}`);
         setCurrentUsers(data.currentUsers);
         setMessage(`'${data.nickName}' 님이 입장하셨습니다.`);
 
     };
+    // const joinRoom = (data: {
+    //     userId: number,
+    //     nickName: string,
+    //     roomState: { quizState: QuizState, voteState: VoteState }
+    // }) => {
+    //     console.log(`userId : ${data.userId} nickName : ${data.nickName}`)
+    //     console.log(`현재 퀴즈 상태 : ${data.roomState.quizState.isActive ? data.roomState.quizState.isActive : 'X'}
+    //
+    //                  현재 투표 상태 : ${data.roomState.voteState.isActive ? data.roomState.voteState.isActive : 'X'}`)
+    //     // 방 참여에 성공한 유저에게 roomState (quizState, voteState)를 전달
+    //     // 프론트 TODO : 퀴즈나 투표가 있다면 해당 유저의 화면에 표시
+    // }
     const joinRoom = (data: {
         userId: number,
         nickName: string,
+        currentUsers: number,
         roomState: { quizState: QuizState, voteState: VoteState }
     }) => {
-        console.log(`userId : ${data.userId} nickName : ${data.nickName}`)
+        console.log(`userId : ${data.userId} nickName : ${data.nickName} `)
+        console.log("roomState 객체:", data.roomState);
+        setUserId(data.userId);
 
-
-        console.log(`현재 퀴즈 상태 : ${data.roomState.quizState.isActive ? data.roomState.quizState.isActive : 'X'} 
-
-                     현재 투표 상태 : ${data.roomState.voteState.isActive ? data.roomState.voteState.isActive : 'X'}`)
-        // 방 참여에 성공한 유저에게 roomState (quizState, voteState)를 전달
-        // 프론트 TODO : 퀴즈나 투표가 있다면 해당 유저의 화면에 표시
+        // TODO: roomState 처리
+        setQuizState(data.roomState.quizState);
+        setVoteState(data.roomState.voteState);
     }
 
     /* 닉네임 변경 관련 */
@@ -77,7 +89,7 @@ export const useUserHandlers = () => {
         alert(data.message);
     }
 
-    const updateNickName = (data: { nickName: string }) => {
+    const updateNickName = (data: { userId:number,nickName: string }) => {
         // 프론트 TODO : userStore에서 userId 관리 추가
         // 해당 userId를 가져와서 백엔드로 보내야함
         // nickName와 userId가 둘다 userStore에 있어서 매개로 안받아도 될듯?
@@ -87,7 +99,7 @@ export const useUserHandlers = () => {
             return;
         }
 
-        socket.emit('UPDATE_NICKNAME', {userId: 1, nickName: nickName});
+        socket.emit('UPDATE_NICKNAME', { userId, nickName });
 
     }
 
