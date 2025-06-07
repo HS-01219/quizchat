@@ -60,19 +60,18 @@ let isVoteSocketInitialized = false;
 export const useVoteHandler = () => {
     const { setVoteState } = useRoomStore();
     const { setIsSave, setIsTimerActive, endVote: endVoteLocal, setTitle, setVoteItems, setIsDuplicated } = useVoteStore();
-
+    const updateFromServer=useVoteStore((state) => state.updateFromServer);
     useEffect(() => {
         if (isVoteSocketInitialized) return;
         isVoteSocketInitialized = true;
-
-        console.log('투표 소켓 이벤트 리스너 등록');
+        socket.emit("GET_CURRENT_VOTE");
 
         // 투표 시작 이벤트
         socket.on("START_VOTE", (data: VoteState) => {
             console.log("투표 시작됨:", data);
             setVoteState(data);
+            updateFromServer(data);
 
-            // 로컬 상태도 업데이트
             setTitle(data.title);
             setVoteItems(() => data.items.map(item => ({
                 id: item.itemId,
@@ -82,6 +81,7 @@ export const useVoteHandler = () => {
             setIsDuplicated(data.isMultiple);
             setIsSave(true);
             setIsTimerActive(true);
+
         });
 
         // 투표 업데이트 이벤트

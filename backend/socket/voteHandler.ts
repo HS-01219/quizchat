@@ -328,4 +328,13 @@ export function handleVote(io: Server, socket: Socket) {
             io.emit('END_VOTE', currentVote);
         }
     });
+
+
+    // 서버에서 처리: 투표 상태 조회 요청 처리
+    socket.on('GET_CURRENT_VOTE', async () => {
+        const currentVote = await loadCurrentVoteFromRedis();
+        if (currentVote) {
+            socket.emit('START_VOTE', currentVote);
+        }
+    });
 }

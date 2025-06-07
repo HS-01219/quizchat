@@ -16,7 +16,8 @@ interface VoteStore {
 	isVoteEnded: boolean;
 	voteCreatorId: number | null;
 	currentUserId: number | null;
-
+	timeLeft: number;
+	setTimeLeft: (time: number) => void;
 	setIsSave: (state: boolean) => void;
 	setTitle: (title: string) => void;
 	setVoteItems: (fn: (prev: VoteItem[]) => VoteItem[]) => void;
@@ -43,6 +44,8 @@ interface VoteStore {
 
 export const useVoteStore = create<VoteStore>((set, get) => ({
 	title: "",
+	timeLeft: 10 * 60 * 1000,
+	setTimeLeft: (time) => set({ timeLeft: time }),
 	voteItems: [
 		{ id: Date.now(), text: "", count: 0 },
 		{ id: Date.now() + 1, text: "", count: 0 },
@@ -150,7 +153,6 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 
 	isVote: (id) => {
 		const { isDuplicated, setSelectedVoteId} = get();
-
 		console.log('투표 항목 선택:', id, '중복 선택:', isDuplicated);
 
 		if (isDuplicated) {

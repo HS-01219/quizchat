@@ -76,7 +76,7 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
               <Button onClick={handleVoteClick}>
                 투표하기
               </Button>
-              {isCreator&& isSave && (
+              { isSave && (
                 <Button onClick={handleEndVoteClick} >
                   투표 종료
                 </Button>
