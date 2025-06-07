@@ -1,4 +1,3 @@
-// src/hooks/useAuth.ts
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/store/useUserStore";
 import { useModalStore } from "@/store/useModalStore";

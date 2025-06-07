@@ -4,10 +4,12 @@ import * as S from "@/components/footer/footerMenu/footerMenu.style";
 import { Label } from "@/constants/label";
 import { useNavigate } from "react-router-dom";
 import { useQuizHandler } from "@/socket/quizHandler";
+import {useRoomStore} from "@/store/useRoomStore";
+
 
 const FooterMenu = () => {
   const nav = useNavigate();
-  const { requestStartQuiz } = useQuizHandler();
+const {requestStartQuiz} = useQuizHandler();
 
   const handleVoteClick = () => {
     nav("/vote");

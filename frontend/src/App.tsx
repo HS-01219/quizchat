@@ -7,10 +7,11 @@ import { Outlet } from "react-router-dom";
 import Layout from "@/components/layout/layout";
 import UserNameChange from "@/components/modal/userNameChange/userNameChange";
 import {useAuth} from "@/hooks/useAuth"
+import {useVoteHandler} from "@/socket/voteHandler";
 
 const App: React.FC = () => {
   const { isOpenModal, handleSave } = useAuth();
-
+  useVoteHandler();
   return (
     <ThemeProvider theme={theme}>
       <Global styles={GlobalStyle} />

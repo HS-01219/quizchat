@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 import { socket } from './socketManager';
 import {useUserStore} from "@/store/useUserStore";
 import type { VoteState, QuizState } from '@/common/types';
+import {useRoomStore} from "@/store/useRoomStore";
 
 let isSocketInitialized = false;
 
 export const useUserHandlers = () => {
     const { nickName, userId, setNickName, setMessage, setUserId } = useUserStore();
     const {setCurrentUsers} = useUserStore.getState()
-
+    const { setQuizState, setVoteState } = useRoomStore.getState();
     useEffect(() => {
         if (isSocketInitialized) return;
         isSocketInitialized = true;
@@ -68,10 +69,13 @@ export const useUserHandlers = () => {
         currentUsers: number,
         roomState: { quizState: QuizState, voteState: VoteState }
     }) => {
-        console.log(`userId : ${data.userId} nickName : ${data.nickName}`)
+        console.log(`userId : ${data.userId} nickName : ${data.nickName} `)
+        console.log("roomState 객체:", data.roomState);
         setUserId(data.userId);
 
         // TODO: roomState 처리
+        setQuizState(data.roomState.quizState);
+        setVoteState(data.roomState.voteState);
     }
 
     /* 닉네임 변경 관련 */

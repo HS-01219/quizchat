@@ -22,9 +22,9 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
                                                    }) => {
   const [expanded, setExpanded] = useState(false);
   const { openModal } = useModalStore();
-  const { isSave, setIsTimerActive,resetVote } = useVoteStore();
-
-  const { vote, endVote } = useVoteHandler()
+  const{isSave, setIsTimerActive,resetVote,isVoteCreator } = useVoteStore();
+  const isCreator = isVoteCreator();
+  const { endVote } = useVoteHandler()
   const handleCreateVoteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     openModal("vote");
@@ -76,7 +76,7 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
               <Button onClick={handleVoteClick}>
                 투표하기
               </Button>
-              {isSave && (
+              {isCreator&& isSave && (
                 <Button onClick={handleEndVoteClick} >
                   투표 종료
                 </Button>
@@ -84,9 +84,6 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
             </S.VoteButtonGroup>
           )}
         </S.ButtonContainer>
-      )}
-      {expanded && vote && !vote.isActive&&(
-        <VoteResult items={vote.items} />
       )}
     </S.BalloonContainer>
   );

@@ -83,4 +83,5 @@ display: flex;`
 
 export const VoteButtonGroup=styled.div`
 display: flex;
-flex-direction: column;`
+flex-direction: column;
+gap:0.25rem`

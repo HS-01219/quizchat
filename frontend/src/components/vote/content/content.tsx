@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from "react";
+import React, { ChangeEvent, useState, useEffect } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import * as S from "./content.style";
 import Button from "@/components/button/button";
@@ -7,12 +7,15 @@ import RadioBtn from "@/components/radioBtn/radioBtn";
 
 import { useVote } from "@/hooks/useVote";
 import { useVoteStore } from "@/store/useVoteStore";
-import {useVoteHandler} from "@/socket/voteHandler";
-import {useModalStore} from "@/store/useModalStore";
+import { useModalStore } from "@/store/useModalStore";
+
+import {useUserStore} from "@/store/useUserStore";
 
 const Content = () => {
-	const { save, edit } = useVote();
-const {closeModal} = useModalStore();
+	const { save, edit, vote } = useVote();
+	const { closeModal } = useModalStore();
+	const { userId } = useUserStore();
+
 	const {
 		title,
 		voteItems,
@@ -22,33 +25,28 @@ const {closeModal} = useModalStore();
 		setTitle,
 		setVoteItems,
 		selectedVoteId,
+		isTimerActive,
+		isVoteEnded,
+		isVoteCreator,
+		setCurrentUserId
 	} = useVoteStore();
 
-
-	const { vote, startVote, submitVote, endVote } = useVoteHandler();
-	// const [newTitle, setNewTitle] = useState('');
-	// const [newItems, setNewItems] = useState<string[]>(['', '']);
-	// const [allowMultiple, setAllowMultiple] = useState(false);
 	const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
 
+	useEffect(() => {
+		setSelectedItems(new Set(selectedVoteId));
+	}, [selectedVoteId]);
+
+	useEffect(() => {
+			setCurrentUserId(userId);
+	}, [setCurrentUserId]);
+	const isCreator = isVoteCreator();
 	const handleVoteClick = (itemId: number) => {
-		if(!vote || !vote.isActive) return;
+		if (!isSave) return;
+		if (isVoteEnded) return;
 
-		const update = new Set(selectedItems);
-
-		if(update.has(itemId)){
-			update.delete(itemId);
-		}else{
-			if(!vote?.isMultiple){
-				update.clear();
-			}
-			update.add(itemId);
-		}
-
-		setSelectedItems(update);
-		submitVote(Array.from(update));
-	}
-
+		vote(itemId);
+	};
 
 	const handleItemChange = (id: number, value: string) => {
 		if (isSave) return;
@@ -58,12 +56,13 @@ const {closeModal} = useModalStore();
 	};
 
 	const handleItemDelete = (id: number) => {
+		if (isSave || voteItems.length <= 2) return;
 		deleteVoteItem(id);
 	};
 
 	const addVoteItem = () => {
 		if (isSave) return;
-		setVoteItems((prev) => [...prev, { id: Date.now(), text: "" }]);
+		setVoteItems((prev) => [...prev, { id: Date.now(), text: "", count: 0 }]);
 	};
 
 	const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -74,8 +73,11 @@ const {closeModal} = useModalStore();
 	const onSaveClick = () => {
 		const data = {
 			title,
-			items: voteItems.map((item) => item.text),
-			isDuplicated,
+			items: voteItems.map((item) => ({
+				itemId: item.id,
+				text: item.text,
+			})),
+			isMultiple: isDuplicated,
 		};
 		save(data);
 	};
@@ -83,19 +85,18 @@ const {closeModal} = useModalStore();
 	const onEdit = () => {
 		const data = {
 			title,
-			items: voteItems.map((item) => item.text),
-			isDuplicated,
+			items: voteItems.map((item) => ({
+				itemId: item.id,
+				text: item.text,
+			})),
+			isMultiple: isDuplicated,
 		};
-		edit(123, data);
+		edit(selectedVoteId[0], data);
 	};
-const handleCloseModal=()=>{
-	closeModal("vote");
-}
-	// const onVote = (itemId: number) => {
-	// 	if (isSave) {
-	// 		vote(itemId);
-	// 	}
-	// };
+
+	const handleCloseModal = () => {
+		closeModal("vote");
+	};
 
 	return (
 		<S.VoteInputContainer>
@@ -111,14 +112,14 @@ const handleCloseModal=()=>{
 				<InputWithIcon
 					key={item.id}
 					readOnly={isSave}
-					isSelected={selectedVoteId.includes(item.id)}
+					isSelected={isSave && selectedItems.has(item.id)}
 					inputComponent={S.MediumInput}
 					placeholder={`항목 ${index + 1}`}
 					value={item.text}
 					onChange={(e) => {
 						if (!isSave) handleItemChange(item.id, e.target.value);
 					}}
-					onClick={() =>  handleVoteClick(item.id)}
+					onClick={() => handleVoteClick(item.id)}
 					icon={
 						!isSave && voteItems.length > 2 ? (
 							<IoIosCloseCircleOutline
@@ -130,16 +131,31 @@ const handleCloseModal=()=>{
 				/>
 			))}
 
+
 			{!isSave && (
 				<S.AddText onClick={addVoteItem}>+ 항목 추가</S.AddText>
 			)}
-			<RadioBtn />
+
+			{!isSave && <RadioBtn />}
+
 			<S.ButtonWrapper>
-				<Button onClick={isSave ? onEdit : onSaveClick}>
-					{isSave ? "수정" : "완료"}
-				</Button>
-				<Button onClick={handleCloseModal}>닫기</Button>
+				{!isSave ? (
+					<>
+						<Button onClick={onSaveClick}>완료</Button>
+						<Button onClick={handleCloseModal}>취소</Button>
+					</>
+				) : (
+					<>
+						{isCreator && isTimerActive && !isVoteEnded && (
+							<Button onClick={onEdit}>수정</Button>
+						)}
+						<Button onClick={handleCloseModal}>닫기</Button>
+
+					</>
+				)}
 			</S.ButtonWrapper>
+
+
 		</S.VoteInputContainer>
 	);
 };
