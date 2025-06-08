@@ -1,8 +1,6 @@
 import { io } from 'socket.io-client';
 const SOCKET_SERVER_URL = import.meta.env.VITE_BACK_SERVER_URL;
 
-//const SOCKET_SERVER_URL = import.meta.env.VITE_BACK_SERVER_URL;
-
 // const [socket, setSocket] = useState<Socket | null>(null);
 
 // 소켓 생성
