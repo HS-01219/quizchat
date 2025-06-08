@@ -372,7 +372,6 @@ export function handleVote(io: Server, socket: Socket) {
             currentVote = await loadCurrentVoteFromRedis();
             userVotes = await loadUserVotesFromRedis();
         }
-
         if (currentVote) {
             socket.emit('START_VOTE', currentVote);
         }

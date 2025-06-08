@@ -51,32 +51,34 @@ export const useUserHandlers = () => {
         setMessage(`'${data.nickName}' 님이 입장하셨습니다.`);
 
     };
-    // const joinRoom = (data: {
-    //     userId: number,
-    //     nickName: string,
-    //     roomState: { quizState: QuizState, voteState: VoteState }
-    // }) => {
-    //     console.log(`userId : ${data.userId} nickName : ${data.nickName}`)
-    //     console.log(`현재 퀴즈 상태 : ${data.roomState.quizState.isActive ? data.roomState.quizState.isActive : 'X'}
-    //
-    //                  현재 투표 상태 : ${data.roomState.voteState.isActive ? data.roomState.voteState.isActive : 'X'}`)
-    //     // 방 참여에 성공한 유저에게 roomState (quizState, voteState)를 전달
-    //     // 프론트 TODO : 퀴즈나 투표가 있다면 해당 유저의 화면에 표시
-    // }
     const joinRoom = (data: {
         userId: number,
         nickName: string,
-        currentUsers: number,
         roomState: { quizState: QuizState, voteState: VoteState }
     }) => {
-        console.log(`userId : ${data.userId} nickName : ${data.nickName} `)
-        console.log("roomState 객체:", data.roomState);
-        setUserId(data.userId);
+        console.log(`userId : ${data.userId} nickName : ${data.nickName}`)
+        console.log(`현재 퀴즈 상태 : ${data.roomState.quizState ? data.roomState.quizState.isActive : 'X'}
 
-        // TODO: roomState 처리
-        setQuizState(data.roomState.quizState);
-        setVoteState(data.roomState.voteState);
+                     현재 투표 상태 : ${data.roomState.voteState ? data.roomState.voteState.isActive : 'X'}`)
+        // 방 참여에 성공한 유저에게 roomState (quizState, voteState)를 전달
+        // 프론트 TODO : 퀴즈나 투표가 있다면 해당 유저의 화면에 표시
+        //     setQuizState(data.roomState.quizState);
+        //     setVoteState(data.roomState.voteState);
     }
+    // const joinRoom = (data: {
+    //     userId: number,
+    //     nickName: string,
+    //     currentUsers: number,
+    //     roomState: { quizState: QuizState, voteState: VoteState }
+    // }) => {
+    //     console.log(`userId : ${data.userId} nickName : ${data.nickName} `)
+    //     console.log("roomState 객체:", data.roomState);
+    //     setUserId(data.userId);
+    //
+    //     // TODO: roomState 처리
+    //     setQuizState(data.roomState.quizState);
+    //     setVoteState(data.roomState.voteState);
+    // }
 
     /* 닉네임 변경 관련 */
     const sendNickName = (data: { userId: number, nickName: string }) => {

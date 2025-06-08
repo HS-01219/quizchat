@@ -2,6 +2,7 @@ import { useModalStore } from "@/store/useModalStore";
 import { useVoteStore } from "@/store/useVoteStore";
 import { useVoteHandler } from "@/socket/voteHandler";
 import {useUserStore} from "@/store/useUserStore";
+import {useTimerStore} from "@/store/useTimerStore";
 
 export const useVote = () => {
 	const { closeModal } = useModalStore();
@@ -18,6 +19,7 @@ export const useVote = () => {
 	} = useVoteStore();
 	const { userId } = useUserStore();
 	const { startVote, submitVote, endVote } = useVoteHandler();
+	const { startTimer } = useTimerStore();
 
 	const save = async (data: any) => {
 		console.log("투표 저장:", data);
@@ -41,7 +43,8 @@ export const useVote = () => {
 			closeModal("vote");
 			setIsTimerActive(true);
 			startVote(data);
-	setVoteCreatorId(userId);
+		setVoteCreatorId(userId);
+		startTimer()
 		} catch (error) {
 			console.error('투표 시작 오류:', error);
 			setIsSave(false);
@@ -74,18 +77,13 @@ export const useVote = () => {
 				const updated = prev.includes(id)
 					? prev.filter((v) => v !== id)
 					: [...prev, id];
-				console.log("중복 모드 - 업데이트된 선택:", updated);
 				submitVote(updated);
 				return updated;
 			});
 		} else {
-			console.log("단일 모드 - 기존 선택 무시하고 새로 설정");
 			const updated = [id];
-			console.log("단일 모드 - 전송할 데이터:", updated);
 
-			// 상태 업데이트
 			setSelectedVoteId(() => {
-				console.log("단일 모드 - 상태 업데이트 완료:", updated);
 				return updated;
 			});
 
