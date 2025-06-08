@@ -58,29 +58,41 @@ export const useVote = () => {
 	};
 
 	const cancel = () => {
-		console.log("투표 취소");
 		closeModal("vote");
 		resetVote();
 	};
 
 	const vote = (id: number) => {
-		console.log("투표 항목 선택:", id);
+		console.log("=== 투표 시작 ===");
+		console.log("선택한 ID:", id);
+		console.log("현재 선택된 항목들:", selectedVoteId);
+		console.log("투표 모드:", isDuplicated ? "중복" : "단일");
+
 		if (isDuplicated) {
-			setSelectedVoteId((prev) =>
-				prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
-			);
+			setSelectedVoteId((prev) => {
+				console.log("중복 모드 - 이전 선택:", prev);
+				const updated = prev.includes(id)
+					? prev.filter((v) => v !== id)
+					: [...prev, id];
+				console.log("중복 모드 - 업데이트된 선택:", updated);
+				submitVote(updated);
+				return updated;
+			});
 		} else {
-			setSelectedVoteId(() => [id]);
+			console.log("단일 모드 - 기존 선택 무시하고 새로 설정");
+			const updated = [id];
+			console.log("단일 모드 - 전송할 데이터:", updated);
+
+			// 상태 업데이트
+			setSelectedVoteId(() => {
+				console.log("단일 모드 - 상태 업데이트 완료:", updated);
+				return updated;
+			});
+
 			setCurrentUserId(userId);
+			submitVote(updated);
 		}
-
-		const newSelectedIds = isDuplicated
-			? selectedVoteId.includes(id)
-				? selectedVoteId.filter((v) => v !== id)
-				: [...selectedVoteId, id]
-			: [id];
-
-		submitVote(newSelectedIds);
+		console.log("=== 투표 끝 ===");
 	};
 
 	const voteEnd = () => {
@@ -93,6 +105,6 @@ export const useVote = () => {
 		edit,
 		cancel,
 		vote,
-	voteEnd
+		voteEnd
 	};
 };

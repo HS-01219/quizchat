@@ -6,6 +6,8 @@ interface VoteResultProps {
 }
 
 const VoteResult: React.FC<VoteResultProps> = ({ items }) => {
+	console.log('VoteResult items:', items);
+
 	return (
 		<div style={{ padding: '1rem' }}>
 			<h3>투표 결과</h3>

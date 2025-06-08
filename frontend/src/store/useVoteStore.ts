@@ -1,10 +1,6 @@
 import { create } from "zustand";
+import type { VoteItem } from "@/common/types";
 
-interface VoteItem {
-	id: number;
-	text: string;
-	count: number;
-}
 
 interface VoteStore {
 	title: string;
@@ -17,6 +13,7 @@ interface VoteStore {
 	voteCreatorId: number | null;
 	currentUserId: number | null;
 	timeLeft: number;
+
 	setTimeLeft: (time: number) => void;
 	setIsSave: (state: boolean) => void;
 	setTitle: (title: string) => void;
@@ -39,6 +36,7 @@ interface VoteStore {
 		isActive: boolean;
 		isEnded: boolean;
 		userId?: number;
+		timeLeft?: number;
 	}) => void;
 }
 
@@ -47,8 +45,8 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 	timeLeft: 10 * 60 * 1000,
 	setTimeLeft: (time) => set({ timeLeft: time }),
 	voteItems: [
-		{ id: Date.now(), text: "", count: 0 },
-		{ id: Date.now() + 1, text: "", count: 0 },
+		{ itemId: Date.now(), text: "", count: 0 },
+		{ itemId: Date.now() + 1, text: "", count: 0 },
 	],
 	isSave: false,
 	isDuplicated: false,
@@ -75,9 +73,9 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 		set({ isDuplicated: value });
 	},
 
-	deleteVoteItem: (id) =>
+	deleteVoteItem: (itemId) =>
 		set((state) => {
-			const newItems = state.voteItems.filter((item) => item.id !== id);
+			const newItems = state.voteItems.filter((item) => item.itemId !== itemId);
 			console.log('항목 삭제 후:', newItems);
 			return { voteItems: newItems };
 		}),
@@ -90,7 +88,6 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 	setSelectedVoteId: (fn) =>
 		set((state) => {
 			const newSelected = fn(state.selectedVoteId);
-			console.log('선택된 투표 ID 업데이트:', newSelected);
 			return { selectedVoteId: newSelected };
 		}),
 
@@ -106,6 +103,11 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 
 	isVoteCreator: () => {
 		const { voteCreatorId, currentUserId } = get();
+		console.log('투표 생성자 확인:', {
+			voteCreatorId,
+			currentUserId,
+			isCreator: voteCreatorId !== null && currentUserId !== null && voteCreatorId === currentUserId
+		});
 		return voteCreatorId !== null && currentUserId !== null && voteCreatorId === currentUserId;
 	},
 
@@ -122,8 +124,8 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 		set({
 			title: "",
 			voteItems: [
-				{ id: Date.now(), text: "", count: 0 },
-				{ id: Date.now() + 1, text: "", count: 0 },
+				{ itemId: Date.now(), text: "", count: 0 },
+				{ itemId: Date.now() + 1, text: "", count: 0 },
 			],
 			isSave: false,
 			isDuplicated: false,
@@ -133,24 +135,19 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 			voteCreatorId: null,
 		});
 	},
-
 	updateFromServer: (data) => {
 		console.log('서버에서 받은 투표 데이터 업데이트:', data);
 		set({
 			title: data.title,
-			voteItems: data.items.map(item => ({
-				id: item.itemId,
-				text: item.text,
-				count: item.count
-			})),
+			voteItems: data.items,
 			isDuplicated: data.isMultiple,
 			isSave: data.isActive,
 			isTimerActive: data.isActive && !data.isEnded,
 			isVoteEnded: data.isEnded,
 			voteCreatorId: data.userId || null
+
 		});
 	},
-
 	isVote: (id) => {
 		const { isDuplicated, setSelectedVoteId} = get();
 		console.log('투표 항목 선택:', id, '중복 선택:', isDuplicated);
