@@ -11,7 +11,9 @@ export const setupSocketIO = (io : Server) => {
         // 연결이 끊어졌을 때
         socket.on('disconnect', () => {
             console.log('클라이언트 연결 끊김');
-            userLeave(io, socket);
+            if(socket.data.userId) {
+                userLeave(io, socket);
+            }
         });
 
         // 에러 발생 시

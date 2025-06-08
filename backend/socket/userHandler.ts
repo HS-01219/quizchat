@@ -51,8 +51,8 @@ export function handleUser(io : Server, socket : Socket) {
         });
     });
 
-    socket.on('LEAVE_ROOM', async ({ userId, nickName } : userPayload) => {
-        if(userId) {
+    socket.on('LEAVE_ROOM', async () => {
+        if(socket.data.userId) {
             userLeave(io, socket);
         }
     });
