@@ -6,7 +6,7 @@ const Chat = () => {
 	const message = useUserStore((state) => state.message);
 	return (
 		<>
-			<div>채팅</div>
+			<div>채팅 - 서버반영테스트</div>
 			{message.map((msg,index)=>(
 				<ChatSystemMessage message={msg} key={index} />
 				))}
