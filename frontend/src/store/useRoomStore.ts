@@ -9,8 +9,8 @@ interface RoomState{
 }
 
 export const useRoomStore = create<RoomState>((set) => ({
-quizState:{isActive:false,quizData:null},
-	voteState: { isActive: false, userId: 0, title: '', items: [], isMultiple: false },
+	quizState:{isActive:false,quizData:null},
+	voteState: { isActive: false, userId: 0, title: '', items: [], isMultiple: false, isEnded: false },
 	setQuizState: (quizState) => set({ quizState}),
 	setVoteState:(voteState) => set({ voteState}),
 }));

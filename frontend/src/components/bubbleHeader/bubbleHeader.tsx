@@ -99,6 +99,7 @@ import { useModalStore } from "@/store/useModalStore";
 import { useVoteStore } from "@/store/useVoteStore";
 import { useVoteHandler } from "@/socket/voteHandler";
 import VoteResult from "@/components/vote/result/result";
+import {useTimerStore} from "@/store/useTimerStore";
 
 interface BubbleHeaderProps {
   type: "quiz" | "vote";
@@ -113,17 +114,17 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
                                                      hasVote = false,
                                                    }) => {
   const [expanded, setExpanded] = useState(false);
-  const [showResult, setShowResult] = useState(false); // ✅ 결과 표시 여부
-
+  const [showResult, setShowResult] = useState(false);
   const { openModal } = useModalStore();
   const {
     isSave,
     setIsTimerActive,
     resetVote,
     isVoteCreator,
-voteItems
+    voteItems
   } = useVoteStore();
   const isCreator = isVoteCreator();
+  const { resetTimer } = useTimerStore();
   const { endVote } = useVoteHandler();
 
   const handleCreateVoteClick = (e: React.MouseEvent) => {
@@ -140,8 +141,9 @@ voteItems
     e.stopPropagation();
     setIsTimerActive(false);
     endVote();
-    // resetVote();
-    setShowResult(true);
+    resetVote();
+    resetTimer()
+
   };
 
   return (

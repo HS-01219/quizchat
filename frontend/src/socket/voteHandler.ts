@@ -15,7 +15,7 @@ export const useVoteHandler = () => {
         isVoteSocketInitialized = true;
         socket.emit("GET_CURRENT_VOTE");
 
-
+        console.log('🔍 컴포넌트 마운트:', new Date().toISOString());
         socket.on("START_VOTE", (data: VoteState) => {
             console.log("투표 시작됨:", data);
             setVoteState(data);

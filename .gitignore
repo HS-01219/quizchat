@@ -4,4 +4,4 @@ frontend/.env
 package-lock.json
 
 build/
-dist/
+dist/frontend/.env
