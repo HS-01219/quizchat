@@ -173,6 +173,8 @@ import { useVoteStore } from "@/store/useVoteStore";
 import { useModalStore } from "@/store/useModalStore";
 
 import {useUserStore} from "@/store/useUserStore";
+import {useTimerStore} from "@/store/useTimerStore";
+import {useVoteHandler} from "@/socket/voteHandler";
 
 const Content = () => {
 	const { save, edit, vote } = useVote(); // vote 함수 다시 추가 (서버 전송용)
@@ -189,24 +191,23 @@ const Content = () => {
 		setVoteItems,
 		selectedVoteId,
 		isTimerActive,
+		setIsTimerActive,
 		isVoteEnded,
+		resetVote,
 		isVoteCreator,
-		setCurrentUserId,
 		voteCreatorId,
 		setVoteCreatorId,
 		isVote, // store의 상태 업데이트용
 
 	} = useVoteStore();
-
+	const { resetTimer } = useTimerStore();
+	const { endVote } = useVoteHandler();
 	const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
 
 	useEffect(() => {
 		setSelectedItems(new Set(selectedVoteId));
 	}, [selectedVoteId]);
 
-	useEffect(() => {
-		setCurrentUserId(userId);
-	}, [setCurrentUserId, userId]); // userId 의존성 추가
 
 	const isCreator = isVoteCreator();
 
@@ -220,15 +221,13 @@ const Content = () => {
 			isCreator: isVoteCreator(),
 			selectedItems: Array.from(selectedItems)
 		});
-
-		setVoteCreatorId(userId);
 		vote(id);
 	};
 
 	const handleItemChange = (id: number, value: string) => {
 		if (isSave) return;
 		setVoteItems((prev) =>
-			prev.map((item) => (item.itemId === id ? { ...item, text: value } : item)) // item.id → item.itemId
+			prev.map((item) => (item.itemId === id ? { ...item, text: value } : item))
 		);
 	};
 
@@ -239,12 +238,21 @@ const Content = () => {
 
 	const addVoteItem = () => {
 		if (isSave) return;
-		setVoteItems((prev) => [...prev, { itemId: Date.now(), text: "", count: 0 }]); // id → itemId
+		setVoteItems((prev) => [...prev, { itemId: Date.now(), text: "", count: 0 }]);
 	};
 
 	const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (isSave) return;
 		setTitle(e.target.value);
+	};
+
+	const handleEndVoteClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		setIsTimerActive(false);
+		endVote();
+		resetVote();
+		resetTimer()
+
 	};
 
 	const onSaveClick = () => {
@@ -313,7 +321,6 @@ const Content = () => {
 			)}
 
 			{!isSave && <RadioBtn />}
-
 			<S.ButtonWrapper>
 				{!isSave ? (
 					<>
@@ -326,6 +333,7 @@ const Content = () => {
 							<Button onClick={onEdit}>수정</Button>
 						)}
 						<Button onClick={handleCloseModal}>닫기</Button>
+						<Button onClick={handleEndVoteClick}>투표 종료</Button>
 					</>
 				)}
 			</S.ButtonWrapper>
