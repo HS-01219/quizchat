@@ -49,7 +49,7 @@ const messageMap: {
   },
   quizEnd: {
     IconComponent: FaExclamationTriangle,
-    getText: () => "퀴즈가 종료료되었습니다.",
+    getText: () => "퀴즈가 종료되었습니다.",
   },
 };
 

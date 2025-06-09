@@ -214,6 +214,7 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
   type,
   question,
   hasVote = false,
+  time,
 }) => {
   const [expanded, setExpanded] = useState(false);
   const [showResult, setShowResult] = useState(false);
@@ -256,20 +257,27 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
   return (
     <S.BalloonContainer onClick={() => setExpanded(!expanded)}>
       <S.ContentRow expanded={expanded}>
+
         <S.QuestionSection>
           {type === "quiz" ? <S.QLabel>Q</S.QLabel> : <S.VoteIcon />}
           {expanded ? (
-            <S.QuestionTextExpanded>{question}</S.QuestionTextExpanded>
+            <S.QuestionTextExpanded>
+              {question}
+              </S.QuestionTextExpanded>
           ) : (
             <S.QuestionText title={question}>{question}</S.QuestionText>
           )}
-
           {hasVote && isSave && <CountDown />}
         </S.QuestionSection>
 
         <S.ToggleIcon>
           {expanded ? <FiChevronUp /> : <FiChevronDown />}
         </S.ToggleIcon>
+
+        <S.TimeText>
+          {time && <S.TimeText>{time}</S.TimeText>}
+        </S.TimeText>
+
       </S.ContentRow>
 
       {expanded && type === "quiz" && (
@@ -277,6 +285,8 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
           <Button onClick={handleQuitQuiz}>퀴즈 종료</Button>
         </S.ButtonContainer>
       )}
+
+
 
       {expanded && type === "vote" && (
         <S.ButtonContainer>

@@ -12,11 +12,13 @@ interface UserState {
   justJoined: boolean;
   message: ChatMessage[];
   currentUsers: number;
+  headerType: "default" | "quiz" | "vote";
   setUserId: (userId: number) => void;
   setCurrentUsers: (currentUsers: number) => void;
   setNickName: (name: string) => void;
   setJustJoined: (joined: boolean) => void;
   setMessage: (msg: string, sender: string) => void;
+  setHeaderType: (type: "default" | "quiz" | "vote") => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -25,6 +27,7 @@ export const useUserStore = create<UserState>((set) => ({
   message: [],
   userId: 0,
   currentUsers: 0,
+  headerType: "default",
 
   setUserId: (id: number) => set({ userId: id }),
   setCurrentUsers: (currentUsers: number) =>
@@ -46,4 +49,6 @@ export const useUserStore = create<UserState>((set) => ({
         },
       ],
     })),
+     setHeaderType: (type) => set({ headerType: type }),
+
 }));

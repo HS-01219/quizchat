@@ -6,11 +6,13 @@ import { useQuizHandler } from "@/socket/quizHandler";
 import { useModalStore } from "@/store/useModalStore";
 
 import {useVoteStore} from "@/store/useVoteStore";
+import { useUserStore } from "@/store/useUserStore";
+
 const FooterMenu = () => {
    const { voteState } = useVoteStore();
   const { requestStartQuiz } = useQuizHandler();
   const { openModal } = useModalStore();
-
+  const { setHeaderType } = useUserStore();
 
 
   const handleVoteClick = () => {
@@ -25,9 +27,18 @@ const FooterMenu = () => {
       openModal("vote");
     }
   };
-  const handleQuizClick=()=>{
-    requestStartQuiz()
-  }
+
+  const handleQuizClick = () => {
+    const hasActiveVote = voteState?.isActive && !voteState?.isEnded;
+
+    if (hasActiveVote) {
+      alert("진행 중인 투표가 있습니다.");
+      return;
+    }
+
+    setHeaderType("quiz");
+    requestStartQuiz();
+  };
 
   return (
     <S.FooterMenuContainer>
