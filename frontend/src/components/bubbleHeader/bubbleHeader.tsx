@@ -146,6 +146,8 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
 
   };
 
+  const handleQuitQuiz = () => {};
+
   return (
     <S.BalloonContainer onClick={() => setExpanded(!expanded)}>
       <S.ContentRow expanded={expanded}>
@@ -164,6 +166,13 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
           {expanded ? <FiChevronUp /> : <FiChevronDown />}
         </S.ToggleIcon>
       </S.ContentRow>
+
+      {expanded && type === "quiz" && (
+        <S.ButtonContainer>
+          <Button onClick={handleQuitQuiz}>퀴즈 종료</Button>
+        </S.ButtonContainer>
+      )}
+      
 
       {expanded && type === "vote" && (
         <S.ButtonContainer>
