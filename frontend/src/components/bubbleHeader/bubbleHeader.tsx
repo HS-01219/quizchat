@@ -99,7 +99,8 @@ import { useModalStore } from "@/store/useModalStore";
 import { useVoteStore } from "@/store/useVoteStore";
 import { useVoteHandler } from "@/socket/voteHandler";
 import VoteResult from "@/components/vote/result/result";
-import {useTimerStore} from "@/store/useTimerStore";
+import { useTimerStore } from "@/store/useTimerStore";
+import { useQuizStore } from "@/store/useQuizStore";
 
 interface BubbleHeaderProps {
   type: "quiz" | "vote";
@@ -109,10 +110,10 @@ interface BubbleHeaderProps {
 }
 
 const BubbleHeader: React.FC<BubbleHeaderProps> = ({
-                                                     type,
-                                                     question,
-                                                     hasVote = false,
-                                                   }) => {
+  type,
+  question,
+  hasVote = false,
+}) => {
   const [expanded, setExpanded] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const { openModal } = useModalStore();
@@ -121,11 +122,12 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
     setIsTimerActive,
     resetVote,
     isVoteCreator,
-    voteItems
+    voteItems,
   } = useVoteStore();
   const isCreator = isVoteCreator();
   const { resetTimer } = useTimerStore();
   const { endVote } = useVoteHandler();
+  const { hideQuizQuestion } = useQuizStore();
 
   const handleCreateVoteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -142,11 +144,13 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
     setIsTimerActive(false);
     endVote();
     resetVote();
-    resetTimer()
-
+    resetTimer();
   };
 
-  const handleQuitQuiz = () => {};
+  const handleQuitQuiz = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    hideQuizQuestion();
+  };
 
   return (
     <S.BalloonContainer onClick={() => setExpanded(!expanded)}>
@@ -172,7 +176,6 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
           <Button onClick={handleQuitQuiz}>퀴즈 종료</Button>
         </S.ButtonContainer>
       )}
-      
 
       {expanded && type === "vote" && (
         <S.ButtonContainer>
@@ -188,9 +191,7 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
           )}
         </S.ButtonContainer>
       )}
-      {showResult && voteItems.length > 0 && (
-        <VoteResult items={voteItems} />
-      )}
+      {showResult && voteItems.length > 0 && <VoteResult items={voteItems} />}
     </S.BalloonContainer>
   );
 };
