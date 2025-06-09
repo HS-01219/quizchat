@@ -6,9 +6,10 @@ interface UserState {
 	userId:number;
 	justJoined: boolean;
 	message: string[];
-currentUsers:number;
-setUserId: (userId: number) => void;
-setCurrentUsers: (currentUsers: number) => void;
+	currentUsers:number;
+
+	setUserId: (userId: number) => void;
+	setCurrentUsers: (currentUsers: number) => void;
 	setNickName: (name: string) => void;
 	setJustJoined: (joined: boolean) => void;
 	setMessage: (msg: string) => void;

@@ -8,10 +8,13 @@ import Layout from "@/components/layout/layout";
 import UserNameChange from "@/components/modal/userNameChange/userNameChange";
 import {useAuth} from "@/hooks/useAuth"
 import {useVoteHandler} from "@/socket/voteHandler";
+import {useUserHandlers} from "@/socket/userHandler";
+import VoteCard from "@/components/vote/voteCard";
 
 const App: React.FC = () => {
   const { isOpenModal, handleSave } = useAuth();
   useVoteHandler();
+  useUserHandlers()
   return (
     <ThemeProvider theme={theme}>
       <Global styles={GlobalStyle} />
@@ -20,6 +23,7 @@ const App: React.FC = () => {
         {isOpenModal.nickName && (
           <UserNameChange onSave={handleSave} />
         )}
+        {isOpenModal.vote && <VoteCard />}
       </Layout>
     </ThemeProvider>
   );

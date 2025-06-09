@@ -39,7 +39,9 @@ export function handleUser(io : Server, socket : Socket) {
         const voteStateRaw = await getRedisValue('voteState');
         const quizState = quizStateRaw ? JSON.parse(quizStateRaw) : null;
         const voteState = voteStateRaw ? JSON.parse(voteStateRaw) : null;
-
+        console.log(quizState);
+        console.log("📦 quizStateRaw:", quizStateRaw);
+        console.log("📦 voteStateRaw:", voteStateRaw);
         // JOIN_ROOM 을 보낸 클라이언트에게만 전달
         socket.emit('SEND_JOINED_SUCCESS', {
             userId : socket.data.userId,
@@ -56,6 +58,7 @@ export function handleUser(io : Server, socket : Socket) {
             userLeave(io, socket);
         }
     });
+
 }
 
 export const userLeave = async (io : Server, socket : Socket) : Promise<void> => {

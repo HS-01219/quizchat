@@ -3,13 +3,15 @@ import { socket } from './socketManager';
 import {useUserStore} from "@/store/useUserStore";
 import type { VoteState, QuizState } from '@/common/types';
 import {useRoomStore} from "@/store/useRoomStore";
+import {useVoteStore} from "@/store/useVoteStore";
 
 let isSocketInitialized = false;
 
 export const useUserHandlers = () => {
-    const { nickName, userId, setNickName, setMessage, setUserId } = useUserStore();
+    const { nickName, userId, setNickName, setMessage} = useUserStore();
     const {setCurrentUsers} = useUserStore.getState()
-    const { setQuizState, setVoteState } = useRoomStore.getState();
+const { setVoteState} = useVoteStore();
+
     useEffect(() => {
         if (isSocketInitialized) return;
         isSocketInitialized = true;
@@ -32,10 +34,9 @@ export const useUserHandlers = () => {
         };
     }, []);
 
-// userHandler.ts
-    const requestJoinRoom = (data: { nickName: string }) => {
+    const requestJoinRoom = (data: { nickName: string}) => {
         console.log(`${data.nickName} 님이 입장 요청합니다.`);
-        socket.emit('JOIN_ROOM', { nickName: data.nickName });
+        socket.emit('JOIN_ROOM', { nickName: data.nickName});
     };
 
     const userLeaved = (data: { currentUsers: number, userId: number, nickName: string }) => {
@@ -51,35 +52,30 @@ export const useUserHandlers = () => {
         setMessage(`'${data.nickName}' 님이 입장하셨습니다.`);
 
     };
+    // const joinRoom = (data: {
+    //     userId: number,
+    //     nickName: string,
+    //     roomState: { quizState: QuizState, voteState: VoteState }
+    // }) => {
+    //     console.log("[joinRoom] 전달받은 데이터:", data)
+    //     console.log(`현재 퀴즈 상태 : ${data.roomState.quizState ? data.roomState.quizState.isActive : 'X'}
+    //                  현재 투표 상태 : ${data.roomState.voteState ? data.roomState.voteState.isActive : 'X'}`)
+    //     // 방 참여에 성공한 유저에게 roomState (quizState, voteState)를 전달
+    //     // 프론트 TODO : 퀴즈나 투표가 있다면 해당 유저의 화면에 표시
+
+    // }
     const joinRoom = (data: {
         userId: number,
         nickName: string,
         roomState: { quizState: QuizState, voteState: VoteState }
     }) => {
-        console.log(`userId : ${data.userId} nickName : ${data.nickName}`)
-        console.log(`현재 퀴즈 상태 : ${data.roomState.quizState ? data.roomState.quizState.isActive : 'X'}
+        console.log("[joinRoom] 전달받은 데이터:", data);
+        console.log("전달받은 voteState:", data.roomState.voteState);
+        // setQuizState(data.roomState.quizState);
+        setVoteState(data.roomState.voteState);
 
-                     현재 투표 상태 : ${data.roomState.voteState ? data.roomState.voteState.isActive : 'X'}`)
-        // 방 참여에 성공한 유저에게 roomState (quizState, voteState)를 전달
-        // 프론트 TODO : 퀴즈나 투표가 있다면 해당 유저의 화면에 표시
-        //     setQuizState(data.roomState.quizState);
-        //     setVoteState(data.roomState.voteState);
-    }
-    // const joinRoom = (data: {
-    //     userId: number,
-    //     nickName: string,
-    //     currentUsers: number,
-    //     roomState: { quizState: QuizState, voteState: VoteState }
-    // }) => {
-    //     console.log(`userId : ${data.userId} nickName : ${data.nickName} `)
-    //     console.log("roomState 객체:", data.roomState);
-    //     setUserId(data.userId);
-    //
-    //     // TODO: roomState 처리
-    //     setQuizState(data.roomState.quizState);
-    //     setVoteState(data.roomState.voteState);
-    // }
-
+        useVoteStore.getState().setCurrentUserId(data.userId);
+    };
     /* 닉네임 변경 관련 */
     const sendNickName = (data: { userId: number, nickName: string }) => {
         console.log(`${data.userId}의 닉네임이 ${data.nickName}으로 변경됨`);
@@ -105,5 +101,5 @@ export const useUserHandlers = () => {
 
     }
 
-    return {nickName, setNickName, updateNickName, requestJoinRoom, userJoined, userLeaved};
+    return {nickName, setNickName, updateNickName, requestJoinRoom, userJoined, userLeaved,joinRoom};
 }
