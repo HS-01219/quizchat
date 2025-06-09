@@ -2,6 +2,7 @@ import React from "react";
 import SystemMessage from "@/components/systemMessage/SystemMessage";
 import BubbleHeader from "@/components/bubbleHeader/bubbleHeader";
 import { useQuizStore } from "@/store/useQuizStore";
+import { useChatStore } from "@/store/useChatStore";
 
 const Quiz = () => {
   const {
@@ -11,19 +12,41 @@ const Quiz = () => {
     correctAnswer,
   } = useQuizStore();
 
-  const dummyTime = "00:30";
+  const { systemMessages } = useChatStore();
 
   const headerQuestion = isActive && question ? question : "퀴즈가 없습니다";
 
+  const getCurrentTime = () => {
+    const now = new Date();
+    return now.toTimeString().slice(0, 5);
+  };
+
   return (
     <>
-      <BubbleHeader type="quiz" question={headerQuestion} time={dummyTime} />
+      <BubbleHeader type="quiz" question={headerQuestion} time={getCurrentTime()} />
+
+      {/* 테스트용 */}
+      {!isActive && (
+        <SystemMessage
+          type="quizStart"
+          time={getCurrentTime()}
+        />
+      )}
+
+      {systemMessages.map((msg, index) => (
+        <SystemMessage
+          key={index}
+          type={msg.type}
+          nickName={msg.nickName}
+          time={msg.time}
+        />
+      ))}
 
       {!isActive && winnerNickName && correctAnswer && (
         <SystemMessage
           type="correct"
           nickName={winnerNickName}
-          time={dummyTime}
+          time={getCurrentTime()}
         />
       )}
     </>
