@@ -165,7 +165,7 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
         </S.ToggleIcon>
       </S.ContentRow>
 
-      {expanded && (
+      {expanded && type === "vote" && (
         <S.ButtonContainer>
           {!hasVote ? (
             <Button onClick={handleCreateVoteClick}>투표 만들기</Button>

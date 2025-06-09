@@ -11,15 +11,15 @@ const Quiz = () => {
     correctAnswer,
   } = useQuizStore();
 
-  const dummyTime = "00:30"; 
+  const dummyTime = "00:30";
+
+  const headerQuestion = isActive && question ? question : "퀴즈가 없습니다";
 
   return (
     <>
-      {isActive && question && (
-        <BubbleHeader type="quiz" question={question} time={dummyTime} />
-      )}
+      <BubbleHeader type="quiz" question={headerQuestion} time={dummyTime} />
 
-      {winnerNickName && correctAnswer && (
+      {!isActive && winnerNickName && correctAnswer && (
         <SystemMessage
           type="correct"
           nickName={winnerNickName}
