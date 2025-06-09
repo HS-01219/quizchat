@@ -7,8 +7,6 @@ const Quiz = () => {
   const {
     question,
     isActive,
-    winnerNickName,
-    correctAnswer,
   } = useQuizStore();
 
   const { systemMessages } = useChatStore();
