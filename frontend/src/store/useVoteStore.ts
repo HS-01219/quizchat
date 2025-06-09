@@ -1,8 +1,9 @@
 import { create } from "zustand";
-import type { VoteItem } from "@/common/types";
+import type {VoteItem, VoteState} from "@/common/types";
 
 
 interface VoteStore {
+	voteState: VoteState | null;
 	title: string;
 	voteItems: VoteItem[];
 	isSave: boolean;
@@ -12,7 +13,7 @@ interface VoteStore {
 	isVoteEnded: boolean;
 	voteCreatorId: number | null;
 	currentUserId: number | null;
-
+	setVoteState: (newState: VoteState) => void
 	setIsSave: (state: boolean) => void;
 	setTitle: (title: string) => void;
 	setVoteItems: (fn: (prev: VoteItem[]) => VoteItem[]) => void;
@@ -39,6 +40,7 @@ interface VoteStore {
 }
 
 export const useVoteStore = create<VoteStore>((set, get) => ({
+	voteState: null,
 	title: "",
 	voteItems: [
 		{ itemId: Date.now(), text: "", count: 0 },
@@ -68,7 +70,10 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 		console.log('중복 선택 설정:', value);
 		set({ isDuplicated: value });
 	},
-
+	setVoteState: (newState) => {
+		console.log("투표 상태 설정:", newState);
+		set({ voteState: newState });
+	},
 	deleteVoteItem: (itemId) =>
 		set((state) => {
 			const newItems = state.voteItems.filter((item) => item.itemId !== itemId);
