@@ -9,6 +9,7 @@ import UserNameChange from "@/components/modal/userNameChange/userNameChange";
 import {useAuth} from "@/hooks/useAuth"
 import {useVoteHandler} from "@/socket/voteHandler";
 import VoteCard from "@/components/vote/voteCard";
+
 const App: React.FC = () => {
   const { isOpenModal, handleSave } = useAuth();
   useVoteHandler();

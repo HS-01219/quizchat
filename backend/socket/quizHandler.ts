@@ -17,6 +17,7 @@ export function handleQuiz(io : Server, socket : Socket) {
             question: '논리적 데이터베이스를 구성하는 기본 단위는?',
             answer : '테이블/table/Table'
         }
+
         if(result) {
             // redis에 answer와 퀴즈 상태를 저장
             const quizState : QuizState = {

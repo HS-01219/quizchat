@@ -1,3 +1,5 @@
+// 퀴즈 투표 관련 시스템 메시지
+
 import { create } from "zustand";
 import type {VoteItem} from "@/common/types";
 type MessageType = "correct" | "voteStart" | "voteEnd" | "warning" | "quizStart" | "quizEnd" |"voteResult";

@@ -101,12 +101,11 @@ export const useUserHandlers = () => {
             alert("닉네임이 빈칸입니다.");
             return;
         }
-        console.log(`닉네임 변경 요청: ${trimmed} (userId: ${data.userId})`);
 
-        // 1. 클라이언트 스토어에 닉네임 변경 적용
+        console.log(`닉네임 변경 요청: ${data.nickName} (userId: ${data.userId})`);
+        setSystemMessage(`'${userId}' 님이 '${nickName}' 님으로 이름이 변경되었습니다.`);
+        socket.emit('UPDATE_NICKNAME', { userId, nickName });
         useUserStore.getState().updateSenderNickName(data.userId, trimmed);
-
-        // 2. 서버로 닉네임 변경 요청
         socket.emit('UPDATE_NICKNAME', { userId: data.userId, nickName: trimmed });
     }
 
