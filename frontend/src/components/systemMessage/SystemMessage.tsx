@@ -6,6 +6,7 @@ import {
   FaVoteYea,
 } from "react-icons/fa";
 import { MdHowToVote } from "react-icons/md";
+import type {VoteItem} from "@/common/types";
 
 type MessageType =
   | "correct"
@@ -13,12 +14,15 @@ type MessageType =
   | "voteEnd"
   | "warning"
   | "quizStart"
-  | "quizEnd";
+  | "quizEnd"
+| "voteResult";
+
 
 interface SystemMessageProps {
   type: MessageType;
   nickName?: string;
   time: string;
+  items?: VoteItem[];
 }
 
 const messageMap: {
@@ -49,23 +53,40 @@ const messageMap: {
   },
   quizEnd: {
     IconComponent: FaExclamationTriangle,
-    getText: () => "퀴즈가 종료료되었습니다.",
+    getText: () => "퀴즈가 종료되었습니다.",
   },
+  voteResult:{
+    IconComponent: FaExclamationTriangle,
+    getText: () => "투표 결과",
+  }
 };
 
 const SystemMessage: React.FC<SystemMessageProps> = ({
   type,
   nickName = "사용자",
   time,
+  items,
 }) => {
   const { IconComponent, getText } = messageMap[type];
-
+  console.log('voteResult items:', items);
   return (
     <S.Wrapper>
       <S.Icon type={type}>
         <IconComponent />
       </S.Icon>
-      <S.Text>{getText(nickName)}</S.Text>
+      <S.Text>
+        {type=== "voteResult" && items ?
+          <div>투표 결과
+          <ul>
+            {items.map((item)=>(
+              <li key={item.itemId}>
+                 {item.text} - {item.count}표
+               </li>
+            ))}
+          </ul>
+          </div>:(getText(nickName))
+        }
+    </S.Text>
       <S.Time>{time}</S.Time>
     </S.Wrapper>
   );

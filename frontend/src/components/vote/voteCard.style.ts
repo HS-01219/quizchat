@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 
 export const VoteContainer = styled.div(({ theme }) => ({
 	display: "flex",
-
+	position: "fixed",
+	zIndex: "999",
 	padding: "0rem 1rem",
 	flexDirection: "column",
 		margin: "2rem",

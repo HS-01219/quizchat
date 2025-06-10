@@ -19,11 +19,13 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <Global styles={GlobalStyle} />
       <Layout>
+
         <Outlet />
+        {isOpenModal.vote && <VoteCard />}
         {isOpenModal.nickName && (
           <UserNameChange onSave={handleSave} />
         )}
-        {isOpenModal.vote && <VoteCard />}
+
       </Layout>
     </ThemeProvider>
   );

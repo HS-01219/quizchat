@@ -1,12 +1,20 @@
 import { socket } from "./socketManager";
 import { useEffect } from "react";
 import type { VoteItem, VoteState } from "@/common/types";
+
 import { useVoteStore } from "@/store/useVoteStore";
+import {useChatStore} from "@/store/useChatStore";
 
 let isVoteSocketInitialized = false;
 
 export const useVoteHandler = () => {
     const { setVoteState , setIsTimerActive, endVote: endVoteLocal} = useVoteStore();
+    const { addSystemMessage } = useChatStore();
+    const getCurrentTime = () => {
+        const now = new Date();
+        return now.toTimeString().slice(0, 5);
+    };
+
     const updateFromServer=useVoteStore((state) => state.updateFromServer);
     useEffect(() => {
         if (isVoteSocketInitialized) return;
@@ -47,6 +55,7 @@ export const useVoteHandler = () => {
 
     const startVote = (data: { title: string, items: VoteItem[], isMultiple: boolean }) => {
         console.log('투표 시작 요청:', data);
+        addSystemMessage({ type: "voteStart", time: getCurrentTime() });
         socket.emit('START_VOTE', data);
     };
 
@@ -58,6 +67,8 @@ export const useVoteHandler = () => {
 
     const endVote = () => {
         console.log('투표 종료 요청');
+        addSystemMessage({ type: "voteEnd", time: getCurrentTime() });
+        addSystemMessage({ type: "voteResult", time: getCurrentTime() });
         socket.emit('END_VOTE');
     };
 

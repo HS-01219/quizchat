@@ -5,7 +5,7 @@ import { useUserHandlers} from "@/socket/userHandler";
 
 export const useAuth = () => {
 	const { nickName, setNickName, setJustJoined, setMessage} = useUserStore();
-	const { requestJoinRoom} = useUserHandlers();
+	const { requestJoinRoom,updateNickName} = useUserHandlers();
 	const { closeModal, openModal, isOpenModal } = useModalStore();
 
 	const [isInitial, setIsInitial] = useState(true);
@@ -21,8 +21,7 @@ export const useAuth = () => {
 		}
 	}, [nickName]);
 
-	const handleSave = (nickName: string) => {
-		const trimmedNick = nickName.trim();
+	const handleSave = (trimmedNick: string) => {
 		if (!trimmedNick) return;
 
 		if (isInitial) {
@@ -31,15 +30,18 @@ export const useAuth = () => {
 			requestJoinRoom({ nickName: trimmedNick });
 			setJustJoined(true);
 			setIsInitial(false);
-
-		}else {
+		} else {
+			const previous = prevNickName;
+			const now = new Date().toISOString();
 			setNickName(trimmedNick);
 			setPrevNickName(trimmedNick);
-			setMessage(`'${prevNickName}' 님이 '${trimmedNick}' 님으로 이름이 변경되었습니다.`);
+			const userId = useUserStore.getState().userId;
+
 		}
+
 
 		closeModal("nickName");
 	};
 
 	return { isOpenModal, handleSave, openModal };
-};
+}

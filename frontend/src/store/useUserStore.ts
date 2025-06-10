@@ -1,18 +1,23 @@
 
 import { create } from "zustand";
 
+interface UserMessage {
+	content: string;
+	time: string;
+}
+
 interface UserState {
 	nickName: string;
 	userId:number;
 	justJoined: boolean;
-	message: string[];
+	message: UserMessage[];
 	currentUsers:number;
 
 	setUserId: (userId: number) => void;
 	setCurrentUsers: (currentUsers: number) => void;
 	setNickName: (name: string) => void;
 	setJustJoined: (joined: boolean) => void;
-	setMessage: (msg: string) => void;
+	setMessage: (msg: string, now: string) => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -26,5 +31,14 @@ export const useUserStore = create<UserState>((set) => ({
 	setCurrentUsers:(currentUsers: number) => set({ currentUsers : currentUsers }),
 	setNickName: (name) => set({ nickName: name }),
 	setJustJoined: (joined) => set({ justJoined: joined }),
-	setMessage: (msg) => set((state)=>({ message: [...state.message,msg] })),
+	setMessage: (msg: string, time?: string) =>
+		set((state) => ({
+			message: [
+				...state.message,
+				{
+					content: msg,
+					time: time ?? new Date().toISOString(),
+				},
+			],
+		})),
 }));
