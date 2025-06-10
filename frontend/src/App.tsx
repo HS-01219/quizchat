@@ -12,6 +12,7 @@ import {useVoteHandler} from "@/socket/voteHandler";
 const App: React.FC = () => {
   const { isOpenModal, handleSave } = useAuth();
   useVoteHandler();
+  
   return (
     <ThemeProvider theme={theme}>
       <Global styles={GlobalStyle} />

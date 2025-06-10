@@ -10,6 +10,7 @@ export const useVoteHandler = () => {
     const { setVoteState } = useRoomStore();
     const {  setIsTimerActive, endVote: endVoteLocal} = useVoteStore();
     const updateFromServer=useVoteStore((state) => state.updateFromServer);
+    
     useEffect(() => {
         if (isVoteSocketInitialized) return;
         isVoteSocketInitialized = true;
