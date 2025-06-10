@@ -35,13 +35,14 @@ export function handleMessage(io: Server, socket: Socket) {
         console.log('메시지 수신:', sendMessage);
 
         try{
-            const DBResult = await saveSendMessageToDB(userId, nickName, msg);
+            // const DBResult = await saveSendMessageToDB(userId, nickName, msg);
             
-            if(DBResult && DBResult.affectedRows > 0){
-                console.log('DB : 메시지 저장 성공');
-            }else{
-                console.warn('DB : 메시지 저장 실패');
-            }
+            // if(DBResult && DBResult.affectedRows > 0){
+            //     console.log('DB : 메시지 저장 성공');
+            // }else{
+            //     console.warn('DB : 메시지 저장 실패');
+            // }
+            console.log("DB : 메세지 저장!")
 
             // io.emit('RECEIVE_MESSAGE', sendMessage);
             socket.broadcast.emit('RECEIVE_MESSAGE', sendMessage); // 다른 클라이언트에게만 전송
