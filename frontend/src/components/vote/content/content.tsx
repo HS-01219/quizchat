@@ -262,15 +262,6 @@ const Content = () => {
 		setTitle(e.target.value);
 	};
 
-	const handleEndVoteClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		setIsTimerActive(false);
-		endVote();
-		resetVote();
-		resetTimer()
-
-	};
-
 	const onSaveClick = () => {
 		const data = {
 			title,
