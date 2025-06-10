@@ -6,8 +6,6 @@ import {useUserStore} from "@/store/useUserStore";
 
 const Header = () => {
   const currentUsers = useUserStore((state) => state.currentUsers);
-
-
   return (
     <S.HeaderContainer>
       <S.Title>채팅방</S.Title>

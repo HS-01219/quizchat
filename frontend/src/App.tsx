@@ -10,6 +10,7 @@ import {useAuth} from "@/hooks/useAuth"
 import {useVoteHandler} from "@/socket/voteHandler";
 import VoteCard from "@/components/vote/voteCard";
 
+
 const App: React.FC = () => {
   const { isOpenModal, handleSave } = useAuth();
   useVoteHandler();
@@ -18,6 +19,7 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <Global styles={GlobalStyle} />
       <Layout>
+
         <Outlet />
         {isOpenModal.vote && <VoteCard />}
         {isOpenModal.nickName && (

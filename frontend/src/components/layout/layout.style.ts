@@ -1,15 +1,16 @@
 import styled from "@emotion/styled";
 
 export const LayoutWrapper = styled.div({
-	display: "flex",
-	flexDirection: "column",
-	minHeight: "100vh",
-
+	display: "grid",
+	gridTemplateRows: "0fr 1fr 0fr",
+	height: "100vh",
+	overflow: "hidden",
 });
 
 export const LayoutContainer = styled.div({
-	flex: 1,
 	width: "100%",
 	backgroundColor: "#ffffff",
-	overflowY: "auto",
+	overflow: "hidden",
+	display: "flex",
+flexDirection: "column",
 });
