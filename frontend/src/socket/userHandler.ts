@@ -8,9 +8,11 @@ import {useVoteStore} from "@/store/useVoteStore";
 let isSocketInitialized = false;
 
 export const useUserHandlers = () => {
-    const { nickName, userId, setNickName, setSystemMessage} = useUserStore();
+
+    const { nickName, userId, setNickName, setSystemMessage,setUserId} = useUserStore();
+
     const {setCurrentUsers} = useUserStore.getState()
-const { setVoteState} = useVoteStore();
+    const { setVoteState,updateFromServer} = useVoteStore();
 
     useEffect(() => {
         if (isSocketInitialized) return;
@@ -44,12 +46,14 @@ const { setVoteState} = useVoteStore();
         // 프론트 TODO : 방 참여 또는 퇴장 알림
         setCurrentUsers(data.currentUsers);
         setSystemMessage(`'${data.nickName}' 님이 퇴장하셨습니다.`);
+
     }
 
     const userJoined = (data: { currentUsers: number; userId: number; nickName: string }) => {
         console.log(`${data.nickName} 님이 방에 참여했습니다. 현재 인원: ${data.currentUsers}, 유저 아이디 :${data.userId}`);
         setCurrentUsers(data.currentUsers);
         setSystemMessage(`'${data.nickName}' 님이 입장하셨습니다.`);
+
 
     };
     // const joinRoom = (data: {
@@ -72,8 +76,11 @@ const { setVoteState} = useVoteStore();
         console.log("[joinRoom] 전달받은 데이터:", data);
         console.log("전달받은 voteState:", data.roomState.voteState);
         // setQuizState(data.roomState.quizState);
-        setVoteState(data.roomState.voteState);
-
+        setUserId(data.userId);
+        if(data.roomState.voteState){
+            updateFromServer(data.roomState.voteState);
+            setVoteState(data.roomState.voteState);
+        }
         useVoteStore.getState().setCurrentUserId(data.userId);
     };
     /* 닉네임 변경 관련 */
@@ -96,7 +103,8 @@ const { setVoteState} = useVoteStore();
             alert("닉네임이 빈칸입니다.");
             return;
         }
-
+        console.log(`닉네임 변경 요청: ${data.nickName} (userId: ${data.userId})`);
+        setMessage(`'${userId}' 님이 '${nickName}' 님으로 이름이 변경되었습니다.`,new Date().toISOString());
         socket.emit('UPDATE_NICKNAME', { userId, nickName });
 
     }

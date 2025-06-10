@@ -121,7 +121,7 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 	},
 
 	resetVote: () => {
-		console.log('투표 상태 초기화');
+		console.log('투표 필 초기화');
 		set({
 			title: "",
 			voteItems: [

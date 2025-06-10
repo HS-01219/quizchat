@@ -18,6 +18,7 @@ const App: React.FC = () => {
       <Global styles={GlobalStyle} />
       <Layout>
         <Outlet />
+        {isOpenModal.vote && <VoteCard />}
         {isOpenModal.nickName && (
           <UserNameChange onSave={handleSave} />
         )}
