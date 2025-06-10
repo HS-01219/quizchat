@@ -9,7 +9,7 @@ export const ChatUserMessageContainer = styled.div(({ theme }) => ({
   backgroundColor: theme.color.chatBlue,  
   borderRadius: theme.borderRadius.s,
   maxWidth: '70%',
-  margin: '0.5rem 0',
+  margin: '0.25rem 0',
   boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
   wordBreak: 'break-word',
 }));
@@ -23,7 +23,6 @@ export const MessageWrapper = styled.div(({ theme }) => ({
 export const SenderLabel = styled.div(({ theme }) => ({
   fontSize: theme.fontSize.xs,
   color: theme.color.gray50,
-  marginBottom: theme.fontSize.s,
 }));
 
 export const BubbleRow = styled.div(({ theme }) => ({
