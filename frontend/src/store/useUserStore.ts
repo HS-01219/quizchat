@@ -1,75 +1,29 @@
 import { create } from "zustand";
 
-
-// interface UserMessage {
-// 	content: string;
-// 	time: string;
-// }
-
-// interface UserState {
-// 	nickName: string;
-// 	userId:number;
-// 	justJoined: boolean;
-// 	message: UserMessage[];
-// 	currentUsers:number;
-
-// 	setUserId: (userId: number) => void;
-// 	setCurrentUsers: (currentUsers: number) => void;
-// 	setNickName: (name: string) => void;
-// 	setJustJoined: (joined: boolean) => void;
-// 	setMessage: (msg: string, now: string) => void;
-// }
-
-// export const useUserStore = create<UserState>((set) => ({
-// 	nickName: "",
-// 	justJoined: false,
-// 	message: [],
-// 	userId:0,
-// 	currentUsers:0,
-// 	setUserId: (id: number) => set({ userId: id }),
-
-// 	setCurrentUsers:(currentUsers: number) => set({ currentUsers : currentUsers }),
-// 	setNickName: (name) => set({ nickName: name }),
-// 	setJustJoined: (joined) => set({ justJoined: joined }),
-// 	setMessage: (msg: string, time?: string) =>
-// 		set((state) => ({
-// 			message: [
-// 				...state.message,
-// 				{
-// 					content: msg,
-// 					time: time ?? new Date().toISOString(),
-// 				},
-// 			],
-// 		})),
-// }));
-
 interface ChatMessage {
   content: string;
   sender?: string;
   time: string;
+  userId?: number;
 }
 
 interface UserState {
   nickName: string;
   userId: number;
   justJoined: boolean;
-
   message: ChatMessage[];
-
   userMessages: ChatMessage[];
   systemMessages: ChatMessage[];
-
   currentUsers: number;
   headerType: "default" | "quiz" | "vote";
-
   setUserId: (userId: number) => void;
   setCurrentUsers: (currentUsers: number) => void;
   setNickName: (name: string) => void;
   setJustJoined: (joined: boolean) => void;
-
-  setUserMessage: (msg: string, sender: string) => void;
+  setUserMessage: (msg: string, sender: string,userId:number) => void;
   setSystemMessage: (msg: string) => void;
   setHeaderType: (type: "default" | "quiz" | "vote") => void;
+  updateSenderNickName: (userId: number, newNickName: string) => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -88,13 +42,14 @@ export const useUserStore = create<UserState>((set) => ({
   setNickName: (name) => set({ nickName: name }),
   setJustJoined: (joined) => set({ justJoined: joined }),
 
-  setUserMessage: (msg, sender) =>
+  setUserMessage: (msg, sender,userId) =>
     set((state) => ({
       userMessages: [
         ...state.userMessages,
         {
           content: msg,
           sender,
+          userId,
           time: new Date().toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
@@ -117,5 +72,17 @@ export const useUserStore = create<UserState>((set) => ({
       ],
     })),
   setHeaderType: (type) => set({ headerType: type }),
-}));
-
+  updateSenderNickName: (userId: number, newNickName: string) =>
+    set((state) => ({
+      userMessages: state.userMessages.map((msg) =>
+        msg.userId === userId
+          ? { ...msg, sender: newNickName }
+          : msg
+      ),
+      message: state.message.map((msg) =>
+        msg.userId === userId
+          ? { ...msg, sender: newNickName }
+          : msg
+      ),
+    })),
+}))

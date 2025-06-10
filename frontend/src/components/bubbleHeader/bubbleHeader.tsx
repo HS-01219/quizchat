@@ -199,7 +199,6 @@ import CountDown from "@/components/countdown/countDown";
 import { useModalStore } from "@/store/useModalStore";
 import { useVoteStore } from "@/store/useVoteStore";
 import { useVoteHandler } from "@/socket/voteHandler";
-import VoteResult from "@/components/vote/result/result";
 import { useTimerStore } from "@/store/useTimerStore";
 import { useQuizStore } from "@/store/useQuizStore";
 
@@ -244,7 +243,7 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
   const handleEndVoteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsTimerActive(false);
-    endVote();
+    endVote(voteItems);
     resetVote();
     resetTimer();
   };
@@ -305,7 +304,6 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
           )}
         </S.ButtonContainer>
       )}
-      {showResult && voteItems.length > 0 && <VoteResult items={voteItems} />}
     </S.BalloonContainer>
   );
 };
