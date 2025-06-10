@@ -7,8 +7,6 @@ import {
 } from "react-icons/fa";
 import { MdHowToVote } from "react-icons/md";
 import { SystemMessageProps, MessageType } from "@/common/types";
-import type {VoteItem} from "@/common/types";
-
 
 const messageMap: {
   [key in MessageType]: {
