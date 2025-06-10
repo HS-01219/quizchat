@@ -89,7 +89,6 @@ export const useUserHandlers = () => {
         useUserStore.getState().updateSenderNickName(data.userId, data.nickName);
     }
 
-
     const responseMessage = (data: { message: string }) => {
         alert(data.message);
     }

@@ -21,7 +21,7 @@ export const ContentRow = styled.div<{ expanded: boolean }>(({ expanded }) => ({
 	display: "flex",
 	justifyContent: "space-between",
 	alignItems: "center",
-	marginBottom: expanded ? "3rem" : "0",
+	marginBottom: expanded ? "1.25rem" : "0",
 }));
 
 export const QuestionSection = styled.div({
