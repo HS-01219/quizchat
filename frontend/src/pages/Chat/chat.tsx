@@ -12,7 +12,7 @@ const Chat = () => {
   const { headerType } = useUserStore();
   const { systemMessages } = useChatStore();
 
-  const headerQuestion = isActive && question ? question : "퀴즈가 없습니다";
+  const headerQuestion = isActive && question ? question : "";
 
   const getCurrentTime = () => {
     const now = new Date();
@@ -48,7 +48,7 @@ const Chat = () => {
           time={msg.time}
         />
       ))}
-      
+
       <ChatMessageList>
         {userMessages.map((msg, idx) => (
           <ChatUserMessage key={idx} message={msg} />
