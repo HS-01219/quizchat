@@ -2,28 +2,49 @@ import { FiUser } from "react-icons/fi";
 import { RiFileListLine } from "react-icons/ri";
 import * as S from "@/components/footer/footerMenu/footerMenu.style";
 import { Label } from "@/constants/label";
-import { useNavigate } from "react-router-dom";
 import { useQuizHandler } from "@/socket/quizHandler";
-import {useRoomStore} from "@/store/useRoomStore";
+import { useModalStore } from "@/store/useModalStore";
 
+import {useVoteStore} from "@/store/useVoteStore";
+import { useUserStore } from "@/store/useUserStore";
 
 const FooterMenu = () => {
-  const nav = useNavigate();
-const {requestStartQuiz} = useQuizHandler();
+   const { voteState } = useVoteStore();
+  const { requestStartQuiz } = useQuizHandler();
+  const { openModal } = useModalStore();
+  const { setHeaderType } = useUserStore();
+
 
   const handleVoteClick = () => {
-    nav("/vote");
+    console.log(`[FooterMenu] 현재 voteState:`, voteState);
+    const isActiveVote = voteState?.isActive && !voteState?.isEnded;
+
+    if (isActiveVote) {
+      console.log("진행 중인 투표가 있습니다. 투표 헤더를 표시합니다.");
+      openModal("vote");
+    } else {
+      console.log("진행 중인 투표가 없습니다. 투표 모달을 엽니다.");
+      openModal("vote");
+    }
   };
+
   const handleQuizClick = () => {
+    const hasActiveVote = voteState?.isActive && !voteState?.isEnded;
+
+    if (hasActiveVote) {
+      alert("진행 중인 투표가 있습니다.");
+      return;
+    }
+
+    setHeaderType("quiz");
     requestStartQuiz();
-    nav("/quiz");
   };
 
   return (
     <S.FooterMenuContainer>
       <S.FooterMenuWrapper>
         <RiFileListLine onClick={handleVoteClick} />
-        <S.FooterMenuLabel> {Label.VOTE}</S.FooterMenuLabel>
+        <S.FooterMenuLabel>{Label.VOTE}</S.FooterMenuLabel>
       </S.FooterMenuWrapper>
       <S.FooterMenuWrapper>
         <FiUser onClick={handleQuizClick} />
@@ -32,4 +53,5 @@ const {requestStartQuiz} = useQuizHandler();
     </S.FooterMenuContainer>
   );
 };
+
 export default FooterMenu;

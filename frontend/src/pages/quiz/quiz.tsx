@@ -1,33 +1,45 @@
-import React from "react";
-import SystemMessage from "@/components/systemMessage/SystemMessage";
-import BubbleHeader from "@/components/bubbleHeader/bubbleHeader";
-import { useQuizStore } from "@/store/useQuizStore";
+// import SystemMessage from "@/components/systemMessage/SystemMessage";
+// import BubbleHeader from "@/components/bubbleHeader/bubbleHeader";
+// import { useQuizStore } from "@/store/useQuizStore";
+// import { useChatStore } from "@/store/useChatStore";
 
-const Quiz = () => {
-  const {
-    question,
-    isActive,
-    winnerNickName,
-    correctAnswer,
-  } = useQuizStore();
+// const Quiz = () => {
+//   const {
+//     question,
+//     isActive,
+//   } = useQuizStore();
 
-  const dummyTime = "00:30"; 
+//   const { systemMessages } = useChatStore();
 
-  return (
-    <>
-      {isActive && question && (
-        <BubbleHeader type="quiz" question={question} time={dummyTime} />
-      )}
+//   const headerQuestion = isActive && question ? question : "퀴즈가 없습니다";
 
-      {winnerNickName && correctAnswer && (
-        <SystemMessage
-          type="correct"
-          nickName={winnerNickName}
-          time={dummyTime}
-        />
-      )}
-    </>
-  );
-};
+//   const getCurrentTime = () => {
+//     const now = new Date();
+//     return now.toTimeString().slice(0, 5);
+//   };
 
-export default Quiz;
+//   return (
+//     <>
+//       <BubbleHeader type="quiz" question={headerQuestion} time={getCurrentTime()} />
+
+//       {/* {!isActive && (
+//         <SystemMessage
+//           type="quizStart"
+//           time={getCurrentTime()}
+//         />
+//       )} */}
+
+//       {systemMessages.map((msg, index) => (
+//         <SystemMessage
+//           key={index}
+//           type={msg.type}
+//           nickName={msg.nickName}
+//           time={msg.time}
+//         />
+//       ))}
+
+//     </>
+//   );
+// };
+
+// export default Quiz;

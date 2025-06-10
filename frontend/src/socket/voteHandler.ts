@@ -1,14 +1,12 @@
 import { socket } from "./socketManager";
 import { useEffect } from "react";
 import type { VoteItem, VoteState } from "@/common/types";
-import { useRoomStore } from "@/store/useRoomStore";
 import { useVoteStore } from "@/store/useVoteStore";
 
 let isVoteSocketInitialized = false;
 
 export const useVoteHandler = () => {
-    const { setVoteState } = useRoomStore();
-    const {  setIsTimerActive, endVote: endVoteLocal} = useVoteStore();
+    const { setVoteState , setIsTimerActive, endVote: endVoteLocal} = useVoteStore();
     const updateFromServer=useVoteStore((state) => state.updateFromServer);
     
     useEffect(() => {
@@ -16,12 +14,13 @@ export const useVoteHandler = () => {
         isVoteSocketInitialized = true;
         socket.emit("GET_CURRENT_VOTE");
 
-        console.log('🔍 컴포넌트 마운트:', new Date().toISOString());
         socket.on("START_VOTE", (data: VoteState) => {
             console.log("투표 시작됨:", data);
             setVoteState(data);
             updateFromServer(data);
-
+            console.log("🔥 서버로부터 받은 투표 상태:", data);
+            useVoteStore.getState().setVoteState(data);
+            useVoteStore.getState().updateFromServer(data);
         });
 
         // 투표 업데이트 이벤트

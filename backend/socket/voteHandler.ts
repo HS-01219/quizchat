@@ -7,16 +7,16 @@ let userVotes = new Map<number, Set<number>>(); // 사용자의 개별 투표 �
 
 // Redis : 현재 투표 상태 로드
 async function loadCurrentVoteFromRedis(): Promise<VoteState | null> {
-    const voteStateRaw = await getRedisValue('vote_state');
+    const voteStateRaw = await getRedisValue('voteState');
     return voteStateRaw ? JSON.parse(voteStateRaw) : null;
 }
 
 // Redis : 현재 투표 상태 저장
 async function saveCurrentVoteToRedis(voteState: VoteState | null){
     if(voteState){
-        await setRedisValue('vote_state', JSON.stringify(voteState), 60 * 60 * 24);
+        await setRedisValue('voteState', JSON.stringify(voteState), 60 * 60 * 24);
     }else{
-        await delRedisValue('vote_state');
+        await delRedisValue('voteState');
     }
 }
 
@@ -227,7 +227,7 @@ export function handleVote(io: Server, socket: Socket) {
         }
         // 클라이언트에 현재 투표 상태 전송
         if (currentVote) {
-            socket.emit('START_VOTE', currentVote);
+            socket.emit("CURRENT_VOTE", currentVote);
         }
     });
 }

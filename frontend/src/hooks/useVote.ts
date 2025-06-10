@@ -39,11 +39,12 @@ export const useVote = () => {
 		}
 
 		try {
+			setVoteCreatorId(userId);
 			setIsSave(true);
 			closeModal("vote");
 			setIsTimerActive(true);
 			startVote(data);
-		setVoteCreatorId(userId);
+
 		startTimer()
 		} catch (error) {
 			console.error('투표 시작 오류:', error);
