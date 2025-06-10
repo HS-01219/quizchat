@@ -55,6 +55,11 @@ export const useMessageHandler = () => {
       setMessage('');
     }
   };
+  
+  const sendSystemMessage = (msg : SystemMessageProps) => {
+      // 서버로 시스템 메시지 요청
+      socket.emit('REQUEST_SYSTEM_MSG', msg);
+  }
 
-  return { message, setMessage, sendMessage };
+  return { message, setMessage, sendMessage, sendSystemMessage };
 };
