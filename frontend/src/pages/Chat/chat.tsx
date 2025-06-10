@@ -112,7 +112,7 @@ const Chat = () => {
           <ChatUserMessage key={idx} message={msg} />
         ))}
         
-      </ChatMessageList>{" "}
+      </ChatMessageList>
 
       
     </>

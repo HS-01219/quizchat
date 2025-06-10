@@ -1,41 +1,52 @@
 import { useEffect, useState } from 'react';
 import { socket } from './socketManager';
 import type { MessagePayload } from '../common/types';
+import { useUserStore } from "@/store/useUserStore";
 
 export const useMessageHandler = () => {
-    const [message, setMessage] = useState('');
-    const [messages, setMessages] = useState<MessagePayload[]>([]);
+  const [message, setMessage] = useState('');
 
-    const [userId, setUserId] = useState<number>(1); // 임시 사용자 ID
-    const [nickName, setNickName] = useState<string>('tester'); // 임시 사용자 닉네임
+  // zustand 상태 가져오기
+  const {
+    userId,
+    nickName,
+    setUserMessage
+  } = useUserStore();
 
-    useEffect(() => {
-        // 메시지 수신
-        socket.on('RECEIVE_MESSAGE', (msg: MessagePayload) => {
-            console.log('서버로부터 메시지 수신:', msg);
-            setMessages(prevMessages => [...prevMessages, msg]); 
-        });
+  useEffect(() => {
+    // 다른 유저의 메시지 수신
+    socket.on('RECEIVE_MESSAGE', (msg: MessagePayload) => {
+      console.log('서버로부터 메시지 수신:', msg);
 
-        return () => {
-            socket.off('RECEIVE_MESSAGE');
-        };
-    }, []);
+      // 내가 보낸 메시지면 무시 (중복 방지)
+      if (msg.userId !== userId) {
+        setUserMessage(msg.content, msg.nickName ?? ''); // sender 포함
+      }
+    });
 
-    const sendMessage = () => {
-        if (socket && message.trim() !== '') {
-            const sendMessage: MessagePayload = {
-                userId: userId,
-                nickName: nickName,
-                content: message,
-                timestamp: new Date().toISOString()
-            };
-
-            setMessages(prevMessages => [...prevMessages, sendMessage]);
-            socket.emit('SEND_MESSAGE', message);
-            setMessage('');
-            setMessage(''); // 메시지 전송 후 입력 필드 초기화
-        }
+    return () => {
+      socket.off('RECEIVE_MESSAGE');
     };
+  }, [userId, setUserMessage]);
 
-    return { message, setMessage, messages, sendMessage};
-}
+  const sendMessage = () => {
+    if (socket && message.trim() !== '') {
+      const payload: MessagePayload = {
+        userId,
+        nickName,
+        content: message,
+        timestamp: new Date().toISOString(),
+      };
+
+      // 상태 먼저 반영
+      setUserMessage(message, nickName);
+
+      // 서버로 전송
+      socket.emit('SEND_MESSAGE', payload);
+
+      setMessage('');
+    }
+  };
+
+  return { message, setMessage, sendMessage };
+};
