@@ -6,24 +6,9 @@ import {
   FaVoteYea,
 } from "react-icons/fa";
 import { MdHowToVote } from "react-icons/md";
+import { SystemMessageProps, MessageType } from "@/common/types";
 import type {VoteItem} from "@/common/types";
 
-export type MessageType =
-  | "correct"
-  | "voteStart"
-  | "voteEnd"
-  | "warning"
-  | "quizStart"
-  | "quizEnd"
-| "voteResult";
-
-
-interface SystemMessageProps {
-  type: MessageType;
-  nickName?: string;
-  time: string;
-  items?: VoteItem[];
-}
 
 const messageMap: {
   [key in MessageType]: {

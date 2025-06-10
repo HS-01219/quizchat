@@ -40,3 +40,20 @@ export interface QuizState {
     isActive : boolean;
     quizData : QuizItem | null;
 }
+
+// 시스템 메세지
+export type MessageType =
+  | "correct"
+  | "voteStart"
+  | "voteEnd"
+  | "warning"
+  | "quizStart"
+  | "quizEnd"
+  | "voteResult";
+
+export interface SystemMessageProps {
+  type: MessageType;
+  nickName?: string;
+  time: string;
+  items?: VoteItem[];
+}
