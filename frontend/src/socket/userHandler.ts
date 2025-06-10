@@ -87,6 +87,7 @@ export const useUserHandlers = () => {
     const sendNickName = (data: { userId: number, nickName: string }) => {
         console.log(`${data.userId}의 닉네임이 ${data.nickName}으로 변경됨`);
         // 프론트 TODO :해당 유저가 보낸 채팅의 닉네임 변경하는 로직 추라
+        useUserStore.getState().updateSenderNickName(data.userId, data.nickName);
     }
 
 
@@ -94,19 +95,18 @@ export const useUserHandlers = () => {
         alert(data.message);
     }
 
-    const updateNickName = (data: { userId:number,nickName: string }) => {
-        // 프론트 TODO : userStore에서 userId 관리 추가
-        // 해당 userId를 가져와서 백엔드로 보내야함
-        // nickName와 userId가 둘다 userStore에 있어서 매개로 안받아도 될듯?
-        // userId 체크하는 로직 필요
-        if (nickName.trim() === '') {
+    const updateNickName = (data: { userId: number, nickName: string }) => {
+        const trimmed = data.nickName.trim();
+        if (trimmed === '') {
             alert("닉네임이 빈칸입니다.");
             return;
         }
+
         console.log(`닉네임 변경 요청: ${data.nickName} (userId: ${data.userId})`);
         setSystemMessage(`'${userId}' 님이 '${nickName}' 님으로 이름이 변경되었습니다.`);
         socket.emit('UPDATE_NICKNAME', { userId, nickName });
-
+        useUserStore.getState().updateSenderNickName(data.userId, trimmed);
+        socket.emit('UPDATE_NICKNAME', { userId: data.userId, nickName: trimmed });
     }
 
     return {nickName, setNickName, updateNickName, requestJoinRoom, userJoined, userLeaved,joinRoom};

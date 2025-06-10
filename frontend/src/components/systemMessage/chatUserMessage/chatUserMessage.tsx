@@ -5,11 +5,13 @@ interface ChatUserMessageProps {
   message: {
     content: string;
     sender?: string;
+   userId?: number;
     time: string;
   };
 }
 
 const ChatUserMessage: React.FC<ChatUserMessageProps> = ({ message }) => {
+
   return (
     <S.MessageWrapper>
       <S.SenderLabel>{message.sender}</S.SenderLabel>

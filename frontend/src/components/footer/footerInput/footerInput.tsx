@@ -11,10 +11,8 @@ interface FooterInputProps {
 
 const FooterInput = ({ isExpanded, setIsExpanded }: FooterInputProps) => {
   const [isRotated, setIsRotated] = useState(false);
+  const {userId, setUserMessage} = useUserStore();
   const [inputValue, setInputValue] = useState("");
-
-  const setMessage = useUserStore((state) => state.setUserMessage);
-
   const nickName = useUserStore((state) => state.nickName);
 
   const handleClick = () => {
@@ -24,7 +22,7 @@ const FooterInput = ({ isExpanded, setIsExpanded }: FooterInputProps) => {
 
   const handleSend = () => {
     if (inputValue.trim() === "") return;
-    setMessage(inputValue, nickName); 
+    setUserMessage(inputValue, nickName,userId);
     setInputValue("");
   };
 
@@ -42,8 +40,7 @@ const FooterInput = ({ isExpanded, setIsExpanded }: FooterInputProps) => {
         </S.RotatingIcon>
       </S.IconWrapper>
       <S.FooterInputWrapper>
-        <S.FooterInput type="text" placeholder="메세지를 입력하세요" 
-		  value={inputValue}
+        <S.FooterInput type="text" placeholder="메세지를 입력하세요" value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown} />
         <BiSend onClick={handleSend} style={{ cursor: "pointer" }} />

@@ -1,14 +1,12 @@
 import * as S from "./userNameChange.style";
 import {useUserStore} from "@/store/useUserStore";
 
-
 interface UserNameChangeProps {
   onSave: (nickName: string) => void;
 }
 
 const UserNameChange = ({  onSave }: UserNameChangeProps) => {
-  const { nickName, setNickName } = useUserStore();
-
+  const { nickName, setNickName} = useUserStore();
   const handleSave = () => {
     const trimmedNickName = nickName.trim();
     if (!trimmedNickName) {

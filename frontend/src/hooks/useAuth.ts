@@ -5,7 +5,8 @@ import { useUserHandlers} from "@/socket/userHandler";
 
 export const useAuth = () => {
 
-	const { nickName, setNickName, setJustJoined, setSystemMessage} = useUserStore();
+	const { nickName, setNickName, setJustJoined, setSystemMessage,userId} = useUserStore();
+	const { updateNickName } = useUserHandlers()
 	const { requestJoinRoom} = useUserHandlers();
 
 	const { closeModal, openModal, isOpenModal } = useModalStore();
@@ -37,7 +38,7 @@ export const useAuth = () => {
 			const now = new Date().toISOString();
 			setNickName(trimmedNick);
 			setPrevNickName(trimmedNick);
-
+			updateNickName({ userId, nickName: trimmedNick });
 			setSystemMessage(`'${prevNickName}' 님이 '${trimmedNick}' 님으로 이름이 변경되었습니다.`);
 
 		}
