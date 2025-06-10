@@ -22,7 +22,7 @@ interface UserState {
   setCurrentUsers: (currentUsers: number) => void;
   setNickName: (name: string) => void;
   setJustJoined: (joined: boolean) => void;
-  setUserMessage: (msg: string, sender: string,userId:number) => void;
+  setUserMessage: (msg: string, sender: string, userId:number) => void;
   setSystemMessage: (msg: string) => void;
   setHeaderType: (type: "default" | "quiz" | "vote") => void;
   updateSenderNickName: (userId: number, newNickName: string) => void;

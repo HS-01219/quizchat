@@ -20,7 +20,7 @@ export const useMessageHandler = () => {
 
       // 내가 보낸 메시지면 무시 (중복 방지)
       if (msg.userId !== userId) {
-        setUserMessage(msg.content, msg.nickName ?? ''); // sender 포함
+        setUserMessage(msg.content, msg.nickName ?? '', msg.userId); // sender 포함
       }
     });
 
@@ -47,7 +47,7 @@ export const useMessageHandler = () => {
       };
 
       // 상태 먼저 반영
-      setUserMessage(message, nickName);
+      setUserMessage(message, nickName, userId);
 
       // 서버로 전송
       socket.emit('SEND_MESSAGE', payload);
