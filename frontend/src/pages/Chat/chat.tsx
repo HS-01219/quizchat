@@ -5,6 +5,7 @@ import BubbleHeader from "@/pageHeader/pageHeader";
 import { useChatStore } from "@/store/useChatStore";
 import { useQuizStore } from "@/store/useQuizStore";
 import { useUserStore } from "@/store/useUserStore";
+import ChatUserMessage from "@/components/systemMessage/chatUserMessage/chatUserMessage";
 
 const Chat = () => {
   const { question, isActive } = useQuizStore();
@@ -18,10 +19,14 @@ const Chat = () => {
     return now.toTimeString().slice(0, 5);
   };
 
-  const message = useUserStore((state) => state.message);
+  // const message = useUserStore((state) => state.message);
+
+  const userMessages = useUserStore((state) => state.userMessages);
+  const chatSystemMessages = useUserStore((state) => state.systemMessages);
+
   return (
     <>
-      <div>채팅 - 서버반영테스트2</div>
+      {/* <div>채팅 - 서버반영테스트2</div> */}
 
       {headerType === "quiz" && (
         <BubbleHeader
@@ -30,7 +35,6 @@ const Chat = () => {
           time={getCurrentTime()}
         />
       )}
-
       {systemMessages.map((msg, index) => (
         <SystemMessage
           key={index}
@@ -40,11 +44,19 @@ const Chat = () => {
         />
       ))}
 
+      {chatSystemMessages.map((msg, idx) => (
+        <ChatSystemMessage key={idx} message={msg} />
+        
+      ))}
+
       <ChatMessageList>
-        {message.map((msg, index) => (
-          <ChatSystemMessage message={msg} key={index} />
+        {userMessages.map((msg, idx) => (
+          <ChatUserMessage key={idx} message={msg} />
         ))}
-      </ChatMessageList>
+        
+      </ChatMessageList>{" "}
+
+      
     </>
   );
 };

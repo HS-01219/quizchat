@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 interface ChatMessage {
   content: string;
-  sender: string;
+  sender?: string;
   time: string;
 }
 
@@ -10,14 +10,22 @@ interface UserState {
   nickName: string;
   userId: number;
   justJoined: boolean;
+
   message: ChatMessage[];
+
+  userMessages: ChatMessage[];
+  systemMessages: ChatMessage[];
+
   currentUsers: number;
   headerType: "default" | "quiz" | "vote";
+
   setUserId: (userId: number) => void;
   setCurrentUsers: (currentUsers: number) => void;
   setNickName: (name: string) => void;
   setJustJoined: (joined: boolean) => void;
-  setMessage: (msg: string, sender: string) => void;
+
+  setUserMessage: (msg: string, sender: string) => void;
+  setSystemMessage: (msg: string) => void;
   setHeaderType: (type: "default" | "quiz" | "vote") => void;
 }
 
@@ -25,6 +33,8 @@ export const useUserStore = create<UserState>((set) => ({
   nickName: "",
   justJoined: false,
   message: [],
+  userMessages: [],
+  systemMessages: [],
   userId: 0,
   currentUsers: 0,
   headerType: "default",
@@ -35,10 +45,10 @@ export const useUserStore = create<UserState>((set) => ({
   setNickName: (name) => set({ nickName: name }),
   setJustJoined: (joined) => set({ justJoined: joined }),
 
-  setMessage: (msg, sender) =>
+  setUserMessage: (msg, sender) =>
     set((state) => ({
-      message: [
-        ...state.message,
+      userMessages: [
+        ...state.userMessages,
         {
           content: msg,
           sender,
@@ -49,6 +59,19 @@ export const useUserStore = create<UserState>((set) => ({
         },
       ],
     })),
-     setHeaderType: (type) => set({ headerType: type }),
 
+  setSystemMessage: (msg) =>
+    set((state) => ({
+      systemMessages: [
+        ...state.systemMessages,
+        {
+          content: msg,
+          time: new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+        },
+      ],
+    })),
+  setHeaderType: (type) => set({ headerType: type }),
 }));
