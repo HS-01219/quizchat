@@ -8,7 +8,7 @@ import {
 import { MdHowToVote } from "react-icons/md";
 import type {VoteItem} from "@/common/types";
 
-type MessageType =
+export type MessageType =
   | "correct"
   | "voteStart"
   | "voteEnd"

@@ -16,6 +16,7 @@ export const useVoteHandler = () => {
     };
 
     const updateFromServer=useVoteStore((state) => state.updateFromServer);
+    
     useEffect(() => {
         if (isVoteSocketInitialized) return;
         isVoteSocketInitialized = true;

@@ -8,7 +8,9 @@ import {useVoteStore} from "@/store/useVoteStore";
 let isSocketInitialized = false;
 
 export const useUserHandlers = () => {
-    const { nickName, userId, setNickName, setMessage,setUserId} = useUserStore();
+
+    const { nickName, userId, setNickName, setSystemMessage,setUserId} = useUserStore();
+
     const {setCurrentUsers} = useUserStore.getState()
     const { setVoteState,updateFromServer} = useVoteStore();
 
@@ -43,13 +45,16 @@ export const useUserHandlers = () => {
         console.log(`${data.nickName} 님이 퇴장했습니다. userId : ${data.userId}`);
         // 프론트 TODO : 방 참여 또는 퇴장 알림
         setCurrentUsers(data.currentUsers);
-        setMessage(`'${data.nickName}' 님이 퇴장하셨습니다.`, new Date().toISOString());
+        setSystemMessage(`'${data.nickName}' 님이 퇴장하셨습니다.`);
+
     }
 
     const userJoined = (data: { currentUsers: number; userId: number; nickName: string }) => {
         console.log(`${data.nickName} 님이 방에 참여했습니다. 현재 인원: ${data.currentUsers}, 유저 아이디 :${data.userId}`);
         setCurrentUsers(data.currentUsers);
-        setMessage(`'${data.nickName}' 님이 입장하셨습니다.`, new Date().toISOString());
+        setSystemMessage(`'${data.nickName}' 님이 입장하셨습니다.`);
+
+
     };
     // const joinRoom = (data: {
     //     userId: number,
@@ -99,7 +104,6 @@ export const useUserHandlers = () => {
             return;
         }
         console.log(`닉네임 변경 요청: ${data.nickName} (userId: ${data.userId})`);
-
         setMessage(`'${userId}' 님이 '${nickName}' 님으로 이름이 변경되었습니다.`,new Date().toISOString());
         socket.emit('UPDATE_NICKNAME', { userId, nickName });
 

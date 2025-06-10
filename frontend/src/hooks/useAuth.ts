@@ -4,8 +4,10 @@ import { useModalStore } from "@/store/useModalStore";
 import { useUserHandlers} from "@/socket/userHandler";
 
 export const useAuth = () => {
-	const { nickName, setNickName, setJustJoined, setMessage} = useUserStore();
-	const { requestJoinRoom,updateNickName} = useUserHandlers();
+
+	const { nickName, setNickName, setJustJoined, setSystemMessage} = useUserStore();
+	const { requestJoinRoom} = useUserHandlers();
+
 	const { closeModal, openModal, isOpenModal } = useModalStore();
 
 	const [isInitial, setIsInitial] = useState(true);
@@ -35,7 +37,8 @@ export const useAuth = () => {
 			const now = new Date().toISOString();
 			setNickName(trimmedNick);
 			setPrevNickName(trimmedNick);
-			const userId = useUserStore.getState().userId;
+
+			setSystemMessage(`'${prevNickName}' 님이 '${trimmedNick}' 님으로 이름이 변경되었습니다.`);
 
 		}
 
