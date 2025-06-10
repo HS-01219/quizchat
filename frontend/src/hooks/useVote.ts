@@ -10,6 +10,7 @@ export const useVote = () => {
 	const {
 		isSave,
 		setIsSave,
+		voteItems,
 		setIsTimerActive,
 		resetVote,
 		setSelectedVoteId,
@@ -97,9 +98,7 @@ export const useVote = () => {
 		console.log("=== 투표 끝 ===");
 	};
 
-	const voteEnd = () => {
-		endVote();
-	};
+
 
 	return {
 		isSave,
@@ -107,6 +106,5 @@ export const useVote = () => {
 		edit,
 		cancel,
 		vote,
-		voteEnd
 	};
 };

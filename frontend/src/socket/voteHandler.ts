@@ -56,7 +56,7 @@ export const useVoteHandler = () => {
 
     const startVote = (data: { title: string, items: VoteItem[], isMultiple: boolean }) => {
         console.log('투표 시작 요청:', data);
-        addSystemMessage({ type: "voteStart", time: getCurrentTime() });
+        addSystemMessage({items: [], type: "voteStart", time: getCurrentTime() });
         socket.emit('START_VOTE', data);
     };
 
@@ -66,10 +66,10 @@ export const useVoteHandler = () => {
         socket.emit('SUBMIT_VOTE',  itemIds);
     };
 
-    const endVote = () => {
+    const endVote = (items:VoteItem[]) => {
         console.log('투표 종료 요청');
-        addSystemMessage({ type: "voteEnd", time: getCurrentTime() });
-        addSystemMessage({ type: "voteResult", time: getCurrentTime() });
+        addSystemMessage({items: [], type: "voteEnd", time: getCurrentTime() });
+        addSystemMessage({items: items, type: "voteResult", time: getCurrentTime() });
         socket.emit('END_VOTE');
     };
 
