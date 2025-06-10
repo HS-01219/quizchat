@@ -31,10 +31,8 @@ export const useMessageHandler = () => {
             };
 
             setMessages(prevMessages => [...prevMessages, sendMessage]);
-
             socket.emit('SEND_MESSAGE', message);
             setMessage('');
-
             setMessage(''); // 메시지 전송 후 입력 필드 초기화
         }
     };

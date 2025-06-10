@@ -73,7 +73,8 @@ const Chat = () => {
   const userMessages = useUserStore((state) => state.userMessages);
   const chatSystemMessages = useUserStore((state) => state.systemMessages);
 
-  
+
+
   return (
     <>
       {headerType === "quiz" && (
@@ -89,14 +90,22 @@ const Chat = () => {
         
       ))}
 
-      {systemMessages.map((msg, index) => (
-        <SystemMessage
-          key={index}
-          type={msg.type}
-          nickName={msg.nickName}
-          time={msg.time}
-        />
-      ))}
+      {systemMessages.map((msg, index) => {
+        console.log(msg);
+
+        return(
+          <SystemMessage
+            key={index}
+            type={msg.type}
+            nickName={msg.nickName}
+            time={msg.time}
+            items={msg.items}
+          />
+          )
+        
+
+
+      })}
 
       <ChatMessageList>
         {userMessages.map((msg, idx) => (

@@ -3,7 +3,7 @@ import type {VoteItem} from "@/common/types";
 type MessageType = "correct" | "voteStart" | "voteEnd" | "warning" | "quizStart" | "quizEnd" |"voteResult";
 
 export interface SystemMessage {
-  items:VoteItem[];
+  items?:VoteItem[];
   type: MessageType;
   nickName?: string;
   time: string;
