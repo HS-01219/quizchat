@@ -1,8 +1,11 @@
-import { create } from "zustand";
+// 퀴즈 투표 관련 시스템 메시지
 
-type MessageType = "correct" | "voteStart" | "voteEnd" | "warning" | "quizStart" | "quizEnd";
+import { create } from "zustand";
+import type {VoteItem} from "@/common/types";
+type MessageType = "correct" | "voteStart" | "voteEnd" | "warning" | "quizStart" | "quizEnd" |"voteResult";
 
 export interface SystemMessage {
+  items?:VoteItem[];
   type: MessageType;
   nickName?: string;
   time: string;

@@ -8,8 +8,11 @@ import CountDown from "@/components/countdown/countDown";
 import { useModalStore } from "@/store/useModalStore";
 import { useVoteStore } from "@/store/useVoteStore";
 import { useVoteHandler } from "@/socket/voteHandler";
-import VoteResult from "@/components/vote/result/result";
+
 import {useTimerStore} from "@/store/useTimerStore";
+
+
+
 
 interface BubbleHeaderProps {
 	type: "quiz" | "vote";
@@ -27,7 +30,7 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
 	const [showResult, setShowResult] = useState(false);
 	const { openModal } = useModalStore();
 	const {
-		isSave,
+	voteState,
 		setIsTimerActive,
 		resetVote,
 		isVoteCreator,
@@ -41,15 +44,18 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
 	const handleVoteClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
 		openModal("vote");
+
 	};
 
 	const handleEndVoteClick = (e: React.MouseEvent) => {
 		e.stopPropagation();
 		setIsTimerActive(false);
-		endVote();
+		endVote(voteItems);
 		resetVote();
-		resetTimer()
 
+
+		resetTimer()
+setShowResult(true);
 	};
 
 	return (
@@ -63,7 +69,7 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
 						<S.QuestionText title={question}>{question}</S.QuestionText>
 					)}
 
-					{hasVote && isSave && <CountDown />}
+					{hasVote && !voteState.isEnded && <CountDown />}
 				</S.QuestionSection>
 
 				<S.ToggleIcon>
@@ -76,16 +82,16 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
 					{hasVote && (
 						<S.VoteButtonGroup>
 							<Button onClick={handleVoteClick}>투표하기</Button>
-							{isSave && (
+							{!voteState.isEnded && isCreator&& (
 								<Button onClick={handleEndVoteClick}>투표 종료</Button>
 							)}
 						</S.VoteButtonGroup>
 					)}
 				</S.ButtonContainer>
 			)}
-			{showResult && voteItems.length > 0 && (
-				<VoteResult items={voteItems} />
-			)}
+			{/*{showResult && voteItems.length > 0 && (*/}
+			{/*	<VoteResult items={voteItems} />*/}
+			{/*)}*/}
 		</S.BalloonContainer>
 	);
 };

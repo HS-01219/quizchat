@@ -48,10 +48,12 @@ export type MessageType =
   | "voteEnd"
   | "warning"
   | "quizStart"
-  | "quizEnd";
+  | "quizEnd"
+  | "voteResult";
 
 export interface SystemMessageProps {
   type: MessageType;
   nickName?: string;
   time: string;
+  items?: VoteItem[];
 }

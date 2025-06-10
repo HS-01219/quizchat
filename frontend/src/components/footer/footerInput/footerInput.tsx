@@ -13,7 +13,7 @@ const FooterInput = ({ isExpanded, setIsExpanded }: FooterInputProps) => {
   const [isRotated, setIsRotated] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
-  const setMessage = useUserStore((state) => state.setMessage);
+  const setMessage = useUserStore((state) => state.setUserMessage);
 
   const nickName = useUserStore((state) => state.nickName);
 

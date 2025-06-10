@@ -255,7 +255,10 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
   };
 
   return (
-    <S.BalloonContainer onClick={() => setExpanded(!expanded)}>
+    <S.BalloonContainer onClick={() => {
+      console.log("클릭됨"); 
+    setExpanded(!expanded)}}>
+      
       <S.ContentRow expanded={expanded}>
 
         <S.QuestionSection>

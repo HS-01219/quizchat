@@ -206,6 +206,22 @@ const Content = () => {
 
 	useEffect(() => {
 		setSelectedItems(new Set(selectedVoteId));
+		console.log('현재 투표 상태:', {
+			title,
+			voteItems,
+			deleteVoteItem,
+			isSave,
+			isDuplicated,
+			setTitle,
+			setVoteItems,
+			selectedVoteId,
+			isTimerActive,
+			setIsTimerActive,
+			isVoteEnded,
+			resetVote,
+			isVoteCreator,
+			voteCreatorId,
+		});
 	}, [selectedVoteId]);
 
 
@@ -244,15 +260,6 @@ const Content = () => {
 	const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (isSave) return;
 		setTitle(e.target.value);
-	};
-
-	const handleEndVoteClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		setIsTimerActive(false);
-		endVote();
-		resetVote();
-		resetTimer()
-
 	};
 
 	const onSaveClick = () => {
@@ -333,7 +340,7 @@ const Content = () => {
 							<Button onClick={onEdit}>수정</Button>
 						)}
 						<Button onClick={handleCloseModal}>닫기</Button>
-						<Button onClick={handleEndVoteClick}>투표 종료</Button>
+
 					</>
 				)}
 			</S.ButtonWrapper>

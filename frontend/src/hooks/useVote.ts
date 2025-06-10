@@ -3,12 +3,14 @@ import { useVoteStore } from "@/store/useVoteStore";
 import { useVoteHandler } from "@/socket/voteHandler";
 import {useUserStore} from "@/store/useUserStore";
 import {useTimerStore} from "@/store/useTimerStore";
+import {useChatStore} from "@/store/useChatStore";
 
 export const useVote = () => {
 	const { closeModal } = useModalStore();
 	const {
 		isSave,
 		setIsSave,
+		voteItems,
 		setIsTimerActive,
 		resetVote,
 		setSelectedVoteId,
@@ -18,6 +20,7 @@ export const useVote = () => {
 		setVoteCreatorId,
 	} = useVoteStore();
 	const { userId } = useUserStore();
+	const { addSystemMessage } = useChatStore();
 	const { startVote, submitVote, endVote } = useVoteHandler();
 	const { startTimer } = useTimerStore();
 
@@ -71,6 +74,7 @@ export const useVote = () => {
 		console.log("선택한 ID:", id);
 		console.log("현재 선택된 항목들:", selectedVoteId);
 		console.log("투표 모드:", isDuplicated ? "중복" : "단일");
+		console.log("유저 아이디:", userId);
 
 		if (isDuplicated) {
 			setSelectedVoteId((prev) => {
@@ -94,9 +98,7 @@ export const useVote = () => {
 		console.log("=== 투표 끝 ===");
 	};
 
-	const voteEnd = () => {
-		endVote();
-	};
+
 
 	return {
 		isSave,
@@ -104,6 +106,5 @@ export const useVote = () => {
 		edit,
 		cancel,
 		vote,
-		voteEnd
 	};
 };
