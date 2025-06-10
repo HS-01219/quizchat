@@ -14,7 +14,6 @@ const ChatSystemMessage: React.FC<ChatSystemMessageProps> = ({ message }) => {
       <S.ChatSystemMessageContainer>
         {message.content}
       </S.ChatSystemMessageContainer>
-      <S.TimeLabel>{message.time}</S.TimeLabel>
     </S.SystemMessageWrapper>
   );
 };
