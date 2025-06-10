@@ -39,12 +39,14 @@ export const useMessageHandler = () => {
 
   const sendMessage = () => {
     if (socket && message.trim() !== '') {
+      console.log('메시지 전송:');
       const payload: MessagePayload = {
         userId,
         nickName,
         content: message,
         timestamp: new Date().toISOString(),
       };
+      console.log('보낼 메시지:', payload);
 
       // 상태 먼저 반영
       setUserMessage(message, nickName, userId);

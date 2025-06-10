@@ -3,6 +3,7 @@ import { BiSend } from "react-icons/bi";
 import { FiPlusCircle } from "react-icons/fi";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useUserStore } from "@/store/useUserStore";
+import { useMessageHandler } from "@/socket/messageHandler";
 
 interface FooterInputProps {
   isExpanded: boolean;
@@ -11,8 +12,10 @@ interface FooterInputProps {
 
 const FooterInput = ({ isExpanded, setIsExpanded }: FooterInputProps) => {
   const [isRotated, setIsRotated] = useState(false);
-  const {userId, setUserMessage} = useUserStore();
+  const { userId, setUserMessage } = useUserStore();
   const [inputValue, setInputValue] = useState("");
+  const { setMessage, sendMessage } = useMessageHandler();
+
   const nickName = useUserStore((state) => state.nickName);
 
   const handleClick = () => {
@@ -22,11 +25,14 @@ const FooterInput = ({ isExpanded, setIsExpanded }: FooterInputProps) => {
 
   const handleSend = () => {
     if (inputValue.trim() === "") return;
-    setUserMessage(inputValue, nickName,userId);
+    setUserMessage(inputValue, nickName, userId);
+
+    setMessage(inputValue);
+    sendMessage();
     setInputValue("");
   };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleSend();
     }
@@ -40,9 +46,13 @@ const FooterInput = ({ isExpanded, setIsExpanded }: FooterInputProps) => {
         </S.RotatingIcon>
       </S.IconWrapper>
       <S.FooterInputWrapper>
-        <S.FooterInput type="text" placeholder="메세지를 입력하세요" value={inputValue}
+        <S.FooterInput
+          type="text"
+          placeholder="메세지를 입력하세요"
+          value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={handleKeyDown} />
+          onKeyDown={handleKeyDown}
+        />
         <BiSend onClick={handleSend} style={{ cursor: "pointer" }} />
       </S.FooterInputWrapper>
     </S.FooterInputContainer>
