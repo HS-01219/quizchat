@@ -2,7 +2,6 @@ import * as S from "@/components/footer/footerInput/footerInput.style";
 import { BiSend } from "react-icons/bi";
 import { FiPlusCircle } from "react-icons/fi";
 import { Dispatch, SetStateAction, useState } from "react";
-import { useUserStore } from "@/store/useUserStore";
 import { useMessageHandler } from "@/socket/messageHandler";
 
 interface FooterInputProps {
@@ -12,11 +11,8 @@ interface FooterInputProps {
 
 const FooterInput = ({ isExpanded, setIsExpanded }: FooterInputProps) => {
   const [isRotated, setIsRotated] = useState(false);
-  const { userId, setUserMessage } = useUserStore();
   const [inputValue, setInputValue] = useState("");
-  const { setMessage, sendMessage } = useMessageHandler();
-
-  const nickName = useUserStore((state) => state.nickName);
+  const { sendMessage } = useMessageHandler();
 
   const handleClick = () => {
     setIsRotated(!isRotated);
@@ -25,10 +21,7 @@ const FooterInput = ({ isExpanded, setIsExpanded }: FooterInputProps) => {
 
   const handleSend = () => {
     if (inputValue.trim() === "") return;
-    setUserMessage(inputValue, nickName, userId);
-
-    setMessage(inputValue);
-    sendMessage();
+    sendMessage(inputValue);
     setInputValue("");
   };
 

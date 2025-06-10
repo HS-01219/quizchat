@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { socket } from './socketManager';
 import {useUserStore} from "@/store/useUserStore";
 import type { VoteState, QuizState } from '@/common/types';
-import {useRoomStore} from "@/store/useRoomStore";
 import {useVoteStore} from "@/store/useVoteStore";
 
 let isSocketInitialized = false;
