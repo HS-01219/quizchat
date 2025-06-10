@@ -6,20 +6,7 @@ import {
   FaVoteYea,
 } from "react-icons/fa";
 import { MdHowToVote } from "react-icons/md";
-
-type MessageType =
-  | "correct"
-  | "voteStart"
-  | "voteEnd"
-  | "warning"
-  | "quizStart"
-  | "quizEnd";
-
-interface SystemMessageProps {
-  type: MessageType;
-  nickName?: string;
-  time: string;
-}
+import { SystemMessageProps, MessageType } from "@/common/types";
 
 const messageMap: {
   [key in MessageType]: {
