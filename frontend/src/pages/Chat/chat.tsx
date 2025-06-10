@@ -24,10 +24,9 @@ const Chat = () => {
   const userMessages = useUserStore((state) => state.userMessages);
   const chatSystemMessages = useUserStore((state) => state.systemMessages);
 
+  
   return (
     <>
-      {/* <div>채팅 - 서버반영테스트2</div> */}
-
       {headerType === "quiz" && (
         <BubbleHeader
           type="quiz"
@@ -35,6 +34,12 @@ const Chat = () => {
           time={getCurrentTime()}
         />
       )}
+
+      {chatSystemMessages.map((msg, idx) => (
+        <ChatSystemMessage key={idx} message={msg} />
+        
+      ))}
+
       {systemMessages.map((msg, index) => (
         <SystemMessage
           key={index}
@@ -43,12 +48,7 @@ const Chat = () => {
           time={msg.time}
         />
       ))}
-
-      {chatSystemMessages.map((msg, idx) => (
-        <ChatSystemMessage key={idx} message={msg} />
-        
-      ))}
-
+      
       <ChatMessageList>
         {userMessages.map((msg, idx) => (
           <ChatUserMessage key={idx} message={msg} />

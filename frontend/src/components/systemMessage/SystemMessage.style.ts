@@ -35,3 +35,4 @@ export const Time = styled.div(({ theme }) => ({
   color: theme.color.gray50,
   marginLeft: "auto",
 }));
+

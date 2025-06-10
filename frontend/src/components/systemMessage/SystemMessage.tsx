@@ -7,7 +7,7 @@ import {
 } from "react-icons/fa";
 import { MdHowToVote } from "react-icons/md";
 
-type MessageType =
+export type MessageType =
   | "correct"
   | "voteStart"
   | "voteEnd"
