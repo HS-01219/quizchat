@@ -47,7 +47,11 @@ export function handleUser(io : Server, socket : Socket) {
             userId : socket.data.userId,
             nickName : socket.data.nickName,
             roomState : {
-                quizState,
+                quizState : {
+                    isActive : quizState ? quizState.isActive : false,
+                    question : quizState ? quizState.question : '',
+                    isEnded : quizState ? quizState.isEnded : false,
+                },
                 voteState,
             }
         });

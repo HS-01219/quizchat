@@ -14,7 +14,7 @@ interface FooterInputProps {
 const FooterInput = ({ isExpanded, setIsExpanded }: FooterInputProps) => {
   const [isRotated, setIsRotated] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const { isActive } = useQuizStore();
+  const { quizState } = useQuizStore();
   const { requestAnswer } = useQuizHandler();
   const { sendMessage } = useMessageHandler();
 
@@ -27,7 +27,8 @@ const FooterInput = ({ isExpanded, setIsExpanded }: FooterInputProps) => {
     if (inputValue.trim() === "") return;
     
     // 퀴즈 상태에 따라 다르게 처리
-    if (isActive) {
+    console.log(quizState.isActive)
+    if (quizState.isActive) {
       requestAnswer(inputValue);
     }
     

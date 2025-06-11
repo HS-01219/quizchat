@@ -5,10 +5,11 @@ import { useChatStore } from "@/store/useChatStore";
 import { useUserStore } from "@/store/useUserStore";
 import { useMessageHandler } from "./messageHandler";
 import { sendSystemMessage } from "./messageHandler";
+import { QuizState } from "@/common/types";
 
 export const useQuizHandler = () => {
   // const [answer, setAnswer] = useState<string>("");
-  const { showQuizQuestion, setQuizResult } = useQuizStore();
+  const { setQuizState, setQuizResult } = useQuizStore();
   const { setSystemMessages } = useChatStore();
   const { userId } = useUserStore();
   const getCurrentTime = () => {
@@ -31,9 +32,10 @@ export const useQuizHandler = () => {
     };
   }, []);
 
-  const startQuiz = (data: { question: string }) => {
+  const startQuiz = (data: QuizState) => {
     console.log(`퀴즈 시작 - 문제 : ${data.question}`);
-    showQuizQuestion(data.question);
+    setQuizState(data);
+    // showQuizQuestion(data.question);
     // setSystemMessages({ type: "quizStart", time: getCurrentTime() });
 
     sendSystemMessage({
@@ -54,6 +56,7 @@ export const useQuizHandler = () => {
 
     // 프론트 TODO : 화면 상단의 퀴즈 삭제, 채팅에 퀴즈 종료 알림 전달
     setQuizResult(data.winnerNickName, data.answer);
+    setQuizState(null);
 
     // setSystemMessages({
     //   type: "correct",
