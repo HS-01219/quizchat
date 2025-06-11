@@ -43,6 +43,7 @@ const FooterMenu = () => {
 
     if (hasActive) {
       alert("진행 중인 투표 또는 퀴즈가 있습니다.");
+
       return;
     }
      setHeaderType("quiz");
