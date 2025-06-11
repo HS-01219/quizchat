@@ -11,6 +11,11 @@ interface MessagePayload {
   timestamp: string;
 }
 
+export const sendSystemMessage = (msg: SystemMessageProps) => {
+  console.log("시스템 메시지 전송 요청:", msg); 
+  socket.emit("REQUEST_SYSTEM_MSG", msg);
+};
+
 export const useMessageHandler = () => {
   const {
     userId,
@@ -21,11 +26,9 @@ export const useMessageHandler = () => {
   const { setSystemMessages } = useChatStore();
 
   useEffect(() => {
-    // 유저 채팅 메시지 수신
     socket.on("RECEIVE_MESSAGE", (msg: MessagePayload) => {
       console.log("서버로부터 메시지 수신:", msg);
 
-      // 내가 보낸 메시지면 무시 (중복 방지)
       if (msg.userId !== userId) {
         let actualContent = "";
 
@@ -60,7 +63,6 @@ export const useMessageHandler = () => {
     };
   }, [userId, setUserMessage, setSystemMessages]);
 
-  // 유저 메시지 전송
   const sendMessage = (msg: string) => {
     if (socket && msg.trim() !== "") {
       const payload: MessagePayload = {
@@ -76,11 +78,5 @@ export const useMessageHandler = () => {
     }
   };
 
-  // 시스템 메시지 전송
-  const sendSystemMessage = (msg: SystemMessageProps) => {
-    console.log("시스템 메시지 전송 요청:", msg); 
-    socket.emit("REQUEST_SYSTEM_MSG", msg);
-  };
-
-  return { sendMessage, sendSystemMessage };
+  return { sendMessage };
 };

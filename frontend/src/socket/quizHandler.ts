@@ -4,17 +4,18 @@ import { useQuizStore } from "@/store/useQuizStore";
 import { useChatStore } from "@/store/useChatStore";
 import { useUserStore } from "@/store/useUserStore";
 import { useMessageHandler } from "./messageHandler";
+import { sendSystemMessage } from "./messageHandler";
 
 export const useQuizHandler = () => {
   // const [answer, setAnswer] = useState<string>("");
   const { showQuizQuestion, setQuizResult } = useQuizStore();
-  const { addSystemMessage, setSystemMessages } = useChatStore();
+  const { setSystemMessages } = useChatStore();
   const { userId } = useUserStore();
   const getCurrentTime = () => {
     const now = new Date();
     return now.toTimeString().slice(0, 5);
   };
-  const { sendSystemMessage } = useMessageHandler();
+  // const { sendSystemMessage } = useMessageHandler();
 
   useEffect(() => {
     socket.on("START_QUIZ", startQuiz);

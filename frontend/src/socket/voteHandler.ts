@@ -4,7 +4,9 @@ import type { VoteItem, VoteState } from "@/common/types";
 
 import { useVoteStore } from "@/store/useVoteStore";
 import {useChatStore} from "@/store/useChatStore";
-import { useMessageHandler } from "./messageHandler";
+// import { useMessageHandler } from "./messageHandler";
+import { sendSystemMessage } from "./messageHandler";
+
 
 
 let isVoteSocketInitialized = false;
@@ -18,7 +20,7 @@ export const useVoteHandler = () => {
     };
 
     const updateFromServer=useVoteStore((state) => state.updateFromServer);
-  const { sendSystemMessage } = useMessageHandler();
+//   const { sendSystemMessage } = useMessageHandler();
 
     
     useEffect(() => {
