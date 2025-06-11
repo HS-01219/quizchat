@@ -201,7 +201,7 @@ const Content = () => {
 
 	} = useVoteStore();
 	const { resetTimer } = useTimerStore();
-	const { endVote } = useVoteHandler();
+	const { startVote, endVote } = useVoteHandler();
 	const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
 
 	useEffect(() => {
@@ -265,13 +265,18 @@ const Content = () => {
 	const onSaveClick = () => {
 		const data = {
 			title,
-			items: voteItems.map((item) => ({
-				itemId: item.itemId,
-				text: item.text,
-			})),
+			// items: voteItems.map((item) => ({
+			// 	itemId: item.itemId,
+			// 	text: item.text,
+			// })),
+			items: voteItems,
 			isMultiple: isDuplicated,
 		};
 		save(data);
+
+		// 여기에 하는게 맞을까요 
+		startVote(data);
+
 	};
 
 	const onEdit = () => {

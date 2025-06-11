@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import { socket } from "./socketManager";
 import { useQuizStore } from "@/store/useQuizStore";
 import { useChatStore } from "@/store/useChatStore";
+import { useMessageHandler } from "./messageHandler";
 
 export const useQuizHandler = () => {
   const [answer, setAnswer] = useState<string>("");
   const { showQuizQuestion, setQuizResult } = useQuizStore();
-  const { addSystemMessage } = useChatStore();
+  const { setSystemMessages } = useChatStore();
   const getCurrentTime = () => {
     const now = new Date();
     return now.toTimeString().slice(0, 5);
   };
+  const { sendSystemMessage } = useMessageHandler();
 
   useEffect(() => {
     socket.on("START_QUIZ", startQuiz);
@@ -31,7 +33,12 @@ export const useQuizHandler = () => {
 
     // 프론트 TODO : 퀴즈 시작 알림을 채팅에 전달, 화면 상단에 표시
     showQuizQuestion(data.question);
-    addSystemMessage({ type: "quizStart", time: getCurrentTime() });
+    // setSystemMessages({ type: "quizStart", time: getCurrentTime() });
+
+    sendSystemMessage({
+      type: "quizStart",
+      time: getCurrentTime(),
+    });
   };
 
   const endQuiz = (data: {
@@ -45,12 +52,19 @@ export const useQuizHandler = () => {
     // 정답의 경우 여러 키워드를 '/'로 구분하여 전달합니다.
 
     // 프론트 TODO : 화면 상단의 퀴즈 삭제, 채팅에 퀴즈 종료 알림 전달
-    setQuizResult(data.winnerNickName, data.answer); 
-    addSystemMessage({
+    setQuizResult(data.winnerNickName, data.answer);
+
+    // setSystemMessages({
+    //   type: "correct",
+    //   nickName: data.winnerNickName,
+    //   time: getCurrentTime(),
+    // });
+    sendSystemMessage({
       type: "correct",
       nickName: data.winnerNickName,
       time: getCurrentTime(),
     });
+
   };
 
   const requestStartQuiz = () => {

@@ -1,27 +1,17 @@
 // 퀴즈 투표 관련 시스템 메시지
 
 import { create } from "zustand";
-import type {VoteItem} from "@/common/types";
-type MessageType = "correct" | "voteStart" | "voteEnd" | "warning" | "quizStart" | "quizEnd" |"voteResult";
-
-export interface SystemMessage {
-  items?:VoteItem[];
-  type: MessageType;
-  nickName?: string;
-  time: string;
-}
+import { SystemMessageProps } from "@/common/types";
 
 interface ChatStore {
-  systemMessages: SystemMessage[];
-  addSystemMessage: (message: SystemMessage) => void;
-  clearSystemMessages: () => void;
+  systemMessages: SystemMessageProps[];
+  setSystemMessages: (msg: SystemMessageProps) => void;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
   systemMessages: [],
-  addSystemMessage: (message) =>
+  setSystemMessages: (msg) =>
     set((state) => ({
-      systemMessages: [...state.systemMessages, message],
+      systemMessages: [...state.systemMessages, msg],
     })),
-  clearSystemMessages: () => set({ systemMessages: [] }),
 }));

@@ -20,7 +20,7 @@ export const useVote = () => {
 		setVoteCreatorId,
 	} = useVoteStore();
 	const { userId } = useUserStore();
-	const { addSystemMessage } = useChatStore();
+	// const { addSystemMessage } = useChatStore();
 	const { startVote, submitVote, endVote } = useVoteHandler();
 	const { startTimer } = useTimerStore();
 
