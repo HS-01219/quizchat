@@ -18,31 +18,20 @@ export function handleQuiz(io: Server, socket: Socket) {
       answer: "테이블/table/Table",
     };
 
-        if(result) {
-            // redis에 answer와 퀴즈 상태를 저장
-            const quizState : QuizState = {
-                isActive : true,
-                quizData : result,
-                isEnded : false
-            }
+    if (result) {
+      // redis에 answer와 퀴즈 상태를 저장
+      const quizState: QuizState = {
+        isActive: true,
+        quizData: result,
+        isEnded: false,
+      };
 
-            console.log(quizState);
-            await setRedisValue('quizState', JSON.stringify(quizState), 60 * 60);
-            io.emit('START_QUIZ', { 
-                isActive : true,
-                question : result.question,
-                isEnded : false
-            });
-        } else {
-            socket.emit('START_QUIZ_ERROR', { message: '퀴즈가 존재하지 않습니다.' });
-            return;
-        }
-    });
-
-      // 시스템 메세지 사람 수대로 중복해서 나오는 거 해결
-      io.emit("SYSTEM_MESSAGE", {
-        type: "quizStart",
-        time: new Date().toTimeString().slice(0, 5),
+      console.log(quizState);
+      await setRedisValue("quizState", JSON.stringify(quizState), 60 * 60);
+      io.emit("START_QUIZ", {
+        isActive: true,
+        question: result.question,
+        isEnded: false,
       });
     } else {
       socket.emit("START_QUIZ_ERROR", { message: "퀴즈가 존재하지 않습니다." });
@@ -50,20 +39,6 @@ export function handleQuiz(io: Server, socket: Socket) {
     }
   });
 
-<<<<<<< Updated upstream
-            // 서버가 가지고 있는 정답과 일치하는지 체크
-            const isCorrect = currentQuiz.quizData ? checkAnswer(answer, currentQuiz.quizData.answer) : false;
-            
-            console.log('퀴즈 정답 체크', isCorrect)
-            // 정답일 경우
-            if(isCorrect) {
-                // redis에 퀴즈 상태를 업데이트
-                const quizState : QuizState = {
-                    isActive: false,
-                    quizData: null,
-                    isEnded : true
-                };
-=======
   socket.on("ANSWER_QUIZ", async ({ userId, answer }: answerPayload) => {
     // if절로 퀴즈가 진행되고 있을때만 아래 로직을 수행
     const currentQuiz = await getCurrentQuizState();
@@ -73,7 +48,30 @@ export function handleQuiz(io: Server, socket: Socket) {
           message: "퀴즈 데이터가 없습니다.",
         });
       }
->>>>>>> Stashed changes
+      // 시스템 메세지 사람 수대로 중복해서 나오는 거 해결
+      io.emit("SYSTEM_MESSAGE", {
+        type: "quizStart",
+        time: new Date().toTimeString().slice(0, 5),
+      });
+    } else {
+      socket.emit("START_QUIZ_ERROR", { message: "퀴즈가 존재하지 않습니다." });
+      return;
+    }
+
+    // 서버가 가지고 있는 정답과 일치하는지 체크
+    const isCorrect = currentQuiz.quizData
+      ? checkAnswer(answer, currentQuiz.quizData.answer)
+      : false;
+
+    console.log("퀴즈 정답 체크", isCorrect);
+    // 정답일 경우
+    if (isCorrect) {
+      // redis에 퀴즈 상태를 업데이트
+      const quizState: QuizState = {
+        isActive: false,
+        quizData: null,
+        isEnded: true,
+      };
 
       // 서버가 가지고 있는 정답과 일치하는지 체크
       const isCorrect = currentQuiz.quizData
@@ -87,6 +85,7 @@ export function handleQuiz(io: Server, socket: Socket) {
         const quizState: QuizState = {
           isActive: false,
           quizData: null,
+          isEnded: true,
         };
 
         await setRedisValue("quizState", JSON.stringify(quizState), 60 * 60);
