@@ -3,6 +3,7 @@ import { useQuizStore } from "@/store/useQuizStore";
 import { useUserStore } from "@/store/useUserStore";
 import { sendSystemMessage } from "./messageHandler";
 import { QuizState } from "@/common/types";
+import { useChatStore } from "@/store/useChatStore";
 
 const getCurrentTime = () => {
   const now = new Date();
@@ -17,15 +18,21 @@ export const initializeQuizSocket = () => {
   isInitialized = true;
 
   const { setQuizState, setQuizResult } = useQuizStore.getState();
+  const { setSystemMessages } = useChatStore.getState();
+
+  // 시스템 메세지 서버에서 받아오기
+  socket.on("SYSTEM_MESSAGE", (msg) => {
+  setSystemMessages(msg);
+});
   
   const startQuiz = (data: QuizState) => {
     console.log(`퀴즈 시작 - 문제 : ${data.question}`);
     setQuizState(data);
 
-    sendSystemMessage({
-      type: "quizStart",
-      time: getCurrentTime(),
-    });
+    // sendSystemMessage({
+    //   type: "quizStart",
+    //   time: getCurrentTime(),
+    // });
   };
 
   const endQuiz = (data: {
