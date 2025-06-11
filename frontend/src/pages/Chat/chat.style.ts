@@ -11,5 +11,8 @@ export const ChatContainer = styled.div`
     flex: 1; 
     overflow: auto;
     display: flex;
+    &::-webkit-scrollbar {
+        display: none;
+    }
     flex-direction: column;
     max-height: 100%;`

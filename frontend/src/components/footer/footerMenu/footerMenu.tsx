@@ -2,17 +2,18 @@ import { FiUser } from "react-icons/fi";
 import { RiFileListLine } from "react-icons/ri";
 import * as S from "@/components/footer/footerMenu/footerMenu.style";
 import { Label } from "@/constants/label";
-import { useQuizHandler } from "@/socket/quizHandler";
+// import { useQuizHandler } from "@/socket/quizHandler";
 import { useModalStore } from "@/store/useModalStore";
 
 import {useVoteStore} from "@/store/useVoteStore";
 import { useUserStore } from "@/store/useUserStore";
 import {useQuizStore} from "@/store/useQuizStore";
 
+import { requestStartQuiz } from "@/socket/quizHandler";
+
 const FooterMenu = () => {
    const { voteState } = useVoteStore();
    const { quizState }=useQuizStore();
-  const { requestStartQuiz } = useQuizHandler();
   const { openModal } = useModalStore();
   const { setHeaderType } = useUserStore();
 
@@ -25,7 +26,7 @@ const FooterMenu = () => {
       alert("진행 중인 투표 또는 퀴즈가 있습니다.");
       return;
     }
-    
+
     openModal("vote");
     // const isActiveVote = voteState?.isActive && !voteState?.isEnded;
     // if (isActiveVote) {

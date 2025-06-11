@@ -1,7 +1,6 @@
 import * as S from "@/components/header/header.style";
 import { FiUser } from "react-icons/fi";
 import {useUserStore} from "@/store/useUserStore";
-// import { useQuizHandler } from "@/socket/quizHandler";
 
 
 const Header = () => {
