@@ -22,6 +22,7 @@ export const initializeQuizSocket = () => {
 
   // 시스템 메세지 서버에서 받아오기
   socket.on("SYSTEM_MESSAGE", (msg) => {
+    console.log("시스템메세지",msg )
   setSystemMessages(msg);
 });
   

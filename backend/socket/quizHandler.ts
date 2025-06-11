@@ -33,6 +33,10 @@ export function handleQuiz(io: Server, socket: Socket) {
         question: result.question,
         isEnded: false,
       });
+                  io.emit('SYSTEM_MESSAGE', {
+                type: 'quizStart',
+                time: new Date().toTimeString().slice(0, 5)
+            });
     } else {
       socket.emit("START_QUIZ_ERROR", { message: "퀴즈가 존재하지 않습니다." });
       return;
@@ -48,11 +52,6 @@ export function handleQuiz(io: Server, socket: Socket) {
           message: "퀴즈 데이터가 없습니다.",
         });
       }
-      // 시스템 메세지 사람 수대로 중복해서 나오는 거 해결
-      io.emit("SYSTEM_MESSAGE", {
-        type: "quizStart",
-        time: new Date().toTimeString().slice(0, 5),
-      });
     } else {
       socket.emit("START_QUIZ_ERROR", { message: "퀴즈가 존재하지 않습니다." });
       return;
@@ -100,6 +99,11 @@ export function handleQuiz(io: Server, socket: Socket) {
           winnerNickName: winnerNickName,
           answer: answer,
         });
+                        io.emit('SYSTEM_MESSAGE', {
+                    type: 'correct',
+                    nickName: winnerNickName,
+                    time: new Date().toTimeString().slice(0, 5)
+                });
       } else {
         console.log("정답 아님");
         // 별도의 처리 X, 논의 후 수정
