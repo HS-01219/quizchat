@@ -34,7 +34,6 @@ const FooterMenu = () => {
 
   const handleQuizClick = () => {
     const hasActiveQuiz = quizState?.isActive && !quizState?.isEnded;
-
     if (hasActiveQuiz) {
       alert("진행 중인 투표가 있습니다.");
       return;
