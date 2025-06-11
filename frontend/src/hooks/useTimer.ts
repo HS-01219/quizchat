@@ -5,7 +5,7 @@ import {useModalStore} from "@/store/useModalStore";
 import {useTimerStore} from "@/store/useTimerStore";
 
 const STORAGE_KEY = "shared-timer";
-const MINUTES_IN_MS = 10 * 60 * 1000;
+const MINUTES_IN_MS = 60 * 1000;
 const INTERVAL = 1000;
 
 export const useTimer = () => {
