@@ -34,12 +34,12 @@ export const useAuth = () => {
 			setJustJoined(true);
 			setIsInitial(false);
 		} else {
-			const previous = prevNickName;
-			const now = new Date().toISOString();
+			// const previous = prevNickName;
+			// const now = new Date().toISOString();
 			setNickName(trimmedNick);
 			setPrevNickName(trimmedNick);
-			updateNickName({ userId, nickName: trimmedNick });
-			setSystemMessage(`'${prevNickName}' 님이 '${trimmedNick}' 님으로 이름이 변경되었습니다.`);
+			updateNickName({ nickName: trimmedNick });
+			// setSystemMessage(`'${prevNickName}' 님이 '${trimmedNick}' 님으로 이름이 변경되었습니다.`);
 
 		}
 

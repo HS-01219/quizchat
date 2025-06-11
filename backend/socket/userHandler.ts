@@ -7,11 +7,21 @@ interface userPayload {
 };
 
 export function handleUser(io : Server, socket : Socket) {
-    socket.on('UPDATE_NICKNAME', async ({ userId, nickName } : userPayload) => {
+    socket.on('UPDATE_NICKNAME', async ({ nickName } : userPayload) => {
+        const userId = socket.data.userId;
+        const prevNickName = socket.data.nickName;
+
+        if(prevNickName === nickName){
+            console.log('현재 닉네임과 동일합니다.', nickName);
+            socket.emit('SEND_NICKNAME_SUCCESS', { message : '현재 닉네임과 동일합니다.'});
+            return;
+        }
+
         console.log('닉네임 변경 요청:', userId, nickName);
         socket.data.nickName = nickName;
-        io.emit('SEND_NICKNAME', { userId : userId, nickName : nickName });
-        socket.emit('SEND_NICKNAME_SUCCESS', { message : '닉네임이 성공적으로 변경되었습니다.'});
+
+        io.emit('SEND_NICKNAME', { userId : userId, prevNickName : prevNickName, newNickName : nickName });
+        socket.emit('SEND_NICKNAME_SUCCESS', { message : '닉네임이 성공적으로 변경되었습니다.', newNickName : nickName });
     });
 
     socket.on('JOIN_ROOM', async ({ nickName } : userPayload) => {
