@@ -4,7 +4,7 @@ export const MessageWrapper = styled.div<{ isMine: boolean }>(({ isMine }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: isMine ? "flex-end" : "flex-start",
-  margin: "0.5rem 0",
+  margin: "0.35rem 0.5rem",
 }));
 
 export const SenderLabel = styled.div<{ isMine: boolean }>(({ theme }) => ({
