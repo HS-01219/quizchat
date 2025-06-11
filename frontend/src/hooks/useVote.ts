@@ -91,7 +91,7 @@ export const useVote = () => {
 			setSelectedVoteId(() => {
 				return updated;
 			});
-
+			closeModal("vote");
 			setCurrentUserId(userId);
 			submitVote(updated);
 		}

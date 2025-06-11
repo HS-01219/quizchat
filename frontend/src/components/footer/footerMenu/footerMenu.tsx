@@ -38,7 +38,7 @@ const FooterMenu = () => {
       alert("진행 중인 투표가 있습니다.");
       return;
     }
-     setHeaderType("quiz");
+     // setHeaderType("quiz");
     requestStartQuiz();
   };
 

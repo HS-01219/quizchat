@@ -1,19 +1,32 @@
 import { socket } from "./socketManager";
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import type { VoteItem, VoteState } from "@/common/types";
 
 import { useVoteStore } from "@/store/useVoteStore";
 import {useChatStore} from "@/store/useChatStore";
 // import { useMessageHandler } from "./messageHandler";
 import { sendSystemMessage } from "./messageHandler";
+import {useModalStore} from "@/store/useModalStore";
+import {useTimerStore} from "@/store/useTimerStore";
 
 
 
 let isVoteSocketInitialized = false;
 
 export const useVoteHandler = () => {
-    const { setVoteState , setIsTimerActive, endVote: endVoteLocal} = useVoteStore();
+    const { setVoteState , setIsTimerActive} = useVoteStore();
     const { setSystemMessages } = useChatStore();
+
+    const [showResult, setShowResult] = useState(false);
+    const {
+        voteState,
+        resetVote,
+        isVoteCreator,
+        voteItems
+    } = useVoteStore();
+    const isCreator = isVoteCreator();
+    const { resetTimer } = useTimerStore();
+
     const getCurrentTime = () => {
         const now = new Date();
         return now.toTimeString().slice(0, 5);
@@ -48,7 +61,9 @@ export const useVoteHandler = () => {
             console.log('투표 종료:', data);
             setVoteState(data);
             setIsTimerActive(false);
-            endVoteLocal();
+
+
+
         });
 
         return () => {
