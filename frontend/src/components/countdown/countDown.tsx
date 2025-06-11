@@ -8,7 +8,7 @@ const CountDown = () => {
 	if (!isSave || !isActive) {
 		return (
 			<S.CountDownContainer>
-				10:00
+				1:00
 			</S.CountDownContainer>
 		);
 	}

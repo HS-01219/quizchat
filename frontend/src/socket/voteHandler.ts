@@ -8,10 +8,11 @@ import { useVoteStore } from "@/store/useVoteStore";
 import { sendSystemMessage } from "./messageHandler";
 import {useModalStore} from "@/store/useModalStore";
 import {useTimerStore} from "@/store/useTimerStore";
+import {useChatStore} from "@/store/useChatStore";
 
 let isVoteSocketInitialized = false;
 
-export const useVoteHandler = () => {p
+export const useVoteHandler = () => {
     const { setVoteState , setIsTimerActive} = useVoteStore();
     const { setSystemMessages } = useChatStore();
 
@@ -58,9 +59,7 @@ export const useVoteHandler = () => {p
             console.log('투표 종료:', data);
             setVoteState(data);
             setIsTimerActive(false);
-
-
-
+resetVote()
         });
 
         return () => {
@@ -92,13 +91,12 @@ export const useVoteHandler = () => {p
 
     const endVote = (items:VoteItem[]) => {
         console.log('투표 종료 요청');
-        // setSystemMessages({items: [], type: "voteEnd", time: getCurrentTime() });
         sendSystemMessage({
             items: [],
             type: "voteEnd",
             time: getCurrentTime(),
         });
-        // setSystemMessages({items: items, type: "voteResult", time: getCurrentTime() });
+
         sendSystemMessage({
             items: items,
             type: "voteResult",
