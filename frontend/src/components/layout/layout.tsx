@@ -27,13 +27,13 @@ const isQuizActive = quizState?.isActive && !quizState?.isEnded;
 						hasVote={true}
 					/>
 				)}
-				{/*{isQuizActive && (*/}
-				{/*	<BubbleHeader*/}
-				{/*		type="quiz"*/}
-				{/*		question={quizState.question}*/}
+				{isQuizActive && (
+					<BubbleHeader
+						type="quiz"
+						question={quizState.question}
 
-				{/*	/>*/}
-				{/*)}*/}
+					/>
+				)}
 				{children}
 			</S.LayoutContainer>
 			<Footer />
