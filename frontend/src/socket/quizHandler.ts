@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { socket } from "./socketManager";
 import { useQuizStore } from "@/store/useQuizStore";
 import { useChatStore } from "@/store/useChatStore";
+import { useUserStore } from "@/store/useUserStore";
 
 export const useQuizHandler = () => {
-  const [answer, setAnswer] = useState<string>("");
+  // const [answer, setAnswer] = useState<string>("");
   const { showQuizQuestion, setQuizResult } = useQuizStore();
   const { addSystemMessage } = useChatStore();
+  const { userId } = useUserStore();
   const getCurrentTime = () => {
     const now = new Date();
     return now.toTimeString().slice(0, 5);
@@ -28,8 +30,6 @@ export const useQuizHandler = () => {
 
   const startQuiz = (data: { question: string }) => {
     console.log(`퀴즈 시작 - 문제 : ${data.question}`);
-
-    // 프론트 TODO : 퀴즈 시작 알림을 채팅에 전달, 화면 상단에 표시
     showQuizQuestion(data.question);
     addSystemMessage({ type: "quizStart", time: getCurrentTime() });
   };
@@ -58,19 +58,14 @@ export const useQuizHandler = () => {
     socket.emit("START_QUIZ");
   };
 
-  const requestAnswer = () => {
-    if (answer.trim() === "") {
-      return;
-    }
-
+  const requestAnswer = (answer : string) => {
     console.log(`퀴즈 정답 제출 : ${answer}`);
-    socket.emit("ANSWER_QUIZ", { userId: 1, answer: answer });
-    setAnswer("");
+    socket.emit("ANSWER_QUIZ", { userId: userId, answer: answer });
   };
 
   const responseMessage = (data: { message: string }) => {
     alert(data.message);
   };
 
-  return { answer, setAnswer, startQuiz, requestStartQuiz, requestAnswer };
+  return { startQuiz, requestStartQuiz, requestAnswer };
 };
