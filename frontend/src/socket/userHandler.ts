@@ -3,13 +3,12 @@ import { socket } from './socketManager';
 import {useUserStore} from "@/store/useUserStore";
 import type { VoteState, QuizState } from '@/common/types';
 import {useVoteStore} from "@/store/useVoteStore";
-
+import { useQuizStore } from "@/store/useQuizStore";
 let isSocketInitialized = false;
 
 export const useUserHandlers = () => {
-
+    const { setQuizState } = useQuizStore()
     const { nickName, userId, setNickName, setSystemMessage,setUserId} = useUserStore();
-
     const {setCurrentUsers} = useUserStore.getState()
     const { setVoteState,updateFromServer} = useVoteStore();
 
@@ -73,8 +72,11 @@ export const useUserHandlers = () => {
         roomState: { quizState: QuizState, voteState: VoteState }
     }) => {
         console.log("[joinRoom] 전달받은 데이터:", data);
+        console.log("전달받은 quizState:", data.roomState.quizState);
         console.log("전달받은 voteState:", data.roomState.voteState);
-        // setQuizState(data.roomState.quizState);
+        if(data.roomState.quizState){
+            setQuizState(data.roomState.quizState);
+        }
         setUserId(data.userId);
         if(data.roomState.voteState){
             updateFromServer(data.roomState.voteState);

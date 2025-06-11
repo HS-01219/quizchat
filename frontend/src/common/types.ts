@@ -34,11 +34,15 @@ export interface QuizItem {
     id : number;       // 퀴즈 id
     question : string; // 문제
     answer : string;   // 정답
+
 }
 
 export interface QuizState {
     isActive : boolean;
+    question : string; // 문제
     quizData : QuizItem | null;
+    isEnded:boolean; // 퀴즈 종료 여부
+
 }
 
 // 시스템 메세지
