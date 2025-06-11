@@ -4,7 +4,9 @@ import { FiPlusCircle } from "react-icons/fi";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useMessageHandler } from "@/socket/messageHandler";
 import { useQuizStore } from "@/store/useQuizStore";
-import { useQuizHandler } from "@/socket/quizHandler";
+// import { useQuizHandler } from "@/socket/quizHandler";
+
+import { requestAnswer } from "@/socket/quizHandler";
 
 interface FooterInputProps {
   isExpanded: boolean;
@@ -15,7 +17,7 @@ const FooterInput = ({ isExpanded, setIsExpanded }: FooterInputProps) => {
   const [isRotated, setIsRotated] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const { isActive } = useQuizStore();
-  const { requestAnswer } = useQuizHandler();
+  // const { requestAnswer } = useQuizHandler();
   const { sendMessage } = useMessageHandler();
 
   const handleClick = () => {

@@ -275,7 +275,7 @@ const Content = () => {
 		save(data);
 
 		// 여기에 하는게 맞을까요 
-		startVote(data);
+		// startVote(data);
 
 	};
 
