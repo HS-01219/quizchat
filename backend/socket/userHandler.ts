@@ -25,6 +25,11 @@ export function handleUser(io : Server, socket : Socket) {
     });
 
     socket.on('JOIN_ROOM', async ({ nickName } : userPayload) => {
+        if(socket.data.userId){
+            console.log('이미 참여 중인 유저 : ', socket.data.userId);
+            return;
+        }
+
         console.log('채팅방 참여 요청', nickName)
         const nextUserId = await getRedisValue('nextUserId') || 1;
         const userId = nextUserId;
@@ -72,7 +77,6 @@ export function handleUser(io : Server, socket : Socket) {
             userLeave(io, socket);
         }
     });
-
 }
 
 export const userLeave = async (io : Server, socket : Socket) : Promise<void> => {

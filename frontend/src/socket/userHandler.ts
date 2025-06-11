@@ -44,15 +44,12 @@ export const useUserHandlers = () => {
         // 프론트 TODO : 방 참여 또는 퇴장 알림
         setCurrentUsers(data.currentUsers);
         setSystemMessage(`'${data.nickName}' 님이 퇴장하셨습니다.`);
-
     }
 
     const userJoined = (data: { currentUsers: number; userId: number; nickName: string }) => {
         console.log(`${data.nickName} 님이 방에 참여했습니다. 현재 인원: ${data.currentUsers}, 유저 아이디 :${data.userId}`);
         setCurrentUsers(data.currentUsers);
         setSystemMessage(`'${data.nickName}' 님이 입장하셨습니다.`);
-
-
     };
     // const joinRoom = (data: {
     //     userId: number,
