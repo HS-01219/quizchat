@@ -100,7 +100,7 @@ export const useUserHandlers = () => {
         }
 
         console.log(`닉네임 변경 요청: ${data.nickName} (userId: ${data.userId})`);
-        setSystemMessage(`'${userId}' 님이 '${nickName}' 님으로 이름이 변경되었습니다.`);
+        // setSystemMessage(`'${userId}' 님이 '${nickName}' 님으로 이름이 변경되었습니다.`);
         useUserStore.getState().updateSenderNickName(data.userId, trimmed);
         socket.emit('UPDATE_NICKNAME', { userId: data.userId, nickName: trimmed });
     }
