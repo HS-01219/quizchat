@@ -29,13 +29,15 @@ const io = new SocketServer(server, {
         origin: process.env.FRONT_SERVER_URL || "http://localhost:5173",
         methods: ["GET", "POST"], 
         credentials: true 
-    }
+    },
+    pingInterval: 20000, // 20초마다 ping 전송
+    pingTimeout: 10000 // 10초 동안 pong 응답이 없으면 disconnect 처리
 });
 
 // socket 설정
 setupSocketIO(io);
 
 server.listen(PORT, () => {
-    console.log(`💡 서버 포트: ${PORT}`); // 추가
-    console.log("서버 실행")
+    console.log(`💡 서버 포트: ${PORT}`);
+    console.log("서버 실행");
 });

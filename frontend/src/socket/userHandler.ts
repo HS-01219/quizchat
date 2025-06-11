@@ -20,6 +20,7 @@ export const useUserHandlers = () => {
 
         socket.on('SEND_NICKNAME', sendNickName); // 전체 메세지
         socket.on('SEND_NICKNAME_SUCCESS', responseMessage); // 요청한 사람한테만
+        socket.on('SEND_NICKNAME_FAIL', responseMessage);
         socket.on('SEND_JOINED', userJoined);
         socket.on('SEND_JOINED_SUCCESS', joinRoom);
         socket.on('SEND_LEAVED', userLeaved);
@@ -27,6 +28,7 @@ export const useUserHandlers = () => {
         return () => {
             socket.off('SEND_NICKNAME', sendNickName);
             socket.off('SEND_NICKNAME_SUCCESS', responseMessage);
+            socket.off('SEND_NICKNAME_FAIL', responseMessage);
             socket.off('SEND_JOINED', userJoined);
             socket.off('SEND_JOINED_SUCCESS', joinRoom);
             socket.off('SEND_LEAVED', userLeaved);

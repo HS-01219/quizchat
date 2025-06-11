@@ -13,7 +13,7 @@ export function handleUser(io : Server, socket : Socket) {
 
         if(prevNickName === nickName){
             console.log('현재 닉네임과 동일합니다.', nickName);
-            socket.emit('SEND_NICKNAME_SUCCESS', { message : '현재 닉네임과 동일합니다.'});
+            socket.emit('SEND_NICKNAME_FAIL', { message : '현재 닉네임과 동일합니다.'});
             return;
         }
 
@@ -37,6 +37,7 @@ export function handleUser(io : Server, socket : Socket) {
 
         socket.data.userId = userId;
         socket.data.nickName = nickName;
+        socket.data.hasJoined = true;
 
         const currentUsers = await getRedisValue('currentUsers');
         const userCnt = currentUsers ? parseInt(currentUsers) + 1 : 1;
@@ -82,8 +83,9 @@ export function handleUser(io : Server, socket : Socket) {
 export const userLeave = async (io : Server, socket : Socket) : Promise<void> => {
     console.log('방 나가기', socket.data.userId);
     const currentUsers = await getRedisValue('currentUsers');
-    const userCnt = currentUsers ? parseInt(currentUsers) - 1 : 0;
-    setRedisValue('currentUsers', userCnt.toString());
+    const userCnt = currentUsers ? Math.max(parseInt(currentUsers) - 1, 0) : 0; // 최소 0명으로 설정
+    console.log(`현재 유저 수 : ${currentUsers} -> ${userCnt}`);
+    await setRedisValue('currentUsers', userCnt.toString());
 
     io.emit('SEND_LEAVED', {
         currentUsers : userCnt,
