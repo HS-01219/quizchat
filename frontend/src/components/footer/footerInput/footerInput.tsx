@@ -27,8 +27,7 @@ const FooterInput = ({ isExpanded, setIsExpanded }: FooterInputProps) => {
     if (inputValue.trim() === "") return;
     
     // 퀴즈 상태에 따라 다르게 처리
-    console.log(quizState.isActive)
-    if (quizState.isActive) {
+    if (quizState && quizState.isActive) {
       requestAnswer(inputValue);
     }
     
