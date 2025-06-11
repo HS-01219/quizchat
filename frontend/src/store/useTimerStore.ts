@@ -8,7 +8,7 @@ interface TimerState {
 	resetTimer: () => void;
 }
 
-const MINUTES_IN_MS = 10 * 60 * 1000;
+const MINUTES_IN_MS = 10 * 20 * 1000;
 const STORAGE_KEY = "shared-timer";
 
 export const useTimerStore = create<TimerState>((set, get) => ({

@@ -50,7 +50,7 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
 		endVote(voteItems);
 		resetVote();
 		resetTimer()
-setShowResult(true);
+		setShowResult(true);
 	};
 	const handleQuitQuiz = (e: React.MouseEvent) => {
 		e.stopPropagation();
