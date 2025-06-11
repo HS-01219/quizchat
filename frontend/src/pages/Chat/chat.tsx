@@ -6,6 +6,7 @@ import { useChatStore } from "@/store/useChatStore";
 import { useQuizStore } from "@/store/useQuizStore";
 import { useUserStore } from "@/store/useUserStore";
 import ChatUserMessage from "@/components/systemMessage/chatUserMessage/chatUserMessage";
+import {useEffect, useRef} from "react";
 
 const Chat = () => {
   const { question, isActive } = useQuizStore();
@@ -17,12 +18,19 @@ const Chat = () => {
     return now.toTimeString().slice(0, 5);
   };
 
-  // const message = useUserStore((state) => state.message);
+   const messages = useUserStore((state) => state.message);
   const userMessages = useUserStore((state) => state.userMessages);
   const chatSystemMessages = useUserStore((state) => state.systemMessages);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  }, [messages, userMessages, chatSystemMessages, systemMessages]);
   return (
 
-    <ChatContainer>
+    <ChatContainer ref={containerRef}>
       {headerType === "quiz" && (
         <BubbleHeader
           type="quiz"
@@ -48,7 +56,9 @@ const Chat = () => {
       <ChatMessageList>
         {userMessages.map((msg, idx) => (
           <ChatUserMessage key={idx} message={msg} />
+          
         ))}
+
       </ChatMessageList>
 
       
