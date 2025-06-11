@@ -37,6 +37,7 @@ export interface QuizItem {
 export interface QuizState {
     isActive : boolean;
     quizData : QuizItem | null;
+    isEnded : boolean;
 }
 
 type MessageType =

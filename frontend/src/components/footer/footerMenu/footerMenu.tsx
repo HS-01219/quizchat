@@ -13,29 +13,37 @@ import { requestStartQuiz } from "@/socket/quizHandler";
 
 const FooterMenu = () => {
    const { voteState } = useVoteStore();
-  // const { requestStartQuiz } = useQuizHandler();
-
+   const { quizState }=useQuizStore();
   const { openModal } = useModalStore();
   const { setHeaderType } = useUserStore();
-  const {quizState}=useQuizStore()
 
 
   const handleVoteClick = () => {
     console.log(`[FooterMenu] 현재 voteState:`, voteState);
-    const isActiveVote = voteState?.isActive && !voteState?.isEnded;
-    if (isActiveVote) {
-      console.log("진행 중인 투표가 있습니다. 투표 헤더를 표시합니다.");
-      openModal("vote");
-    } else {
-      console.log("진행 중인 투표가 없습니다. 투표 모달을 엽니다.");
-      openModal("vote");
+    const hasActive = (voteState?.isActive && !voteState?.isEnded) || (quizState?.isActive && !quizState?.isEnded);
+
+    if (hasActive) {
+      alert("진행 중인 투표 또는 퀴즈가 있습니다.");
+      return;
     }
+
+    openModal("vote");
+    // const isActiveVote = voteState?.isActive && !voteState?.isEnded;
+    // if (isActiveVote) {
+    //   console.log("진행 중인 투표가 있습니다. 투표 헤더를 표시합니다.");
+    //   openModal("vote");
+    // } else {
+    //   console.log("진행 중인 투표가 없습니다. 투표 모달을 엽니다.");
+    //   openModal("vote");
+    // }
   };
 
   const handleQuizClick = () => {
-    const hasActiveQuiz = quizState?.isActive && !quizState?.isEnded;
-    if (hasActiveQuiz) {
-      alert("진행 중인 투표가 있습니다.");
+    const hasActive = (voteState?.isActive && !voteState?.isEnded) || (quizState?.isActive && !quizState?.isEnded);
+
+    if (hasActive) {
+      alert("진행 중인 투표 또는 퀴즈가 있습니다.");
+
       return;
     }
      // setHeaderType("quiz");
