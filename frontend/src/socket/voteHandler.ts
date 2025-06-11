@@ -4,18 +4,22 @@ import type { VoteItem, VoteState } from "@/common/types";
 
 import { useVoteStore } from "@/store/useVoteStore";
 import {useChatStore} from "@/store/useChatStore";
+import { useMessageHandler } from "./messageHandler";
+
 
 let isVoteSocketInitialized = false;
 
 export const useVoteHandler = () => {
     const { setVoteState , setIsTimerActive, endVote: endVoteLocal} = useVoteStore();
-    const { addSystemMessage } = useChatStore();
+    const { setSystemMessages } = useChatStore();
     const getCurrentTime = () => {
         const now = new Date();
         return now.toTimeString().slice(0, 5);
     };
 
     const updateFromServer=useVoteStore((state) => state.updateFromServer);
+  const { sendSystemMessage } = useMessageHandler();
+
     
     useEffect(() => {
         if (isVoteSocketInitialized) return;
@@ -56,7 +60,13 @@ export const useVoteHandler = () => {
 
     const startVote = (data: { title: string, items: VoteItem[], isMultiple: boolean }) => {
         console.log('투표 시작 요청:', data);
-        addSystemMessage({items: [], type: "voteStart", time: getCurrentTime() });
+        // setSystemMessages({items: [], type: "voteStart", time: getCurrentTime() });
+        sendSystemMessage({
+            items: [],
+            type: "voteStart",
+            time: getCurrentTime(),
+        });
+
         socket.emit('START_VOTE', data);
     };
 
@@ -68,8 +78,18 @@ export const useVoteHandler = () => {
 
     const endVote = (items:VoteItem[]) => {
         console.log('투표 종료 요청');
-        addSystemMessage({items: [], type: "voteEnd", time: getCurrentTime() });
-        addSystemMessage({items: items, type: "voteResult", time: getCurrentTime() });
+        // setSystemMessages({items: [], type: "voteEnd", time: getCurrentTime() });
+        sendSystemMessage({
+            items: [],
+            type: "voteEnd",
+            time: getCurrentTime(),
+        });
+        // setSystemMessages({items: items, type: "voteResult", time: getCurrentTime() });
+        sendSystemMessage({
+            items: items,
+            type: "voteResult",
+            time: getCurrentTime(),
+        });
         socket.emit('END_VOTE');
     };
 

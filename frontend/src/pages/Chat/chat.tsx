@@ -30,9 +30,11 @@ const Chat = () => {
           time={getCurrentTime()}
         />
       )}
+
       {chatSystemMessages.map((msg, idx) => (
         <ChatSystemMessage key={idx} message={msg} />
       ))}
+
       {systemMessages.map((msg, index) => {
         console.log(msg);
         return(
@@ -45,6 +47,7 @@ const Chat = () => {
           />
           )
       })}
+      
       <ChatMessageList>
         {userMessages.map((msg, idx) => (
           <ChatUserMessage key={idx} message={msg} />

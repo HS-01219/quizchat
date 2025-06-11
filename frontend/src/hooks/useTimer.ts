@@ -55,7 +55,7 @@ export const useTimer = () => {
 	const [timeLeft, setTimeLeft] = useState<number>(MINUTES_IN_MS);
 	const { isTimerActive,voteItems } = useVoteStore();
 	const { endVote } = useVoteHandler();
-	const hasEndedRef = useRef(false); // 종료 중복 방지
+	const hasEndedRef = useRef(false);
 
 	useEffect(() => {
 		const checkTimer = () => {
@@ -79,7 +79,7 @@ export const useTimer = () => {
 		return () => clearInterval(timer);
 	}, [isTimerActive]);
 
-	// 타이머가 0이 되면 endVote 호출 (한 번만)
+
 	useEffect(() => {
 		if (timeLeft <= 0 && isTimerActive && !hasEndedRef.current) {
 			endVote(voteItems);
