@@ -272,10 +272,8 @@ const Content = () => {
 			isMultiple: isDuplicated,
 		};
 		save(data);
-
-		// 여기에 하는게 맞을까요 ㅈ
-		startVote(data);
-
+		// 여기에 하는게 맞을까요 
+		// startVote(data);
 	};
 
 	const onEdit = () => {
