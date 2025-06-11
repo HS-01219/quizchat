@@ -5,10 +5,10 @@ import { useUserStore } from "@/store/useUserStore";
 import { QuizState } from "@/common/types";
 import { useChatStore } from "@/store/useChatStore";
 
-const getCurrentTime = () => {
-  const now = new Date();
-  return now.toTimeString().slice(0, 5);
-};
+// const getCurrentTime = () => {
+//   const now = new Date();
+//   return now.toTimeString().slice(0, 5);
+// };
 
 let isInitialized = false;
 

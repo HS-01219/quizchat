@@ -104,6 +104,10 @@ export function handleQuiz(io: Server, socket: Socket) {
           nickName: winnerNickName,
           time: new Date().toTimeString().slice(0, 5),
         });
+        io.emit("SYSTEM_MESSAGE", {
+          type: "quizEnd",
+          time: new Date().toTimeString().slice(0, 5),
+        });
       } else {
         console.log("정답 아님");
         // 별도의 처리 X, 논의 후 수정

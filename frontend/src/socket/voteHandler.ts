@@ -3,17 +3,15 @@ import { useEffect } from "react";
 import type { VoteItem, VoteState } from "@/common/types";
 
 import { useVoteStore } from "@/store/useVoteStore";
-import {useChatStore} from "@/store/useChatStore";
+// import {useChatStore} from "@/store/useChatStore";
 // import { useMessageHandler } from "./messageHandler";
 import { sendSystemMessage } from "./messageHandler";
-
-
 
 let isVoteSocketInitialized = false;
 
 export const useVoteHandler = () => {
     const { setVoteState , setIsTimerActive, endVote: endVoteLocal} = useVoteStore();
-    const { setSystemMessages } = useChatStore();
+    // const { setSystemMessages } = useChatStore();
     const getCurrentTime = () => {
         const now = new Date();
         return now.toTimeString().slice(0, 5);
