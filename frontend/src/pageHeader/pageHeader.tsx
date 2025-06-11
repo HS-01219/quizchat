@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import * as S from "@/pageHeader/pageHeader.style";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
@@ -8,10 +6,8 @@ import CountDown from "@/components/countdown/countDown";
 import { useModalStore } from "@/store/useModalStore";
 import { useVoteStore } from "@/store/useVoteStore";
 import { useVoteHandler } from "@/socket/voteHandler";
-
 import {useTimerStore} from "@/store/useTimerStore";
-
-
+import {useQuizStore} from "@/store/useQuizStore";
 
 
 interface BubbleHeaderProps {
@@ -39,6 +35,7 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
 	const isCreator = isVoteCreator();
 	const { resetTimer } = useTimerStore();
 	const { endVote } = useVoteHandler();
+	const { hideQuizQuestion } = useQuizStore();
 
 
 	const handleVoteClick = (e: React.MouseEvent) => {
@@ -52,10 +49,12 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
 		setIsTimerActive(false);
 		endVote(voteItems);
 		resetVote();
-
-
 		resetTimer()
 setShowResult(true);
+	};
+	const handleQuitQuiz = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		hideQuizQuestion();
 	};
 
 	return (
@@ -63,12 +62,9 @@ setShowResult(true);
 			<S.ContentRow expanded={expanded}>
 				<S.QuestionSection>
 					{type === "quiz" ? <S.QLabel>Q</S.QLabel> : <S.VoteIcon />}
-					{expanded ? (
-						<S.QuestionTextExpanded>{question}</S.QuestionTextExpanded>
-					) : (
+					{expanded &&
 						<S.QuestionText title={question}>{question}</S.QuestionText>
-					)}
-
+					}
 					{hasVote && !voteState.isEnded && <CountDown />}
 				</S.QuestionSection>
 
@@ -76,6 +72,12 @@ setShowResult(true);
 					{expanded ? <FiChevronUp /> : <FiChevronDown />}
 				</S.ToggleIcon>
 			</S.ContentRow>
+
+			{expanded && type === "quiz" && (
+				<S.ButtonContainer>
+					<Button onClick={handleQuitQuiz}>퀴즈 종료</Button>
+				</S.ButtonContainer>
+			)}
 
 			{expanded && (
 				<S.ButtonContainer>
