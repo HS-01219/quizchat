@@ -5,7 +5,7 @@ import { useUserHandlers} from "@/socket/userHandler";
 
 export const useAuth = () => {
 
-	const { nickName, setNickName, setJustJoined, setSystemMessage,userId} = useUserStore();
+	const { nickName, setNickName, setJustJoined} = useUserStore();
 	const { updateNickName } = useUserHandlers()
 	const { requestJoinRoom} = useUserHandlers();
 

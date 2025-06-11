@@ -3,14 +3,12 @@ import { useVoteStore } from "@/store/useVoteStore";
 import { useVoteHandler } from "@/socket/voteHandler";
 import {useUserStore} from "@/store/useUserStore";
 import {useTimerStore} from "@/store/useTimerStore";
-import {useChatStore} from "@/store/useChatStore";
 
 export const useVote = () => {
 	const { closeModal } = useModalStore();
 	const {
 		isSave,
 		setIsSave,
-		voteItems,
 		setIsTimerActive,
 		resetVote,
 		setSelectedVoteId,
@@ -20,8 +18,8 @@ export const useVote = () => {
 		setVoteCreatorId,
 	} = useVoteStore();
 	const { userId } = useUserStore();
-	// const { addSystemMessage } = useChatStore();
-	const { startVote, submitVote, endVote } = useVoteHandler();
+
+	const { startVote, submitVote } = useVoteHandler();
 	const { startTimer } = useTimerStore();
 
 	const save = async (data: any) => {
@@ -61,7 +59,6 @@ export const useVote = () => {
 		console.log("투표 수정:", id, data);
 		setIsSave(false);
 		setIsTimerActive(false);
-		// TODO: 투표 수정 로직 구현
 	};
 
 	const cancel = () => {
@@ -97,8 +94,6 @@ export const useVote = () => {
 		}
 		console.log("=== 투표 끝 ===");
 	};
-
-
 
 	return {
 		isSave,
