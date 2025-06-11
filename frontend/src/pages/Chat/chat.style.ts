@@ -4,7 +4,6 @@ export const ChatMessageList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3px;
-  align-items: flex-end;
   padding: 1rem;
 `;
 

@@ -44,7 +44,7 @@ export const useUserStore = create<UserState>((set) => ({
   setNickName: (name) => set({ nickName: name }),
   setJustJoined: (joined) => set({ justJoined: joined }),
 
-  setUserMessage: (msg, sender,userId) =>
+  setUserMessage: (msg, sender,userId) => 
     set((state) => ({
       userMessages: [
         ...state.userMessages,

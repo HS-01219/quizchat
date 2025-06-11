@@ -192,7 +192,7 @@
 
 
 import React, { useState } from "react";
-import * as S from "./bubbleHeader.style";
+import * as S from "@/components/bubbleHeader/bubbleHeader.style";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import Button from "../button/button";
 import CountDown from "@/components/countdown/countDown";

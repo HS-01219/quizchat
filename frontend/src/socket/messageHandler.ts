@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { socket } from './socketManager';
-import type { MessagePayload, SystemMessageProps } from '../common/types';
+import type { SystemMessageProps } from '../common/types';
 import { useUserStore } from "@/store/useUserStore";
 export const useMessageHandler = () => {
 
@@ -54,6 +54,13 @@ export const useMessageHandler = () => {
 
   // const [message, setMessage] = useState('');
 
+  interface MessagePayload {
+  userId: number;
+  nickName: string;
+  content: string | { content: string }; 
+  timestamp: string;
+}
+
   // zustand 상태 가져오기
   const {
     userId,
@@ -65,12 +72,32 @@ export const useMessageHandler = () => {
     // 다른 유저의 메시지 수신
     socket.on('RECEIVE_MESSAGE', (msg: MessagePayload) => {
       console.log('서버로부터 메시지 수신:', msg);
+      
 
       // 내가 보낸 메시지면 무시 (중복 방지)
-      if (msg.userId !== userId) {
-        console.log("!!!!에러?!!!!")
-        // TODO : 컴포넌트 에러 발생
-        // setUserMessage(msg.content, msg.nickName ?? '', msg.userId); // sender 포함
+      // if (msg.userId !== userId) {
+      //   console.log("!!!!에러?!!!!")
+      //   // TODO : 컴포넌트 에러 발생
+
+      //   console.log('setUserMessage 호출 전 msg.content 타입:', typeof msg.content);
+      //   console.log('msg.content:', msg.content);
+        
+      //   setUserMessage(msg.content, msg.nickName ?? '', msg.userId); // sender 포함
+
+    if (msg.userId !== userId) {
+      let actualContent = '';
+
+    if (typeof msg.content === 'string') {
+      actualContent = msg.content;
+    } else if (typeof msg.content === 'object' && 'content' in msg.content) {
+      actualContent = msg.content.content;
+    } else {
+      console.warn("Invalid content structure:", msg.content);
+      actualContent = '[잘못된 메시지 형식]';
+    }
+
+    setUserMessage(actualContent, msg.nickName ?? '', msg.userId);
+
       }
     });
 
@@ -89,15 +116,18 @@ export const useMessageHandler = () => {
 
   const sendMessage = (msg : string) => {
     if (socket && msg.trim() !== '') {
+      
       const payload: MessagePayload = {
         userId,
         nickName,
-        content: msg,
+        content:msg,
         timestamp: new Date().toISOString(),
       };
       console.log('보낼 메시지:', payload);
 
       // 상태 먼저 반영
+      // setUserMessage(msg, nickName, userId);
+      // console.log('msg타입', typeof msg);
       setUserMessage(msg, nickName, userId);
 
       // 서버로 전송

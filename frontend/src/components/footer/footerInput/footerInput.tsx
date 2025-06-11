@@ -22,6 +22,7 @@ const FooterInput = ({ isExpanded, setIsExpanded }: FooterInputProps) => {
   const handleSend = () => {
     if (inputValue.trim() === "") return;
     sendMessage(inputValue);
+
     setInputValue("");
   };
 
