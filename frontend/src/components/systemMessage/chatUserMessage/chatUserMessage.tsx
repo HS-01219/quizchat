@@ -22,9 +22,17 @@ const ChatUserMessage: React.FC<ChatUserMessageProps> = ({ message }) => {
         <S.ChatUserMessageContainer isMine={isMine}>
           {message.content}
         </S.ChatUserMessageContainer>
-        {!isMine && <S.TimeLabel isMine={isMine}>{message.time}</S.TimeLabel>}
+        {/* {!isMine && <S.TimeLabel isMine={isMine}>{message.time}</S.TimeLabel>} */}
+        {!isMine && <S.TimeLabel isMine={isMine}>  {new Date(message.time).toLocaleTimeString('ko-KR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })}</S.TimeLabel>}
 
-        {isMine && <S.TimeLabel isMine={isMine}>{message.time}</S.TimeLabel>}
+        {/* {isMine && <S.TimeLabel isMine={isMine}>{message.time}</S.TimeLabel>} */}
+        {isMine && <S.TimeLabel isMine={isMine}>  {new Date(message.time).toLocaleTimeString('ko-KR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })}</S.TimeLabel>}
 
       </S.BubbleRow>
 

@@ -71,7 +71,10 @@ const SystemMessage: React.FC<SystemMessageProps> = ({
         }
     </S.Text>
       {/* <S.Time>{time}</S.Time> */}
-      <S.Time>{new Date(time).toLocaleTimeString()}</S.Time>
+      <S.Time>  {new Date(time).toLocaleTimeString('ko-KR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })}</S.Time>
     </S.Wrapper>
   );
 };
