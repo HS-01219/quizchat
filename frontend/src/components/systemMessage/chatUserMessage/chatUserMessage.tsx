@@ -17,11 +17,8 @@ const ChatUserMessage: React.FC<ChatUserMessageProps> = ({ message }) => {
 
   return (
     <S.MessageWrapper isMine={isMine}>
-
       <S.SenderLabel isMine={isMine}>{message.sender}</S.SenderLabel>
-
       <S.BubbleRow isMine={isMine}>
-
         <S.ChatUserMessageContainer isMine={isMine}>
           {message.content}
         </S.ChatUserMessageContainer>
