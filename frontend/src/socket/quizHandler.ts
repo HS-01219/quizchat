@@ -1,7 +1,7 @@
 import { socket } from "./socketManager";
 import { useQuizStore } from "@/store/useQuizStore";
 import { useUserStore } from "@/store/useUserStore";
-import { sendSystemMessage } from "./messageHandler";
+// import { sendSystemMessage } from "./messageHandler";
 import { QuizState } from "@/common/types";
 import { useChatStore } from "@/store/useChatStore";
 
@@ -23,7 +23,7 @@ export const initializeQuizSocket = () => {
   // 시스템 메세지 서버에서 받아오기
   socket.on("SYSTEM_MESSAGE", (msg) => {
     console.log("시스템메세지",msg )
-  setSystemMessages(msg);
+    setSystemMessages(msg);
 });
   
   const startQuiz = (data: QuizState) => {
@@ -48,11 +48,11 @@ export const initializeQuizSocket = () => {
     setQuizResult(data.winnerNickName, data.answer);
     setQuizState(null);
 
-    sendSystemMessage({
-      type: "correct",
-      nickName: data.winnerNickName,
-      time: getCurrentTime(),
-    });
+    // sendSystemMessage({
+    //   type: "correct",
+    //   nickName: data.winnerNickName,
+    //   time: getCurrentTime(),
+    // });
   };
 
   const responseMessage = (data: { message: string }) => {
