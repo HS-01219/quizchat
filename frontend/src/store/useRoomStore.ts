@@ -15,7 +15,10 @@ interface RoomState {
 export const useRoomStore = create<RoomState>()(
 	persist(
 		(set) => ({
-			quizState: { isActive: false, quizData: null },
+			quizState: {   isActive: false,
+  			isEnded: false,
+  			question: '',
+  			quizData: null },
 			voteState: {
 				isActive: false,
 				userId: 0,
