@@ -4,10 +4,11 @@ import {useUserStore} from "@/store/useUserStore";
 import type { VoteState, QuizState } from '@/common/types';
 import {useVoteStore} from "@/store/useVoteStore";
 import { useQuizStore } from "@/store/useQuizStore";
+import { initializeQuizSocket } from './quizHandler';
 let isSocketInitialized = false;
 
 export const useUserHandlers = () => {
-    const { setQuizState } = useQuizStore()
+    const { setQuizState } = useQuizStore.getState()
     const { nickName, userId, setNickName, setSystemMessage,setUserId} = useUserStore();
     const {setCurrentUsers} = useUserStore.getState()
     const { setVoteState,updateFromServer} = useVoteStore();
@@ -83,6 +84,7 @@ export const useUserHandlers = () => {
             setVoteState(data.roomState.voteState);
         }
         useVoteStore.getState().setCurrentUserId(data.userId);
+        initializeQuizSocket()
     };
     /* 닉네임 변경 관련 */
     const sendNickName = (data: { userId: number, nickName: string }) => {
