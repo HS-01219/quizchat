@@ -77,7 +77,7 @@ resetVote()
         sendSystemMessage({
             items: [],
             type: "voteStart",
-            time: getCurrentTime(),
+            time: Date.now(),
         });
 
         socket.emit('START_VOTE', data);
@@ -94,13 +94,13 @@ resetVote()
         sendSystemMessage({
             items: [],
             type: "voteEnd",
-            time: getCurrentTime(),
+            time: Date.now(),
         });
 
         sendSystemMessage({
             items: items,
             type: "voteResult",
-            time: getCurrentTime(),
+            time: Date.now(),
         });
         socket.emit('END_VOTE');
     };

@@ -70,7 +70,8 @@ const SystemMessage: React.FC<SystemMessageProps> = ({
           </div>:(getText(nickName))
         }
     </S.Text>
-      <S.Time>{time}</S.Time>
+      {/* <S.Time>{time}</S.Time> */}
+      <S.Time>{new Date(time).toLocaleTimeString()}</S.Time>
     </S.Wrapper>
   );
 };

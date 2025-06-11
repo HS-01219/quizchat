@@ -9,20 +9,20 @@ import { MessageType, SystemMessageProps, VoteItem } from "@/common/types";
 
 interface ChatSystemMessage {
   content: string;
-  time: string;
+  time: number; 
 }
 
 interface SystemMsg extends SystemMessageProps {
   type: MessageType;
   nickName?: string;
-  time: string;
+  time: number; 
   items?: VoteItem[];
 }
 
 interface UserMsg {
   content: string;
   sender?: string;
-  time: string;
+  time: number; 
   userId?: number;
 }
 
@@ -33,75 +33,22 @@ type MessageWithMeta =
 
 const Chat = () => {
   const { systemMessages } = useChatStore();
-
   const userMessages = useUserStore((state) => state.userMessages);
   const chatSystemMessages = useUserStore((state) => state.systemMessages);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const iso8601Regex = /^\d{4}-\d{2}-\d{2}T/;
-
-  const parseKoreanTimeToDate = (timeStr: string): Date => {
-    const [ampm, time] = timeStr.split(" ");
-    const [hourStr, minuteStr] = time.split(":");
-    let hour = parseInt(hourStr, 10);
-    const minute = parseInt(minuteStr, 10);
-
-    if (ampm === "오후" && hour !== 12) hour += 12;
-    if (ampm === "오전" && hour === 12) hour = 0;
-
-    const now = new Date();
-    return new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate(),
-      hour,
-      minute,
-      0,
-      0
-    );
-  };
-
-  const parse24hTimeToDate = (timeStr: string): Date => {
-    const [hourStr, minuteStr] = timeStr.split(":");
-    const hour = parseInt(hourStr, 10);
-    const minute = parseInt(minuteStr, 10);
-
-    const now = new Date();
-    return new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate(),
-      hour,
-      minute,
-      0,
-      0
-    );
-  };
-
-  // 오버로드 선언
-  function parseAndIndex(arr: ChatSystemMessage[], source: "chatSystem"): MessageWithMeta[];
-  function parseAndIndex(arr: SystemMsg[], source: "system"): MessageWithMeta[];
-  function parseAndIndex(arr: UserMsg[], source: "user"): MessageWithMeta[];
-  // 구현부
   function parseAndIndex(
     arr: (ChatSystemMessage | SystemMsg | UserMsg)[],
     source: "chatSystem" | "system" | "user"
   ): MessageWithMeta[] {
     return arr.map((msg, idx) => {
-      let baseDate: Date;
-      // if (iso8601Regex.test(msg.time)) {
-      //   baseDate = new Date(msg.time);
-      // } else if (source === "system") {
-      //   baseDate = parse24hTimeToDate(msg.time);
-      // } else {
-      //   baseDate = parseKoreanTimeToDate(msg.time);
-      // }
+      const time = Number(msg.time);
+      const timestamp = !isNaN(time) ? time + idx : Date.now(); 
 
-      // 중복 타임스탬프 방지용 idx 추가 (1ms씩)
       return {
         source,
         message: msg as any,
-        timestamp: Date.now(),
+        timestamp,
       };
     });
   }
@@ -112,13 +59,7 @@ const Chat = () => {
     const userMsgs = parseAndIndex(userMessages, "user");
 
     const combined = [...chatSysMsgs, ...sysMsgs, ...userMsgs];
-
-    // console.log('before:' , combined);
-  
     return combined.sort((a, b) => a.timestamp - b.timestamp);
-    // console.log('after:', ret)
-    // return ret;
-
   }, [chatSystemMessages, systemMessages, userMessages]);
 
   useEffect(() => {

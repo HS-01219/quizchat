@@ -7,7 +7,7 @@ interface ChatUserMessageProps {
     content: string;
     sender?: string;
     userId?: number;
-    time: string;
+    time: number;
   };
 }
 
@@ -23,8 +23,7 @@ const ChatUserMessage: React.FC<ChatUserMessageProps> = ({ message }) => {
       <S.BubbleRow isMine={isMine}>
 
         <S.ChatUserMessageContainer isMine={isMine}>
-          {/* {message.content} */}
-          {message.time}
+          {message.content}
         </S.ChatUserMessageContainer>
         {!isMine && <S.TimeLabel isMine={isMine}>{message.time}</S.TimeLabel>}
 

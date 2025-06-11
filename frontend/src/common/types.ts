@@ -3,7 +3,7 @@ export interface MessagePayload {
     userId: number;    // 메세지 보내는 유저의 id
     nickName: string;  // 메세지 보내는 유저의 닉네임
     content: string;   // 메세지 내용
-    timestamp: string; // 메세지 보낸 시간
+    timestamp: number; // 메세지 보낸 시간
 }
 
 // 투표 관련
@@ -56,6 +56,6 @@ export type MessageType =
 export interface SystemMessageProps {
   type: MessageType;
   nickName?: string;
-  time: string;
+  time: number; //수정 6/11 11시 28분
   items?: VoteItem[];
 }

@@ -5,7 +5,7 @@ import { create } from "zustand";
 interface ChatMessage {
   content: string;
   sender?: string;
-  time: string;
+  time: number;
   userId?: number;
 }
 
@@ -52,10 +52,7 @@ export const useUserStore = create<UserState>((set) => ({
           content: msg,
           sender,
           userId,
-          time: new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
+          time: Date.now(),
         },
       ],
     })),
@@ -66,10 +63,7 @@ export const useUserStore = create<UserState>((set) => ({
         ...state.systemMessages,
         {
           content: msg,
-          time: new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
+          time: Date.now(),
         },
       ],
     })),
