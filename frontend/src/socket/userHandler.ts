@@ -51,18 +51,6 @@ export const useUserHandlers = () => {
         setCurrentUsers(data.currentUsers);
         setSystemMessage(`'${data.nickName}' 님이 입장하셨습니다.`);
     };
-    // const joinRoom = (data: {
-    //     userId: number,
-    //     nickName: string,
-    //     roomState: { quizState: QuizState, voteState: VoteState }
-    // }) => {
-    //     console.log("[joinRoom] 전달받은 데이터:", data)
-    //     console.log(`현재 퀴즈 상태 : ${data.roomState.quizState ? data.roomState.quizState.isActive : 'X'}
-    //                  현재 투표 상태 : ${data.roomState.voteState ? data.roomState.voteState.isActive : 'X'}`)
-    //     // 방 참여에 성공한 유저에게 roomState (quizState, voteState)를 전달
-    //     // 프론트 TODO : 퀴즈나 투표가 있다면 해당 유저의 화면에 표시
-
-    // }
     const joinRoom = (data: {
         userId: number,
         nickName: string,
@@ -87,7 +75,7 @@ export const useUserHandlers = () => {
     const sendNickName = (data: { userId: number, prevNickName: string, newNickName: string }) => {
         // 프론트 TODO :해당 유저가 보낸 채팅의 닉네임 변경하는 로직 추라
         updateSenderNickName(data.userId, data.newNickName);
-        setSystemMessage(`'${data.prevNickName}' 님이 '${data.newNickName}' 님으로 이름이 변경되었습니다.`);      
+        setSystemMessage(`'${data.prevNickName}' 님이 '${data.newNickName}' 님으로 이름이 변경되었습니다.`);
     }
 
     const responseMessage = (data: { message: string, newNickName?: string }) => {
