@@ -62,9 +62,12 @@ setShowResult(true);
 			<S.ContentRow expanded={expanded}>
 				<S.QuestionSection>
 					{type === "quiz" ? <S.QLabel>Q</S.QLabel> : <S.VoteIcon />}
-					{expanded &&
+					{expanded ? (
+						<S.QuestionTextExpanded>{question}</S.QuestionTextExpanded>
+					) : (
 						<S.QuestionText title={question}>{question}</S.QuestionText>
-					}
+					)}
+
 					{hasVote && !voteState.isEnded && <CountDown />}
 				</S.QuestionSection>
 
