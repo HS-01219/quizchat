@@ -7,18 +7,19 @@ import { useModalStore } from "@/store/useModalStore";
 
 import {useVoteStore} from "@/store/useVoteStore";
 import { useUserStore } from "@/store/useUserStore";
+import {useQuizStore} from "@/store/useQuizStore";
 
 const FooterMenu = () => {
    const { voteState } = useVoteStore();
   const { requestStartQuiz } = useQuizHandler();
   const { openModal } = useModalStore();
   const { setHeaderType } = useUserStore();
+  const {quizState}=useQuizStore()
 
 
   const handleVoteClick = () => {
     console.log(`[FooterMenu] 현재 voteState:`, voteState);
     const isActiveVote = voteState?.isActive && !voteState?.isEnded;
-
     if (isActiveVote) {
       console.log("진행 중인 투표가 있습니다. 투표 헤더를 표시합니다.");
       openModal("vote");
@@ -29,14 +30,13 @@ const FooterMenu = () => {
   };
 
   const handleQuizClick = () => {
-    const hasActiveVote = voteState?.isActive && !voteState?.isEnded;
+    const hasActiveQuiz = quizState?.isActive && !quizState?.isEnded;
 
-    if (hasActiveVote) {
+    if (hasActiveQuiz) {
       alert("진행 중인 투표가 있습니다.");
       return;
     }
-
-    setHeaderType("quiz");
+     setHeaderType("quiz");
     requestStartQuiz();
   };
 

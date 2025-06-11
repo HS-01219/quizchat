@@ -4,6 +4,7 @@ import Header from "@/components/header/header"
 import Footer from "@/components/footer/footer";
 import BubbleHeader from "@/pageHeader/pageHeader";
 import { useVoteStore } from "@/store/useVoteStore";
+import {useQuizStore} from "@/store/useQuizStore";
 
 interface LayoutProps {
 	children: React.ReactNode;
@@ -11,8 +12,10 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
 	const { voteState } = useVoteStore();
+	const { quizState } = useQuizStore();
 	const isVoteActive = voteState?.isActive && !voteState?.isEnded;
 
+const isQuizActive = quizState?.isActive && !quizState?.isEnded;
 	return (
 		<S.LayoutWrapper>
 			<Header />
@@ -22,6 +25,13 @@ const Layout = ({ children }: LayoutProps) => {
 						type="vote"
 						question={voteState.title}
 						hasVote={true}
+					/>
+				)}
+				{isQuizActive && (
+					<BubbleHeader
+						type="quiz"
+						question={quizState.question}
+
 					/>
 				)}
 				{children}
