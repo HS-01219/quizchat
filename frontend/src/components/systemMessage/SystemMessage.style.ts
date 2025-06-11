@@ -5,11 +5,11 @@ export const Wrapper = styled.div(({ theme }) => ({
   alignItems: "center",
   gap: "0.5rem",
   backgroundColor: theme.color.gray,
-  padding: "0.75rem 1rem",
+  padding: "0.75rem",
   borderRadius: theme.borderRadius.s,
   width: "fit-content",
   maxWidth: "90%",
-  margin: "1rem",
+  margin: "0.35rem 0.5rem",
 }));
 
 export const Icon = styled.div<{ type: string }>(({ theme, type }) => {
@@ -35,4 +35,3 @@ export const Time = styled.div(({ theme }) => ({
   color: theme.color.gray50,
   marginLeft: "auto",
 }));
-

@@ -67,7 +67,6 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
 
           {hasVote && !voteState.isEnded && <CountDown />}
         </S.QuestionSection>
-
         <S.ToggleIcon>
           {expanded ? <FiChevronUp /> : <FiChevronDown />}
         </S.ToggleIcon>

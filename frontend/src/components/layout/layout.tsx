@@ -31,7 +31,7 @@ const isQuizActive = quizState?.isActive && !quizState?.isEnded;
 					<BubbleHeader
 						type="quiz"
 						question={quizState.question}
-
+hasVote={false}
 					/>
 				)}
 				{children}
