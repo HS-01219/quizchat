@@ -35,7 +35,7 @@ export function handleQuiz(io: Server, socket: Socket) {
       });
       io.emit("SYSTEM_MESSAGE", {
         type: "quizStart",
-        time: new Date().toTimeString().slice(0, 5),
+        time: Date.now(),
       });
     } else {
       socket.emit("START_QUIZ_ERROR", { message: "퀴즈가 존재하지 않습니다." });
@@ -102,11 +102,11 @@ export function handleQuiz(io: Server, socket: Socket) {
         io.emit("SYSTEM_MESSAGE", {
           type: "correct",
           nickName: winnerNickName,
-          time: new Date().toTimeString().slice(0, 5),
+          time: Date.now(),
         });
         io.emit("SYSTEM_MESSAGE", {
           type: "quizEnd",
-          time: new Date().toTimeString().slice(0, 5),
+          time: Date.now(),
         });
       } else {
         console.log("정답 아님");

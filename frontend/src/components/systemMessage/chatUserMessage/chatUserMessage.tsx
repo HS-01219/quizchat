@@ -23,7 +23,8 @@ const ChatUserMessage: React.FC<ChatUserMessageProps> = ({ message }) => {
       <S.BubbleRow isMine={isMine}>
 
         <S.ChatUserMessageContainer isMine={isMine}>
-          {message.content}
+          {/* {message.content} */}
+          {message.time}
         </S.ChatUserMessageContainer>
         {!isMine && <S.TimeLabel isMine={isMine}>{message.time}</S.TimeLabel>}
 
