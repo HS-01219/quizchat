@@ -48,9 +48,9 @@ export const useMessageHandler = () => {
     // 시스템 메시지 수신
     socket.on("RECEIVE_SYSTEM_MSG", (msg: SystemMessageProps) => {
       console.log("서버로부터 시스템 메시지 수신:", msg);
-        if (!msg || !msg.type) {
-    console.warn("⚠️ 시스템 메시지 형식이 이상함:", msg);
-  }
+      if (!msg || !msg.type) {
+        console.warn("⚠️ 시스템 메시지 형식이 이상함:", msg);
+      }
       setSystemMessages(msg);
     });
 
@@ -69,8 +69,7 @@ export const useMessageHandler = () => {
         content: msg,
         timestamp: new Date().toISOString(),
       };
-
-      console.log("보낼 메시지:", payload);
+      console.log('보낼 메시지:', payload);
 
       setUserMessage(msg, nickName, userId);
       socket.emit("SEND_MESSAGE", payload);

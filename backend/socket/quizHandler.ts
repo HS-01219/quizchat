@@ -58,7 +58,7 @@ export function handleQuiz(io : Server, socket : Socket) {
 
                 const winnerId = socket.data.userId;
                 const winnerNickName = socket.data.nickName; 
-                const answer = currentQuiz.quizData.answer; 
+                const answer = currentQuiz.quizData.answer;
 
                 // 서버 내부에서 퀴즈 종료 후 클라이언트에게 퀴즈 종료 신호와 정답자, 정답 전달
                 io.emit('END_QUIZ', { winnerId : winnerId, winnerNickName : winnerNickName, answer : answer});
