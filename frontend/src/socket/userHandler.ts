@@ -8,9 +8,10 @@ import { initializeQuizSocket } from './quizHandler';
 let isSocketInitialized = false;
 
 export const useUserHandlers = () => {
-    const { setQuizState } = useQuizStore.getState()
     const { nickName, userId, setNickName, setSystemMessage,setUserId} = useUserStore();
-    const {setCurrentUsers} = useUserStore.getState()
+    const { setCurrentUsers, updateSenderNickName } = useUserStore.getState();
+    
+    const { setQuizState } = useQuizStore.getState();
     const { setVoteState,updateFromServer} = useVoteStore();
 
     useEffect(() => {
@@ -22,8 +23,6 @@ export const useUserHandlers = () => {
         socket.on('SEND_JOINED', userJoined);
         socket.on('SEND_JOINED_SUCCESS', joinRoom);
         socket.on('SEND_LEAVED', userLeaved);
-
-
 
         return () => {
             socket.off('SEND_NICKNAME', sendNickName);
@@ -45,28 +44,13 @@ export const useUserHandlers = () => {
         // 프론트 TODO : 방 참여 또는 퇴장 알림
         setCurrentUsers(data.currentUsers);
         setSystemMessage(`'${data.nickName}' 님이 퇴장하셨습니다.`);
-
     }
 
     const userJoined = (data: { currentUsers: number; userId: number; nickName: string }) => {
         console.log(`${data.nickName} 님이 방에 참여했습니다. 현재 인원: ${data.currentUsers}, 유저 아이디 :${data.userId}`);
         setCurrentUsers(data.currentUsers);
         setSystemMessage(`'${data.nickName}' 님이 입장하셨습니다.`);
-
-
     };
-    // const joinRoom = (data: {
-    //     userId: number,
-    //     nickName: string,
-    //     roomState: { quizState: QuizState, voteState: VoteState }
-    // }) => {
-    //     console.log("[joinRoom] 전달받은 데이터:", data)
-    //     console.log(`현재 퀴즈 상태 : ${data.roomState.quizState ? data.roomState.quizState.isActive : 'X'}
-    //                  현재 투표 상태 : ${data.roomState.voteState ? data.roomState.voteState.isActive : 'X'}`)
-    //     // 방 참여에 성공한 유저에게 roomState (quizState, voteState)를 전달
-    //     // 프론트 TODO : 퀴즈나 투표가 있다면 해당 유저의 화면에 표시
-
-    // }
     const joinRoom = (data: {
         userId: number,
         nickName: string,
@@ -86,27 +70,33 @@ export const useUserHandlers = () => {
         useVoteStore.getState().setCurrentUserId(data.userId);
         initializeQuizSocket()
     };
+
     /* 닉네임 변경 관련 */
-    const sendNickName = (data: { userId: number, nickName: string }) => {
+    const sendNickName = (data: { userId: number, prevNickName: string, newNickName: string }) => {
         // 프론트 TODO :해당 유저가 보낸 채팅의 닉네임 변경하는 로직 추라
-        useUserStore.getState().updateSenderNickName(data.userId, data.nickName);
+        updateSenderNickName(data.userId, data.newNickName);
+        setSystemMessage(`'${data.prevNickName}' 님이 '${data.newNickName}' 님으로 이름이 변경되었습니다.`);
     }
 
-    const responseMessage = (data: { message: string }) => {
+    const responseMessage = (data: { message: string, newNickName?: string }) => {
         alert(data.message);
+        
+        if(data.newNickName){
+            setNickName(data.newNickName);
+        }
     }
 
-    const updateNickName = (data: { userId: number, nickName: string }) => {
+    const updateNickName = (data: { nickName: string }) => {
         const trimmed = data.nickName.trim();
         if (trimmed === '') {
             alert("닉네임이 빈칸입니다.");
             return;
         }
 
-        console.log(`닉네임 변경 요청: ${data.nickName} (userId: ${data.userId})`);
+        console.log(`닉네임 변경 요청: ${data.nickName} (userId: ${userId})`);
         // setSystemMessage(`'${userId}' 님이 '${nickName}' 님으로 이름이 변경되었습니다.`);
-        useUserStore.getState().updateSenderNickName(data.userId, trimmed);
-        socket.emit('UPDATE_NICKNAME', { userId: data.userId, nickName: trimmed });
+        // updateSenderNickName(data.userId, trimmed);
+        socket.emit('UPDATE_NICKNAME', { nickName: trimmed });
     }
 
     return {nickName, setNickName, updateNickName, requestJoinRoom, userJoined, userLeaved,joinRoom};
