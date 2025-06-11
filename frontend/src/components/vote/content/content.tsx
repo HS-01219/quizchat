@@ -226,7 +226,6 @@ const Content = () => {
 
 
 	const isCreator = isVoteCreator();
-
 	const handleVoteClick = (id: number) => {
 
 		if (!isSave) return;
@@ -274,7 +273,7 @@ const Content = () => {
 		};
 		save(data);
 
-		// 여기에 하는게 맞을까요 
+		// 여기에 하는게 맞을까요 ㅈ
 		startVote(data);
 
 	};
