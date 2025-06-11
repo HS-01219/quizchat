@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import {QuizItem, QuizState} from "@/common/types";
+import {QuizState} from "@/common/types";
 
 interface QuizStore {
   question: string;
@@ -13,10 +13,7 @@ interface QuizStore {
 
 
   quizState: QuizState | null;
-  quizItems: QuizItem;
   setQuizState: (newState: QuizState) => void;
-  setQuizItems: (items: QuizItem) => void;
-
 }
 
 export const useQuizStore = create<QuizStore>((set) => ({
@@ -40,14 +37,7 @@ export const useQuizStore = create<QuizStore>((set) => ({
     correctAnswer: "",
   }),
 
-
-
-  quizItems:{ id: 0, question: "", answer: "" },
   setQuizState: (newState: QuizState) => {
     set({ quizState: newState });
   },
-  setQuizItems: (items: QuizItem) => {
-    set({ quizItems: items });
-  }
-
 }));

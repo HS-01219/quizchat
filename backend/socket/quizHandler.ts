@@ -22,12 +22,17 @@ export function handleQuiz(io : Server, socket : Socket) {
             // redis에 answer와 퀴즈 상태를 저장
             const quizState : QuizState = {
                 isActive : true,
-                quizData : result
+                quizData : result,
+                isEnded : false
             }
 
             console.log(quizState);
             await setRedisValue('quizState', JSON.stringify(quizState), 60 * 60);
-            io.emit('START_QUIZ', { question : result.question });
+            io.emit('START_QUIZ', { 
+                isActive : true,
+                question : result.question,
+                isEnded : false
+            });
         } else {
             socket.emit('START_QUIZ_ERROR', { message: '퀴즈가 존재하지 않습니다.' });
             return;
@@ -51,7 +56,8 @@ export function handleQuiz(io : Server, socket : Socket) {
                 // redis에 퀴즈 상태를 업데이트
                 const quizState : QuizState = {
                     isActive: false,
-                    quizData: null
+                    quizData: null,
+                    isEnded : true
                 };
 
                 await setRedisValue('quizState', JSON.stringify(quizState), 60 * 60);

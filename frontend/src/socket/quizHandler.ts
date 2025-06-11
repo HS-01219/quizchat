@@ -2,6 +2,7 @@ import { socket } from "./socketManager";
 import { useQuizStore } from "@/store/useQuizStore";
 import { useUserStore } from "@/store/useUserStore";
 import { sendSystemMessage } from "./messageHandler";
+import { QuizState } from "@/common/types";
 
 const getCurrentTime = () => {
   const now = new Date();
@@ -15,11 +16,11 @@ export const initializeQuizSocket = () => {
   if (isInitialized) return;
   isInitialized = true;
 
-  const { showQuizQuestion, setQuizResult } = useQuizStore.getState();
+  const { setQuizState, setQuizResult } = useQuizStore.getState();
   
-  const startQuiz = (data: { question: string }) => {
+  const startQuiz = (data: QuizState) => {
     console.log(`퀴즈 시작 - 문제 : ${data.question}`);
-    showQuizQuestion(data.question);
+    setQuizState(data);
 
     sendSystemMessage({
       type: "quizStart",
@@ -37,6 +38,7 @@ export const initializeQuizSocket = () => {
     );
 
     setQuizResult(data.winnerNickName, data.answer);
+    setQuizState(null);
 
     sendSystemMessage({
       type: "correct",
