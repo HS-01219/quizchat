@@ -55,34 +55,28 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 	currentUserId: null,
 
 	setTitle: (title) => {
-		console.log('제목 설정:', title);
 		set({ title });
 	},
 
 	setVoteItems: (fn) =>
 		set((state) => {
 			const newItems = fn(state.voteItems);
-			console.log('투표 항목 업데이트:', newItems);
 			return { voteItems: newItems };
 		}),
 
 	setIsDuplicated: (value) => {
-		console.log('중복 선택 설정:', value);
 		set({ isDuplicated: value });
 	},
 	setVoteState: (newState) => {
-		console.log("투표 상태 설정:", newState);
 		set({ voteState: newState });
 	},
 	deleteVoteItem: (itemId) =>
 		set((state) => {
 			const newItems = state.voteItems.filter((item) => item.itemId !== itemId);
-			console.log('항목 삭제 후:', newItems);
 			return { voteItems: newItems };
 		}),
 
 	setIsSave: (isSave: boolean) => {
-		console.log('저장 상태 변경:', isSave);
 		set({ isSave });
 	},
 
@@ -93,27 +87,19 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 		}),
 
 	setIsTimerActive: (active) => {
-		console.log('타이머 활성 상태:', active);
 		set({ isTimerActive: active });
 	},
 
 	setCurrentUserId: (userId) => {
-		console.log('현재 사용자 ID 설정:', userId);
 		set({ currentUserId: userId });
 	},
 
 	isVoteCreator: () => {
 		const { voteCreatorId, currentUserId } = get();
-		console.log('투표 생성자 확인:', {
-			voteCreatorId,
-			currentUserId,
-			isCreator: voteCreatorId !== null && currentUserId !== null && voteCreatorId === currentUserId
-		});
 		return voteCreatorId !== null && currentUserId !== null && voteCreatorId === currentUserId;
 	},
 
 	endVote: () => {
-		console.log('투표 종료');
 		set({
 			isTimerActive: false,
 			isVoteEnded: true
@@ -121,7 +107,6 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 	},
 
 	resetVote: () => {
-		console.log('투표 필 초기화');
 		set({
 			title: "",
 			voteItems: [
@@ -137,7 +122,6 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 		});
 	},
 	updateFromServer: (data) => {
-		console.log('서버에서 받은 투표 데이터 업데이트:', data);
 		set({
 			title: data.title,
 			voteItems: data.items,
@@ -151,7 +135,6 @@ export const useVoteStore = create<VoteStore>((set, get) => ({
 	},
 	isVote: (id) => {
 		const { isDuplicated, setSelectedVoteId} = get();
-		console.log('투표 항목 선택:', id, '중복 선택:', isDuplicated);
 
 		if (isDuplicated) {
 			setSelectedVoteId((prev) =>
