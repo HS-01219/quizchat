@@ -25,6 +25,7 @@ const FooterMenu = () => {
   };
 
   const handleQuizClick = () => {
+    console.log("퀴즈버튼클릭")
     const hasActive = (voteState?.isActive && !voteState?.isEnded) || (quizState?.isActive && !quizState?.isEnded);
 
     if (hasActive) {
