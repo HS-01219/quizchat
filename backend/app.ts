@@ -39,5 +39,4 @@ setupSocketIO(io);
 
 server.listen(PORT, () => {
     console.log(`💡 서버 포트: ${PORT}`);
-    console.log("서버 실행");
 });

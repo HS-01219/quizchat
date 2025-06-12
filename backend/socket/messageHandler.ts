@@ -15,7 +15,6 @@ const saveSendMessageToDB = async (
   const connection = await pool.getConnection();
   try {
     const [results] = await connection.query<ResultSetHeader>(query, values);
-    console.log("DB : 메시지 저장 성공", results);
     return results;
   } catch (err) {
     console.error("DB 오류 : 메시지 저장 실패", err);
@@ -32,6 +31,7 @@ export function handleMessage(io: Server, socket: Socket) {
     console.log("메시지 수신:", msg);
 
     try {
+      // 추후 확장 시 room 번호와 함께 메세지 저장
       // const DBResult = await saveSendMessageToDB(userId, nickName, msg);
 
       // if(DBResult && DBResult.affectedRows > 0){
@@ -39,21 +39,14 @@ export function handleMessage(io: Server, socket: Socket) {
       // }else{
       //     console.warn('DB : 메시지 저장 실패');
       // }
-      console.log("DB : 메세지 저장!");
 
-      // io.emit('RECEIVE_MESSAGE', sendMessage);
       socket.broadcast.emit("RECEIVE_MESSAGE", msg); // 다른 클라이언트에게만 전송
     } catch (err) {
       console.error("DB : 메시지 처리 중 오류 발생", err);
-      // socket.emit('SEND_MESSAGE_ERROR', {message: '메시지 전송 중 오류가 발생했습니다.'});
     }
   });
 
-  // socket.on('SEND_SYSTEM_MSG', async (data : SystemMessageProps) => {
-  //     io.emit('RECEIVE_SYSTEM_MSG', data);
-  // });
   socket.on("REQUEST_SYSTEM_MSG", async (data: SystemMessageProps) => {
-    console.log("서버: 시스템 메시지 요청 수신:", data);
     io.emit("RECEIVE_SYSTEM_MSG", data); // 모든 유저에게 시스템 메시지 전송
   });
 }
