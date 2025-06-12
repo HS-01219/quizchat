@@ -26,18 +26,10 @@ const saveSendMessageToDB = async (
 };
 
 export function handleMessage(io: Server, socket: Socket) {
-  socket.on("SEND_MESSAGE", async (msg: string) => {
-    const userId = socket.data.userId;
-    const nickName = socket.data.nickName;
+  socket.on("SEND_MESSAGE", async (msg: MessagePayload) => {
 
-    const sendMessage: MessagePayload = {
-      userId: userId,
-      nickName: nickName,
-      content: msg,
-      timestamp: new Date().toISOString(),
-    };
 
-    console.log("메시지 수신:", sendMessage);
+    console.log("메시지 수신:", msg);
 
     try {
       // const DBResult = await saveSendMessageToDB(userId, nickName, msg);
@@ -50,7 +42,7 @@ export function handleMessage(io: Server, socket: Socket) {
       console.log("DB : 메세지 저장!");
 
       // io.emit('RECEIVE_MESSAGE', sendMessage);
-      socket.broadcast.emit("RECEIVE_MESSAGE", sendMessage); // 다른 클라이언트에게만 전송
+      socket.broadcast.emit("RECEIVE_MESSAGE", msg); // 다른 클라이언트에게만 전송
     } catch (err) {
       console.error("DB : 메시지 처리 중 오류 발생", err);
       // socket.emit('SEND_MESSAGE_ERROR', {message: '메시지 전송 중 오류가 발생했습니다.'});

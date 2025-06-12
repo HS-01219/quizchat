@@ -1,5 +1,6 @@
 // 유저 관련 시스템 메시지 (입장/퇴장 시스템 메시지, 유저가 보낸 메시지)
 
+import { MessagePayload } from "@/common/types";
 import { create } from "zustand";
 
 interface ChatMessage {
@@ -22,7 +23,8 @@ interface UserState {
   setCurrentUsers: (currentUsers: number) => void;
   setNickName: (name: string) => void;
   setJustJoined: (joined: boolean) => void;
-  setUserMessage: (msg: string, sender: string, userId:number) => void;
+  // setUserMessage: (msg: string, sender: string, userId:number) => void;
+  setUserMessage: (msg : MessagePayload) => void;
   setSystemMessage: (msg: string) => void;
   setHeaderType: (type: "default" | "quiz" | "vote") => void;
   updateSenderNickName: (userId: number, newNickName: string) => void;
@@ -44,15 +46,15 @@ export const useUserStore = create<UserState>((set) => ({
   setNickName: (name) => set({ nickName: name }),
   setJustJoined: (joined) => set({ justJoined: joined }),
 
-  setUserMessage: (msg, sender,userId) => 
+  setUserMessage: (msg) => 
     set((state) => ({
       userMessages: [
         ...state.userMessages,
         {
-          content: msg,
-          sender,
-          userId,
-          time: Date.now(),
+          content: msg.content,
+          sender: msg.nickName,
+          userId: msg.userId,
+          time: msg.timestamp
         },
       ],
     })),

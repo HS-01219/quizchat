@@ -1,15 +1,8 @@
 import { useEffect } from "react";
 import { socket } from "./socketManager";
-import type { SystemMessageProps } from "../common/types";
+import type { MessagePayload, SystemMessageProps } from "../common/types";
 import { useUserStore } from "@/store/useUserStore";
 import { useChatStore } from "@/store/useChatStore"; 
-
-interface MessagePayload {
-  userId: number;
-  nickName: string;
-  content: string | { content: string };
-  timestamp: string;
-}
 
 export const sendSystemMessage = (msg: SystemMessageProps) => {
   console.log("시스템 메시지 전송 요청:", msg); 
@@ -30,21 +23,22 @@ export const useMessageHandler = () => {
       console.log("서버로부터 메시지 수신:", msg);
 
       if (msg.userId !== userId) {
-        let actualContent = "";
+        // let actualContent = "";
+        // actualContent = msg.content;
+        // if (typeof msg.content === "string") {
+        //   actualContent = msg.content;
+        // } else if (
+        //   typeof msg.content === "object" &&
+        //   "content" in msg.content
+        // ) {
+        //   actualContent = msg.content;
+        // } else {
+        //   console.warn("Invalid content structure:", msg.content);
+        //   actualContent = "[잘못된 메시지 형식]";
+        // }
 
-        if (typeof msg.content === "string") {
-          actualContent = msg.content;
-        } else if (
-          typeof msg.content === "object" &&
-          "content" in msg.content
-        ) {
-          actualContent = msg.content.content;
-        } else {
-          console.warn("Invalid content structure:", msg.content);
-          actualContent = "[잘못된 메시지 형식]";
-        }
-
-        setUserMessage(actualContent, msg.nickName ?? "", msg.userId);
+        // setUserMessage(actualContent, msg.nickName ?? "", msg.userId);
+        setUserMessage(msg);
       }
     });
 
@@ -69,11 +63,12 @@ export const useMessageHandler = () => {
         userId,
         nickName,
         content: msg,
-        timestamp: new Date().toISOString(),
+        timestamp: Date.now(),
       };
       console.log('보낼 메시지:', payload);
 
-      setUserMessage(msg, nickName, userId);
+      // setUserMessage(msg, nickName, userId);
+      setUserMessage(payload);
       socket.emit("SEND_MESSAGE", payload);
     }
   };
