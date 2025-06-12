@@ -65,7 +65,7 @@ export function handleUser(io : Server, socket : Socket) {
             roomState : {
                 quizState : {
                     isActive : quizState ? quizState.isActive : false,
-                    question : quizState ? quizState.question : '',
+                    question : (quizState && quizState.isActive) ? quizState.quizData.question : '',
                     isEnded : quizState ? quizState.isEnded : false,
                 },
                 voteState,
