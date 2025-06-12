@@ -1,14 +1,10 @@
 import { io } from 'socket.io-client';
 const SOCKET_SERVER_URL = import.meta.env.VITE_BACK_SERVER_URL;
 
-// const [socket, setSocket] = useState<Socket | null>(null);
-
-// 소켓 생성
 export const socket = io(SOCKET_SERVER_URL, {
     withCredentials: true,
 });
 
-// 소켓 연결 이벤트
 socket.on('connect', () => {
     console.log('서버에 연결됨!');
 });

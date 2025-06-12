@@ -51,7 +51,6 @@ const SystemMessage: React.FC<SystemMessageProps> = ({
   items,
 }) => {
   const { IconComponent, getText } = messageMap[type];
-  console.log('voteResult items:', items);
   return (
     <S.Wrapper>
       <S.Icon type={type}>

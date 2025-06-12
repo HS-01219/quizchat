@@ -5,7 +5,6 @@ import { useUserStore } from "@/store/useUserStore";
 import { useChatStore } from "@/store/useChatStore"; 
 
 export const sendSystemMessage = (msg: SystemMessageProps) => {
-  console.log("시스템 메시지 전송 요청:", msg); 
   socket.emit("REQUEST_SYSTEM_MSG", msg);
 };
 
@@ -20,31 +19,13 @@ export const useMessageHandler = () => {
 
   useEffect(() => {
     socket.on("RECEIVE_MESSAGE", (msg: MessagePayload) => {
-      console.log("서버로부터 메시지 수신:", msg);
-
       if (msg.userId !== userId) {
-        // let actualContent = "";
-        // actualContent = msg.content;
-        // if (typeof msg.content === "string") {
-        //   actualContent = msg.content;
-        // } else if (
-        //   typeof msg.content === "object" &&
-        //   "content" in msg.content
-        // ) {
-        //   actualContent = msg.content;
-        // } else {
-        //   console.warn("Invalid content structure:", msg.content);
-        //   actualContent = "[잘못된 메시지 형식]";
-        // }
-
-        // setUserMessage(actualContent, msg.nickName ?? "", msg.userId);
         setUserMessage(msg);
       }
     });
 
     // 시스템 메시지 수신
     socket.on("RECEIVE_SYSTEM_MSG", (msg: SystemMessageProps) => {
-      console.log("서버로부터 시스템 메시지 수신:", msg);
       if (!msg || !msg.type) {
         console.warn("⚠️ 시스템 메시지 형식이 이상함:", msg);
       }
@@ -65,9 +46,7 @@ export const useMessageHandler = () => {
         content: msg,
         timestamp: Date.now(),
       };
-      console.log('보낼 메시지:', payload);
-
-      // setUserMessage(msg, nickName, userId);
+      
       setUserMessage(payload);
       socket.emit("SEND_MESSAGE", payload);
     }

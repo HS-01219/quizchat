@@ -23,7 +23,6 @@ export const useVote = () => {
 	const { startTimer } = useTimerStore();
 
 	const save = async (data: any) => {
-		console.log("투표 저장:", data);
 		if (!data.title.trim()) {
 			alert('투표 제목을 입력해주세요.');
 			return;
@@ -56,7 +55,6 @@ export const useVote = () => {
 	};
 
 	const edit = async (id: number, data: any) => {
-		console.log("투표 수정:", id, data);
 		setIsSave(false);
 		setIsTimerActive(false);
 	};
@@ -67,15 +65,8 @@ export const useVote = () => {
 	};
 
 	const vote = (id: number) => {
-		console.log("=== 투표 시작 ===");
-		console.log("선택한 ID:", id);
-		console.log("현재 선택된 항목들:", selectedVoteId);
-		console.log("투표 모드:", isDuplicated ? "중복" : "단일");
-		console.log("유저 아이디:", userId);
-
 		if (isDuplicated) {
 			setSelectedVoteId((prev) => {
-				console.log("중복 모드 - 이전 선택:", prev);
 				const updated = prev.includes(id)
 					? prev.filter((v) => v !== id)
 					: [...prev, id];
@@ -92,7 +83,6 @@ export const useVote = () => {
 			setCurrentUserId(userId);
 			submitVote(updated);
 		}
-		console.log("=== 투표 끝 ===");
 	};
 
 	return {
