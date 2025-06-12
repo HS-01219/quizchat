@@ -82,6 +82,7 @@ const Chat = () => {
                 nickName={entry.message.nickName}
                 time={entry.message.time}
                 items={entry.message.items}
+                answer={entry.message.answer} 
               />
             );
           case "user":

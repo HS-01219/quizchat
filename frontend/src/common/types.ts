@@ -58,4 +58,7 @@ export interface SystemMessageProps {
   nickName?: string;
   time: number; //수정 6/11 11시 28분
   items?: VoteItem[];
+//   text?: string; 
+
+answer?: string;
 }

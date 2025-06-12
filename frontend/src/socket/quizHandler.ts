@@ -29,11 +29,6 @@ export const initializeQuizSocket = () => {
   const startQuiz = (data: QuizState) => {
     console.log(`퀴즈 시작 - 문제 : ${data.question}`);
     setQuizState(data);
-
-    // sendSystemMessage({
-    //   type: "quizStart",
-    //   time: getCurrentTime(),
-    // });
   };
 
   const endQuiz = (data: {
@@ -48,11 +43,6 @@ export const initializeQuizSocket = () => {
     setQuizResult(data.winnerNickName, data.answer);
     setQuizState(null);
 
-    // sendSystemMessage({
-    //   type: "correct",
-    //   nickName: data.winnerNickName,
-    //   time: getCurrentTime(),
-    // });
   };
 
   const responseMessage = (data: { message: string }) => {
@@ -76,4 +66,12 @@ export const requestAnswer = (answer: string) => {
   const { userId } = useUserStore.getState();
   console.log(`퀴즈 정답 제출 : ${answer}`);
   socket.emit("ANSWER_QUIZ", { userId, answer });
+};
+
+export const requestEndQuiz = () => {
+  const { userId, nickName } = useUserStore.getState();
+  socket.emit("END_QUIZ", {
+    winnerId: userId,
+    winnerNickName: nickName,
+  });
 };

@@ -11,7 +11,7 @@ import { SystemMessageProps, MessageType } from "@/common/types";
 const messageMap: {
   [key in MessageType]: {
     IconComponent: React.ElementType;
-    getText: (nickName?: string) => string;
+    getText: (nickName?: string, text?) => string;
   };
 } = {
   correct: {
@@ -38,10 +38,10 @@ const messageMap: {
     IconComponent: FaExclamationTriangle,
     getText: () => "퀴즈가 종료되었습니다.",
   },
-  voteResult:{
+  voteResult: {
     IconComponent: FaExclamationTriangle,
     getText: () => "투표 결과",
-  }
+  },
 };
 
 const SystemMessage: React.FC<SystemMessageProps> = ({
@@ -49,32 +49,44 @@ const SystemMessage: React.FC<SystemMessageProps> = ({
   nickName = "사용자",
   time,
   items,
+  answer,
 }) => {
   const { IconComponent, getText } = messageMap[type];
-  console.log('voteResult items:', items);
+  console.log("voteResult items:", items);
   return (
     <S.Wrapper>
       <S.Icon type={type}>
         <IconComponent />
       </S.Icon>
       <S.Text>
-        {type=== "voteResult" && items ?
-          <div>투표 결과
-          <ul>
-            {items.map((item)=>(
-              <li key={item.itemId}>
-                 {item.text} - {item.count}표
-               </li>
-            ))}
-          </ul>
-          </div>:(getText(nickName))
-        }
-    </S.Text>
-      {/* <S.Time>{time}</S.Time> */}
-      <S.Time>  {new Date(time).toLocaleTimeString('ko-KR', {
-    hour: '2-digit',
-    minute: '2-digit',
-  })}</S.Time>
+        {type === "quizEnd" && answer ? (
+          <div>
+            퀴즈가 종료되었습니다. <br/>
+            정답은: <strong>{answer}</strong>
+          </div>
+        ) :
+        type === "voteResult" && items ? (
+          <div>
+            투표 결과
+            <ul>
+              {items.map((item) => (
+                <li key={item.itemId}>
+                  {item.text} - {item.count}표
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          getText(nickName)
+        )}
+      </S.Text>
+      <S.Time>
+        {" "}
+        {new Date(time).toLocaleTimeString("ko-KR", {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
+      </S.Time>
     </S.Wrapper>
   );
 };

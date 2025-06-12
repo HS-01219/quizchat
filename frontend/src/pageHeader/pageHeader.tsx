@@ -9,6 +9,8 @@ import { useVoteHandler } from "@/socket/voteHandler";
 import { useTimerStore } from "@/store/useTimerStore";
 import { useQuizStore } from "@/store/useQuizStore";
 
+import { requestEndQuiz } from "@/socket/quizHandler";
+
 interface BubbleHeaderProps {
   type: "quiz" | "vote";
   question: string;
@@ -52,6 +54,7 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
   const handleQuitQuiz = (e: React.MouseEvent) => {
     e.stopPropagation();
     hideQuizQuestion();
+    requestEndQuiz();
   };
 
   return (
@@ -90,7 +93,6 @@ const BubbleHeader: React.FC<BubbleHeaderProps> = ({
           )}
         </S.ButtonContainer>
       )}
-
     </S.BalloonContainer>
   );
 };
