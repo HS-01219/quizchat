@@ -7,8 +7,8 @@ const VoteCard=()=>{
 				<S.VoteContainer>
 					<S.VoteTitle>{Label.VOTE_TITLE}</S.VoteTitle>
 					<S.VoteCountDownWrapper>
-					<CountDown/>
-	</S.VoteCountDownWrapper>
+						<CountDown/>
+					</S.VoteCountDownWrapper>
 					<Content/>
 				</S.VoteContainer>
 		);

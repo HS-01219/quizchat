@@ -175,6 +175,7 @@ import { useModalStore } from "@/store/useModalStore";
 import {useUserStore} from "@/store/useUserStore";
 import {useTimerStore} from "@/store/useTimerStore";
 import {useVoteHandler} from "@/socket/voteHandler";
+import { useQuizStore } from "@/store/useQuizStore";
 
 const Content = () => {
 	const { save, edit, vote } = useVote(); // vote 함수 다시 추가 (서버 전송용)
@@ -198,8 +199,9 @@ const Content = () => {
 		voteCreatorId,
 		setVoteCreatorId,
 		isVote, // store의 상태 업데이트용
-
+		voteState
 	} = useVoteStore();
+	const { quizState }=useQuizStore();
 	const { resetTimer } = useTimerStore();
 	const { startVote, endVote } = useVoteHandler();
 	const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
@@ -262,6 +264,13 @@ const Content = () => {
 	};
 
 	const onSaveClick = () => {
+		const hasActive = (voteState?.isActive && !voteState?.isEnded) || (quizState?.isActive && !quizState?.isEnded);
+
+		if (hasActive) {
+			alert("진행 중인 투표 또는 퀴즈가 있습니다.");
+			return;
+		}
+
 		const data = {
 			title,
 			// items: voteItems.map((item) => ({
