@@ -53,8 +53,6 @@ export const useTimer = () => {
 			endVote(voteItems);
 			resetVote();
 			setShowResult(true);
-			console.log("이거 타나");
-
 			resetTimer()
 			hasEndedRef.current = true;
 		}

@@ -11,22 +11,20 @@ interface answerPayload {
 
 export function handleQuiz(io: Server, socket: Socket) {
   socket.on("START_QUIZ", async () => {
-    // const result = await selectQuiz();
-    const result = {
-      id: 1,
-      question: "논리적 데이터베이스를 구성하는 기본 단위는?",
-      answer: "테이블/table/Table",
-    };
+    const result = await selectQuiz();
+    // const result = {
+    //   id: 1,
+    //   question: "논리적 데이터베이스를 구성하는 기본 단위는?",
+    //   answer: "테이블/table/Table",
+    // };
 
     if (result) {
-      // redis에 answer와 퀴즈 상태를 저장
       const quizState: QuizState = {
         isActive: true,
         quizData: result,
         isEnded: false,
       };
 
-      console.log(quizState);
       await setRedisValue("quizState", JSON.stringify(quizState), 60 * 60);
       io.emit("START_QUIZ", {
         isActive: true,
@@ -44,25 +42,19 @@ export function handleQuiz(io: Server, socket: Socket) {
   });
 
     socket.on("ANSWER_QUIZ", async ({ userId, answer }: answerPayload) => {
-        // if절로 퀴즈가 진행되고 있을때만 아래 로직을 수행
         const currentQuiz = await getCurrentQuizState();
         if (currentQuiz && currentQuiz.isActive) {
             if (!currentQuiz.quizData) {
                 return socket.emit("ANSWER_QUIZ_ERROR", { message: "퀴즈 데이터가 없습니다.", });
             }
 
-            // 서버가 가지고 있는 정답과 일치하는지 체크
             const isCorrect = currentQuiz.quizData ? checkAnswer(answer, currentQuiz.quizData.answer) : false;
-        
-            console.log("퀴즈 정답 체크", isCorrect);
             
-            // 정답일 경우
             if (isCorrect) {
-                // redis에 퀴즈 상태를 업데이트
                 const quizState: QuizState = {
-                isActive: false,
-                quizData: null,
-                isEnded: true,
+                  isActive: false,
+                  quizData: null,
+                  isEnded: true,
                 };
         
                 await setRedisValue("quizState", JSON.stringify(quizState), 60 * 60);
@@ -71,7 +63,6 @@ export function handleQuiz(io: Server, socket: Socket) {
                 const winnerNickName = socket.data.nickName;
                 const answer = currentQuiz.quizData.answer;
         
-                // 서버 내부에서 퀴즈 종료 후 클라이언트에게 퀴즈 종료 신호와 정답자, 정답 전달
                 io.emit("END_QUIZ", {
                     winnerId: winnerId,
                     winnerNickName: winnerNickName,
@@ -88,10 +79,6 @@ export function handleQuiz(io: Server, socket: Socket) {
                     type: "quizEnd",
                     time: Date.now(),
                 });
-
-            } else {
-                console.log("정답 아님");
-                // 별도의 처리 X, 논의 후 수정
             }
         } else {
             return socket.emit("ANSWER_QUIZ_ERROR", {
@@ -102,7 +89,6 @@ export function handleQuiz(io: Server, socket: Socket) {
 }
 
 const selectQuiz = async (): Promise<QuizItem | null> => {
-  console.log("랜덤으로 퀴즈를 한개 가져오기");
   const query =
     "SELECT id, question, answer FROM quizzes ORDER BY RAND() LIMIT 1";
 
