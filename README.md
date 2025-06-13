@@ -1,59 +1,29 @@
 # 👩‍💻기술 스택
-<table>
-  <thead>
-    <tr>
-      <th>구분</th>
-      <th>세부 항목</th>
-      <th>사용 기술</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan="1" align="center">공통</td>
-      <td>언어 및 통신</td>
-      <td>TypeScript, Socket.IO</td>
-    </tr>
-    <tr>
-      <td rowspan="3" align="center">프론트엔드</td>
-      <td>UI</td>
-      <td>React, Emotion</td>
-    </tr>
-    <tr>
-      <td>상태 관리</td>
-      <td>Zustand</td>
-    </tr>
-    <tr>
-      <td>디자인</td>
-      <td>Figma</td>
-    </tr>
-    <tr>
-      <td rowspan="3" align="center">백엔드</td>
-      <td>서버</td>
-      <td>Node.js, Express</td>
-    </tr>
-    <tr>
-      <td>DB</td>
-      <td>Redis, MariaDB</td>
-    </tr>
-    <tr>
-      <td>배포</td>
-      <td>AWS, Docker</td>
-    </tr>
-  </tbody>
-</table>
+- 공통
+    - Typescript
+    - Socket
+- FE
+    - UI : React, emotion
+    - 상태 관리 : zustand
+    - 디자인 : Figma
+- BE
+    - 서버 : Node, Express
+    - DB : Redis, MariaDB
+    - 배포 : AWS, Docker
 
 # 👥 팀원 소개
+
 |FE|FE|
 |---|---|
+|<img src="./assets/profile_heeyoung123.png" alt="프로필사진" width="300" height="300">|<img src="./assets/profile_sonjiwoo1215.jpeg" alt="프로필사진" width="300" height="300">|
 |[김희영](https://github.com/heeyoung123)|[손지우](https://github.com/sonjiwoo1215)|
-||- 퀴즈 UI 구현 및 퀴즈 시작/종료, 정답 제출 흐름 구현<br>- 채팅 UI 구현 및 실시간 메시지 송수신 처리<br>- 시스템 메시지와 사용자 메시지 구분 처리 및 UI 분기 처리|
+|- 투표 UI  및 투표 시작/종료, 투표 결과 도출 로직 구현<br>- 채팅 시점 설정<br>- 헤더와 푸터 UI, 로직 구현<br>- 피그마 디자인|- 퀴즈 UI 구현 및 퀴즈 시작/종료, 정답 제출 흐름 구현<br>- 채팅 UI 구현 및 실시간 메시지 송수신 처리<br>- 시스템 메시지와 사용자 메시지 구분 처리 및 UI 분기 처리|
 
 |BE|BE|
 |---|---|
+|<img src="./assets/profile_HS-01219.jpeg" alt="프로필사진" width="300" height="300">|<img src="./assets/profile_jo-eunchae.png" alt="프로필사진" width="300" height="300">|
 |[최희수](https://github.com/HS-01219)|[조은채](https://github.com/jo-eunchae)|
 |- 유저, 퀴즈 관련 소켓 통신 이벤트 구현<br>- AWS와 Docker를 이용한 배포<br>- FE 스크립트 오류 수정|- 메세지, 투표 관련 소켓 통신 이벤트<br>- GitHub Action을 통한 배포 자동화|
-
-
 
 # 💿 실행 방법
 ## 환경변수
@@ -118,9 +88,9 @@ npm run start
 ## 퀴즈
 |시작|정답 입력|종료 버튼|
 |---|---|---|
-|![퀴즈 시작](./assets/start_quiz.gif)|ㅇㅇ|ㅇㅇ|
+|![퀴즈 시작](./assets/quiz_start.gif)|![퀴즈 정답 입력](./assets/quiz_answer.gif)|![퀴즈 종료 버튼](./assets/quiz_end.gif)|
 
 ## 투표
 |시작|진행|종료 버튼|
 |---|---|---|
-|ㅇㅇ|ㅇㅇ|ㅇㅇ|
+|![투표 시작](./assets/vote_start.gif)|![투표 진행](./assets/vote_submit.gif)|![투표 종료 버튼](./assets/vote_end.gif)|
