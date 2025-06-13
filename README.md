@@ -25,17 +25,51 @@
 
 # 👥 팀원 소개
 
-|FE|FE|
-|---|---|
-|<img src="./assets/profile_heeyoung123.png" alt="프로필사진" width="300" height="300">|<img src="./assets/profile_sonjiwoo1215.jpeg" alt="프로필사진" width="300" height="300">|
-|[김희영](https://github.com/heeyoung123)|[손지우](https://github.com/sonjiwoo1215)|
-|- 투표 UI  및 투표 시작/종료, 투표 결과 도출 로직 구현<br>- 채팅 시점 설정<br>- 헤더와 푸터 UI, 로직 구현<br>- 피그마 디자인|- 퀴즈 UI 구현 및 퀴즈 시작/종료, 정답 제출 흐름 구현<br>- 채팅 UI 구현 및 실시간 메시지 송수신 처리<br>- 시스템 메시지와 사용자 메시지 구분 처리 및 UI 분기 처리|
+<table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="width: 50%; text-align: center; border: 1px solid black; padding: 8px;">FE</th>
+      <th style="width: 50%; text-align: center; border: 1px solid black; padding: 8px;">FE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center; border: 1px solid black; padding: 8px;"><img src="./assets/profile_heeyoung123.png" alt="프로필사진" width="300" height="300"></td>
+      <td style="text-align: center; border: 1px solid black; padding: 8px;"><img src="./assets/profile_sonjiwoo1215.jpeg" alt="프로필사진" width="300" height="300"></td>
+    </tr>
+    <tr>
+      <td style="text-align: center; border: 1px solid black; padding: 8px;"><a href="https://github.com/heeyoung123">김희영</a></td>
+      <td style="text-align: center; border: 1px solid black; padding: 8px;"><a href="https://github.com/sonjiwoo1215">손지우</a></td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px;">- 투표 UI  및 투표 시작/종료, 투표 결과 도출 로직 구현<br>- 채팅 시점 설정<br>- 헤더와 푸터 UI, 로직 구현<br>- 피그마 디자인</td>
+      <td style="border: 1px solid black; padding: 8px;">- 퀴즈 UI 구현 및 퀴즈 시작/종료, 정답 제출 흐름 구현<br>- 채팅 UI 구현 및 실시간 메시지 송수신 처리<br>- 시스템 메시지와 사용자 메시지 구분 처리 및 UI 분기 처리</td>
+    </tr>
+  </tbody>
+</table>
 
-|BE|BE|
-|---|---|
-|<img src="./assets/profile_HS-01219.jpeg" alt="프로필사진" width="300" height="300">|<img src="./assets/profile_jo-eunchae.png" alt="프로필사진" width="300" height="300">|
-|[최희수](https://github.com/HS-01219)|[조은채](https://github.com/jo-eunchae)|
-|- 유저, 퀴즈 관련 소켓 통신 이벤트 구현<br>- AWS와 Docker를 이용한 배포<br>- FE 스크립트 오류 수정|- 메세지, 투표 관련 소켓 통신 이벤트<br>- GitHub Action을 통한 배포 자동화|
+<table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+  <thead>
+    <tr>
+      <th style="width: 50%; text-align: center; border: 1px solid black; padding: 8px;">BE</th>
+      <th style="width: 50%; text-align: center; border: 1px solid black; padding: 8px;">BE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center; border: 1px solid black; padding: 8px;"><img src="./assets/profile_HS-01219.jpeg" alt="프로필사진" width="300" height="300"></td>
+      <td style="text-align: center; border: 1px solid black; padding: 8px;"><img src="./assets/profile_jo-eunchae.png" alt="프로필사진" width="300" height="300"></td>
+    </tr>
+    <tr>
+      <td style="text-align: center; border: 1px solid black; padding: 8px;"><a href="https://github.com/HS-01219">최희수</a></td>
+      <td style="text-align: center; border: 1px solid black; padding: 8px;"><a href="https://github.com/jo-eunchae">조은채</a></td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid black; padding: 8px;">- 유저, 퀴즈 관련 소켓 통신 이벤트 구현<br>- AWS와 Docker를 이용한 배포<br>- FE 스크립트 오류 수정</td>
+      <td style="border: 1px solid black; padding: 8px;">- 메세지, 투표 관련 소켓 통신 이벤트<br>- GitHub Action을 통한 배포 자동화</td>
+    </tr>
+  </tbody>
+</table>
 
 # 💿 실행 방법
 ## 환경변수
