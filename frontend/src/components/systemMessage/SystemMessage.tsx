@@ -62,7 +62,7 @@ const SystemMessage: React.FC<SystemMessageProps> = ({
         {type === "quizEnd" && answer ? (
           <div>
             퀴즈가 종료되었습니다. <br/>
-            정답은: <strong>{answer}</strong>
+            정답: <strong>{answer}</strong>
           </div>
         ) :
         type === "voteResult" && items ? (

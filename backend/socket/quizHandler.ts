@@ -11,12 +11,12 @@ interface answerPayload {
 
 export function handleQuiz(io: Server, socket: Socket) {
   socket.on("START_QUIZ", async () => {
-    const result = await selectQuiz();
-    // const result = {
-    //   id: 1,
-    //   question: "논리적 데이터베이스를 구성하는 기본 단위는?",
-    //   answer: "테이블/table/Table",
-    // };
+    // const result = await selectQuiz();
+    const result = {
+      id: 1,
+      question: "논리적 데이터베이스를 구성하는 기본 단위는?",
+      answer: "테이블/table/Table",
+    };
 
     if (result) {
       const quizState: QuizState = {
