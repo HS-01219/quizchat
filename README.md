@@ -4,6 +4,7 @@
     - Socket
 - FE
     - UI : React, emotion
+    - <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
     - 상태 관리 : zustand
     - 디자인 : Figma
 - BE
