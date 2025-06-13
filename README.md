@@ -10,7 +10,8 @@
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![Zustand](https://img.shields.io/badge/zustand-%23181717.svg?style=for-the-badge&logo=zustand&logoColor=white)
 ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
-![image](https://github.com/user-attachments/assets/e2bb71bc-8e31-4bf7-b21e-23d709fa2d88)
+![Emotion](https://img.shields.io/badge/emotion-%236340BF.svg?style=for-the-badge&logo=emotion&logoColor=white)
+
 
 
 - BE
